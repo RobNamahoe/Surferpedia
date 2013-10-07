@@ -7,6 +7,7 @@ import views.html.Page1;
 import views.html.JohnJohnFlorence;
 import views.html.KeliaMoniz;
 import views.html.KaulanaApo;
+import views.html.Megan;
 /**
  * Implements the controllers for this application.
  */
@@ -53,6 +54,11 @@ public class Application extends Controller {
    */
   public static Result kaulanaapo() {
     return ok(KaulanaApo.render("Welcome to Page1."));
+    
+  }
+  
+  public static Result megan() {
+    return ok(Megan.render("Welcome to Page1."));
     
   }
   

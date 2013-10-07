@@ -46,3 +46,10 @@
   background-position: center;
   height: 400px;
 }
+
+.megan {
+  background: url("../images/megan.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
