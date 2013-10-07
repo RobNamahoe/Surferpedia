@@ -1,54 +1,58 @@
-@(message: String)
+@(message: String) @Main("Home") {
+<div id="carousel-example-generic" class="carousel slide">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+  </ol>
 
-@Main("Home") {
-    <div id="carousel-example-generic" class="carousel slide">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-      </ol>
-    
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-      
-        <div class="item active">
-          <div class="carousel-male"></div>
-          <div class="carousel-caption">
-            <h3>John John Florence</h3>
-          </div>
-        </div>
-        
-        <div class="item">
-          <div class="carousel-female"></div>
-          <div class="carousel-caption">
-            <h3>Kelia Moniz</h3>
-          </div>
-        </div>
-        
-        <div class="item">
-          <div class="carousel-grom"></div>
-          <div class="carousel-caption">
-            <h3>Kaulana Apo</h3>
-          </div>
-        </div>
-      
-      
-      <div class="item">
-          <div class="megan"></div>
-          <div class="carousel-caption">
-            <h3>Megan Abubo</h3>
-          </div>
-        </div>
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+
+    <div class="item active">
+      <div class="carousel-male"></div>
+      <div class="carousel-caption">
+        <h3>John John Florence</h3>
       </div>
-      
-      <!-- Controls -->
-      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-        <span class="icon-prev"></span>
-      </a>
-      <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-        <span class="icon-next"></span>
-      </a>
     </div>
+
+    <div class="item">
+      <div class="carousel-female"></div>
+      <div class="carousel-caption">
+        <h3>Kelia Moniz</h3>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="carousel-grom"></div>
+      <div class="carousel-caption">
+        <h3>Kaulana Apo</h3>
+      </div>
+    </div>
+
+
+    <div class="item">
+      <div class="megan"></div>
+      <div class="carousel-caption">
+        <h3>Megan Abubo</h3>
+      </div>
+    </div>
+    
+      <div class="item">
+    <div class="carousel-1"></div>
+    <div class="carousel-caption">
+      <h3>Michael Ho</h3>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="icon-prev"></span>
+  </a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="icon-next"></span>
+  </a>
+</div>
 }

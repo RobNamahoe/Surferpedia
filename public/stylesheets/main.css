@@ -53,3 +53,10 @@
   background-position: center;
   height: 500px;
 }
+
+.carousel-1 {
+  background-image:url('../images/ho.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
