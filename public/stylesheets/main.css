@@ -1,0 +1,48 @@
+.header {
+  background-image: url("../images/header.jpg");
+  background-size: cover;
+  height: 300px;
+}
+
+.carousel-male {
+  background: url("../images/JohnJohnFlorence.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+
+}
+
+.carousel-female {
+  background: url("../images/KeliaMoniz.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
+.carousel-grom {
+  background: url("../images/KaulanaApo.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
+.jjflorence {
+  background: url("../images/JohnJohnFlorence.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+
+.keliamoniz {
+  background: url("../images/KeliaMoniz.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+
+.kaulanaapo {
+  background: url("../images/KaulanaApo.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
