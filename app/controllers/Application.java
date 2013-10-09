@@ -9,6 +9,8 @@ import views.html.KeliaMoniz;
 import views.html.KaulanaApo;
 import views.html.Megan;
 import views.html.mho;
+import views.html.kalanid;
+
 /**
  * Implements the controllers for this application.
  */
@@ -69,6 +71,15 @@ public class Application extends Controller {
    */
   public static Result mho() {
     return ok(mho.render("Welcome to Micheal Ho."));
+    
+  }
+  
+  /**
+   * Returns mho, a page about Micheal Ho.
+   * @return The mho.
+   */
+  public static Result kalanid() {
+    return ok(kalanid.render("Welcome to Kalani David."));
     
   }
   
