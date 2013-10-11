@@ -3,13 +3,12 @@ package controllers;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.Index;
-import views.html.Page1;
-import views.html.JohnJohnFlorence;
-import views.html.KeliaMoniz;
-import views.html.KaulanaApo;
-import views.html.Megan;
-import views.html.mho;
-import views.html.kalanid;
+import views.html.Florence;
+import views.html.Moniz;
+import views.html.Apo;
+import views.html.Abubo;
+import views.html.Ho;
+
 
 /**
  * Implements the controllers for this application.
@@ -17,72 +16,51 @@ import views.html.kalanid;
 public class Application extends Controller {
 
   /**
-   * Returns the home page. 
-   * @return The resulting home page. 
+   * Returns the surferpedia home page. 
+   * @return The resulting surferpedia home page. 
    */
   public static Result index() {
-    return ok(Index.render("Welcome to the home page."));
+    return ok(Index.render(""));
   }
   
   /**
-   * Returns page1, a simple example of a second page to illustrate navigation.
-   * @return The Page1.
+   * Returns John John Florence's Page.
+   * @return The John John florence Page.
    */
-  public static Result page1() {
-    return ok(Page1.render("Welcome to Page1."));
-    
+  public static Result florence() {
+    return ok(Florence.render(""));
   }
   
   /**
-   * Returns page1, a simple example of a second page to illustrate navigation.
-   * @return The Page1.
+   * Returns Kelia Moniz's Page.
+   * @return The Kelia Moniz Page.
    */
-  public static Result johnjohnflorence() {
-    return ok(JohnJohnFlorence.render("Welcome to Page1."));
-    
+  public static Result moniz() {
+    return ok(Moniz.render(""));
   }
   
   /**
-   * Returns page1, a simple example of a second page to illustrate navigation.
-   * @return The Page1.
+   * Returns Kaulana Apo's Page.
+   * @return The Kaulana Apo Page.
    */
-  public static Result keliamoniz() {
-    return ok(KeliaMoniz.render("Welcome to Page1."));
-    
+  public static Result apo() {
+    return ok(Apo.render(""));
   }
   
   /**
-   * Returns page1, a simple example of a second page to illustrate navigation.
-   * @return The Page1.
+   * Returns Megan Abubo's Page.
+   * @return The Megan Abubo Page.
    */
-  public static Result kaulanaapo() {
-    return ok(KaulanaApo.render("Welcome to Page1."));
-    
-  }
-  
-  public static Result megan() {
-    return ok(Megan.render("Welcome to Page1."));
-    
+  public static Result abubo() {
+    return ok(Abubo.render(""));
   }
   
   /**
-   * Returns mho, a page about Micheal Ho.
-   * @return The mho.
+   * Returns Michael Ho's Page.
+   * @return The Michael Ho Page.
    */
-  public static Result mho() {
-    return ok(mho.render("Welcome to Micheal Ho."));
-    
+  public static Result ho() {
+    return ok(Ho.render(""));
   }
-  
-  /**
-   * Returns mho, a page about Micheal Ho.
-   * @return The mho.
-   */
-  public static Result kalanid() {
-    return ok(kalanid.render("Welcome to Kalani David."));
-    
-  }
-  
-  
   
 }

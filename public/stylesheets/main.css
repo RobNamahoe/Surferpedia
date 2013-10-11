@@ -1,76 +1,42 @@
 .header {
-  background-image: url("../images/header.jpg");
+  background: url("../images/header.jpg");
   background-size: cover;
+  background-position: center;
   height: 300px;
 }
 
-.carousel-male {
+.florence-image {
   background: url("../images/JohnJohnFlorence.jpg");
   background-size: cover;
   background-position: center;
   height: 500px;
-
 }
 
-.carousel-female {
+.moniz-image {
   background: url("../images/KeliaMoniz.jpg");
   background-size: cover;
   background-position: center;
   height: 500px;
 }
 
-.carousel-grom {
+.apo-image {
   background: url("../images/KaulanaApo.jpg");
   background-size: cover;
   background-position: center;
   height: 500px;
 }
 
-.carousel-kd {
-  background: url("../images/kd.jpg");
+.abubo-image {
+  background: url("../images/MeganAbubo.jpg");
   background-size: cover;
   background-position: center;
   height: 500px;
 }
 
-.jjflorence {
-  background: url("../images/JohnJohnFlorence.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-}
-
-.keliamoniz {
-  background: url("../images/KeliaMoniz.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-}
-
-.kaulanaapo {
-  background: url("../images/KaulanaApo.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-}
-
-.megan {
-  background: url("../images/megan.jpg");
+.ho-image {
+  background: url("../images/MichaelHo.jpg");
   background-size: cover;
   background-position: center;
   height: 500px;
 }
 
-.carousel-1 {
-  background-image:url('../images/ho.jpg');
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-}
-
-.kalani-pic {
-  background: url("../images/kd.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 500px;
-}
