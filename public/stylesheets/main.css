@@ -2,8 +2,15 @@
   background: url("../images/header.jpg");
   background-size: cover;
   background-position: center;
-  height: 300px;
+  height: 200px;
 }
+
+.carousel-image {
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
 
 .florence-image {
   background: url("../images/JohnJohnFlorence.jpg");

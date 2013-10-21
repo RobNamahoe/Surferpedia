@@ -39,21 +39,26 @@
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Males<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="@routes.Application.florence()">John John Florence</a></li>
-              <li><a href="@routes.Application.ho()">Michael Ho</a></li>
-            </ul></li>
+              <li><a href="">John John Florence</a></li>
+              <li><a href="">Michael Ho</a></li>
+            </ul>
+          </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Females<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="@routes.Application.moniz()">Kelia Moniz</a></li>
-              <li><a href="@routes.Application.abubo()">Megan Abubo</a></li>
-            </ul></li>
+              <li><a href="">Kelia Moniz</a></li>
+              <li><a href="">Megan Abubo</a></li>
+            </ul>
+          </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Groms<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="@routes.Application.apo()">Kaulana Apo</a></li>
-            </ul></li>
-
+              <li><a href="">Kaulana Apo</a></li>
+            </ul>
+          </li>
+          
+          <li class="@("active".when(page == "NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
+        
         </ul>
       </div>
     </div>
