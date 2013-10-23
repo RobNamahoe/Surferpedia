@@ -1,40 +1,68 @@
-@(contactForm: Form[views.formdata.ContactFormData], telephoneTypeMap: Map[String, Boolean]) 
+@(surferForm: Form[views.formdata.SurferFormData], surferTypesMap: Map[String, Boolean]) 
 
 @import helper._
 @import bootstrap3._
 
-@Main("NewContact") {
+@Main("ManageSurfer") {
 <div class="container">
 
-  @form(routes.Application.postContact(), 'class -> "form-horizontal") {
-    <input type="hidden"
-           name="@contactForm("id").name"
-           id="@contactForm("id").id"
-           value="@contactForm("id").value">
+
     
-    <!-- First Name -->
-    @text(contactForm("firstName"),
-          label="First",
-          placeholder="First Name", 
-          help="")
+    <!-- Name -->
+    @text(surferForm("name"),
+          label="Name",
+          placeholder="Surfers Name", 
+          help="The name of the surfer.")
           
-    <!-- Last Name -->
-    @text(contactForm("lastName"),
-          label="Last",
-          placeholder="Last Name",
-          help="")
+    <!-- Home -->
+    @text(surferForm("home"),
+          label="Home",
+          placeholder="Surfers Home",
+          help="Where this surfer hails from.")
     
-    <!-- Telephone and Telephone Type -->
-    @telephone(contactForm("telephone"),
-               contactForm("telephoneType"),
-               optionMap = telephoneTypeMap,
-               isMultiple = false)
-    
+    <!-- Awards -->
+    @text(surferForm("awards"),
+          label="Awards",
+          placeholder="Awards",
+          help="List titles and other surfing awards.")
+          
+    <!-- Carousel URL -->
+    @text(surferForm("carouselURL"),
+          label="Carousel URL",
+          placeholder="http://",
+          help="A URL to the picture to be presented in the home page carousel for this surfer.")
+          
+    <!-- Bio URL -->
+    @text(surferForm("bioUrl"),
+          label="Bio URL",
+          placeholder="http://",
+          help="A URL to the picture to be presented in the bio page for this surfer.")
+       
+    <!-- Bio -->
+    @bootstrap3.textarea(surferForm("bio"),
+          rows="10",
+          label="Bio",
+          placeholder="",
+          help="One paragraph description of this surfer.")
+          
+    <!-- Slug -->
+    @text(surferForm("slug"),
+          label="Slug",
+          placeholder="",
+          help="Slug field cannot be edited for an existing surfer.")
+          
+    <!-- Type -->
+    @bootstrap3.select(surferForm("type"),
+            label="Type",
+            optionMap=surferTypesMap,
+            isMultiple=false,
+            help="The type of surfer for placement in the menubar.")
+
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Add</button>
       </div>
     </div>
-  }
+
 </div>
 }

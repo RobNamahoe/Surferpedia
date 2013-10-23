@@ -6,7 +6,7 @@ package models;
  */
 public class Surfer {
 
-  private long id;
+  private String id;
   private String name = "";
   private String home = "";
   private String awards = "";
@@ -35,7 +35,7 @@ public class Surfer {
    * @param slug Letters and digits to be used to identify this surfer.
    * @param type Male, Female, Grom - for placement in the menu bar.
    */
-  public Surfer(long id, String name, String home, String awards, String carouselUrl, 
+  public Surfer(String id, String name, String home, String awards, String carouselUrl, 
                 String bioUrl, String bio, String slug, String type) {
     this.id = id;
     this.name = name;
@@ -51,7 +51,7 @@ public class Surfer {
   /**
    * @return the id
    */
-  public long getId() {
+  public String getId() {
     return id;
   }
 

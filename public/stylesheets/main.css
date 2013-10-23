@@ -11,9 +11,16 @@
   height: 500px;
 }
 
+.bio-image {
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
+
 
 .florence-image {
   background: url("../images/JohnJohnFlorence.jpg");
+  background: url("http://i.cdn-surfline.com/surfnews/images/2012/03_march/margaret_final/full/JohnJohnFlorenceMargaretRiversr12_6087.jpg");
   background-size: cover;
   background-position: center;
   height: 500px;

@@ -12,7 +12,7 @@ import models.Surfer;
 public class SurferFormData {
 
   /** The surfers id. **/
-  public long id;
+  public String id;
   /** The surfers name. **/
   public String name = "";
   /** The surfers home. **/

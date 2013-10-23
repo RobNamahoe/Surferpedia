@@ -12,7 +12,7 @@ import views.formdata.SurferFormData;
  */
 public class SurferDB {
 
-  private static Map<Long, Surfer> surfers = new HashMap<>();
+  private static Map<String, Surfer> surfers = new HashMap<>();
   
   /**
    * A method to add a new surfer to the database.
@@ -20,10 +20,11 @@ public class SurferDB {
    * @return The new surfer.
    */
   public static Surfer addSurfer(SurferFormData formData) {
-    long id = (formData.id == 0) ? surfers.size() + 1 : formData.id;
-    Surfer surfer = new Surfer(id, formData.name, formData.home, formData.awards, formData.carouselUrl,
+    //long id = (formData.id == 0) ? surfers.size() + 1 : formData.id;
+    Surfer surfer = new Surfer(formData.slug, formData.name, formData.home, formData.awards, formData.carouselUrl,
                                formData.bioUrl, formData.bio, formData.slug, formData.type);
-    surfers.put(id, surfer);
+    surfers.put(formData.slug, surfer);
+    System.out.println(formData.name + " added");
     return surfer;
   }
   
@@ -32,7 +33,7 @@ public class SurferDB {
    * @param id The id of the surfer to retrieve.
    * @return The surfer.
    */
-  public static Surfer getContact(long id) {
+  public static Surfer getSurfer(String id) {
     return surfers.get(id);
   }
   
@@ -48,7 +49,7 @@ public class SurferDB {
    * Delete a specified surfer from the database.
    * @param id The id of the surfer to delete.
    */
-  public static void deleteSurfer(long id) {
+  public static void deleteSurfer(String id) {
     surfers.remove(id);
   }  
   

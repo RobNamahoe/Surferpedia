@@ -1,9 +1,16 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+import models.SurferDB;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.SurferFormData;
+import views.formdata.SurferTypes;
 import views.html.Index;
-
+import views.html.ShowSurfer;
+import views.html.ManageSurfer;
 
 /**
  * Implements the controllers for this application.
@@ -23,7 +30,9 @@ public class Application extends Controller {
   }
   
   public static Result getSurfer(String slug) {
-    return ok(Index.render(""));
+    SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
+    Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
+    return ok(ShowSurfer.render(formData));
   }
   
   public static Result deleteSurfer(String slug) {
@@ -31,10 +40,26 @@ public class Application extends Controller {
   }
   
   public static Result manageSurfer(String slug) {
-    return ok(Index.render(""));
+    Map<String, Boolean> surferTypesMap = new HashMap<>();
+    SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
+    surferTypesMap = SurferTypes.getTypes(data.type);
+    Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
+    return ok(ManageSurfer.render(formData, surferTypesMap));
   }
   
   public static Result postSurfer() {
-    return ok(Index.render(""));
+    //Map<String, Boolean> surferTypesMap = new HashMap<>();
+    Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
+    if (formData.hasErrors()) {
+      System.out.println("Errors found");
+      //surferTypesMap = SurferTypes.getTypes();
+      return badRequest(ShowSurfer.render(formData));
+    }
+    else {
+      SurferFormData data = formData.get();
+      SurferDB.addSurfer(data);
+      //System.out.format("%s, %s, %s%n", data.firstName, data.lastName, data.telephone, data.telephoneType);
+      return ok(ShowSurfer.render(formData));
+    }
   }
 }
