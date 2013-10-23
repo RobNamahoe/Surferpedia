@@ -26,7 +26,11 @@ public class Application extends Controller {
   }
  
   public static Result newSurfer() {
-    return ok(Index.render(""));
+    SurferFormData data = new SurferFormData();
+    Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
+    Map<String, Boolean> surferTypesMap = new HashMap<>();
+    surferTypesMap = SurferTypes.getTypes();
+    return ok(ManageSurfer.render("NewSurfer", formData, surferTypesMap));
   }
   
   public static Result getSurfer(String slug) {
@@ -44,21 +48,21 @@ public class Application extends Controller {
     SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
     surferTypesMap = SurferTypes.getTypes(data.type);
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
-    return ok(ManageSurfer.render(formData, surferTypesMap));
+    return ok(ManageSurfer.render("ManageSurfer", formData, surferTypesMap));
   }
   
   public static Result postSurfer() {
-    //Map<String, Boolean> surferTypesMap = new HashMap<>();
+    Map<String, Boolean> surferTypesMap = new HashMap<>();
     Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
-      System.out.println("Errors found");
-      //surferTypesMap = SurferTypes.getTypes();
-      return badRequest(ShowSurfer.render(formData));
+      System.out.println("Errors found!");
+      surferTypesMap = SurferTypes.getTypes();
+      return badRequest(ManageSurfer.render("ManageSurfer", formData, surferTypesMap));
     }
     else {
       SurferFormData data = formData.get();
       SurferDB.addSurfer(data);
-      //System.out.format("%s, %s, %s%n", data.firstName, data.lastName, data.telephone, data.telephoneType);
+      System.out.format("%s, %s, %s%n", data.name, data.slug);
       return ok(ShowSurfer.render(formData));
     }
   }

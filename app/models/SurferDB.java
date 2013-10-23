@@ -20,21 +20,20 @@ public class SurferDB {
    * @return The new surfer.
    */
   public static Surfer addSurfer(SurferFormData formData) {
-    //long id = (formData.id == 0) ? surfers.size() + 1 : formData.id;
-    Surfer surfer = new Surfer(formData.slug, formData.name, formData.home, formData.awards, formData.carouselUrl,
+    Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl,
                                formData.bioUrl, formData.bio, formData.slug, formData.type);
     surfers.put(formData.slug, surfer);
-    System.out.println(formData.name + " added");
+    System.out.println(formData.slug + ": " + formData.name + " added");
     return surfer;
   }
   
   /**
    * Get a surfer.
-   * @param id The id of the surfer to retrieve.
+   * @param slug The slug of the surfer to retrieve.
    * @return The surfer.
    */
-  public static Surfer getSurfer(String id) {
-    return surfers.get(id);
+  public static Surfer getSurfer(String slug) {
+    return surfers.get(slug);
   }
   
   /**
@@ -47,10 +46,10 @@ public class SurferDB {
   
   /**
    * Delete a specified surfer from the database.
-   * @param id The id of the surfer to delete.
+   * @param slug The slug of the surfer to delete.
    */
-  public static void deleteSurfer(String id) {
-    surfers.remove(id);
+  public static void deleteSurfer(String slug) {
+    surfers.remove(slug);
   }  
   
 }

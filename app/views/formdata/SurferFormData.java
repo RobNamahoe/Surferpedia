@@ -11,8 +11,6 @@ import models.Surfer;
  */
 public class SurferFormData {
 
-  /** The surfers id. **/
-  public String id;
   /** The surfers name. **/
   public String name = "";
   /** The surfers home. **/
@@ -42,7 +40,6 @@ public class SurferFormData {
    * @param surfer An existing surfer.
    */
   public SurferFormData(Surfer surfer) {
-    this.id = surfer.getId();
     this.name = surfer.getName();
     this.home = surfer.getHome();
     this.awards = surfer.getAwards();
@@ -106,7 +103,7 @@ public class SurferFormData {
     if (slug == null || slug.length() == 0) {
       errors.add(new ValidationError("slug", "Slug is required."));
     }
-    
+       
     if (!SurferTypes.isType(type)) {
       errors.add(new ValidationError("type", "Surfer type is invalid."));
     }

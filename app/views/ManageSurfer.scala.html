@@ -1,13 +1,13 @@
-@(surferForm: Form[views.formdata.SurferFormData], surferTypesMap: Map[String, Boolean]) 
+@(message: String, surferForm: Form[views.formdata.SurferFormData], surferTypesMap: Map[String, Boolean]) 
 
 @import helper._
 @import bootstrap3._
 
-@Main("ManageSurfer") {
+@Main(message) {
 <div class="container">
 
+  @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
 
-    
     <!-- Name -->
     @text(surferForm("name"),
           label="Name",
@@ -27,7 +27,7 @@
           help="List titles and other surfing awards.")
           
     <!-- Carousel URL -->
-    @text(surferForm("carouselURL"),
+    @text(surferForm("carouselUrl"),
           label="Carousel URL",
           placeholder="http://",
           help="A URL to the picture to be presented in the home page carousel for this surfer.")
@@ -46,11 +46,11 @@
           help="One paragraph description of this surfer.")
           
     <!-- Slug -->
-    @text(surferForm("slug"),
+    @slug(surferForm("slug"),
           label="Slug",
           placeholder="",
           help="Slug field cannot be edited for an existing surfer.")
-          
+         
     <!-- Type -->
     @bootstrap3.select(surferForm("type"),
             label="Type",
@@ -60,9 +60,9 @@
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Add</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
-
+  }
 </div>
 }

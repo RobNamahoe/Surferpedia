@@ -1,52 +1,24 @@
-@(message: String) @Main("Home") {
-<div id="carousel-example-generic" class="carousel slide">
+@(message: String) 
+
+@Main("Home") {
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+    @for((surfer, index) <- SurferDB.getSurfers().zipWithIndex) {
+      <li data-target="#carousel-example-generic" data-slide-to="@index" @if(index == 0) {class="active"}></li>
+    }
   </ol>
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
-
-    <div class="item active">
-      <div class="florence-image"></div>
-      <div class="carousel-caption">
-        <h3>John John Florence</h3>
+    @for((surfer, index) <- SurferDB.getSurfers().zipWithIndex){
+      <div @if(index == 0) {class="item active"} else {class="item"}>
+        <div class="carousel-image" style="background-image: url('@surfer.getCarouselUrl');"></div>
+        <div class="carousel-caption">
+          <h3>@surfer.getName()</h3>
+        </div>
       </div>
-    </div>
-
-    <div class="item">
-      <div class="moniz-image"></div>
-      <div class="carousel-caption">
-        <h3>Kelia Moniz</h3>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="apo-image"></div>
-      <div class="carousel-caption">
-        <h3>Kaulana Apo</h3>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="abubo-image"></div>
-      <div class="carousel-caption">
-        <h3>Megan Abubo</h3>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="ho-image"></div>
-      <div class="carousel-caption">
-        <h3>Michael Ho</h3>
-      </div>
-    </div>
+    }   
   </div>
 
   <!-- Controls -->
