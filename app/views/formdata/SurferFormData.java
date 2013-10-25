@@ -80,6 +80,8 @@ public class SurferFormData {
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
     
+    System.out.println("Validation: " + slug);
+    
     if (name == null || name.length() == 0) {
       errors.add(new ValidationError("name", "Name is required."));
     }

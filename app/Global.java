@@ -34,7 +34,7 @@ public class Global extends GlobalSettings {
     SurferDB.addSurfer(new SurferFormData("John Florence", "Maui", "", carouselUrl, bioUrl, bio, "jjflorence", "Male"));
     
     // Kelia Moniz
-    carouselUrl = "http://cdn.rsvlts.com/wp-content/uploads/2013/02/Kelia-Moniz-03.jpg";
+    carouselUrl = "http://cdn.rsvlts.com/wp-content/uploads/2013/02/Kelia-Moniz-020.jpg";
     bioUrl = "http://www1.pictures.zimbio.com/gi/DVF+Loves+ROXY+Launch+hiadGWypmZUl.jpg";
     bio = "Multi-talented Japanese, Hawaiian, Portuguese, Chinese, Irish beauty Kelia Moniz grew up in a surfing "
           + "family that spends more time in the water than on land. Raised with four brothers and an ex-professional "

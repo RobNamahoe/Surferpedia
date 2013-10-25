@@ -50,6 +50,15 @@ public class SurferDB {
    */
   public static void deleteSurfer(String slug) {
     surfers.remove(slug);
-  }  
+  }
+  
+  /**
+   * Check if a slug is already assigned to a surfer.
+   * @param slug The unique identifier.
+   * @return true of the slug is already associated to a surfer, false otherwise.
+   */
+  public static Boolean slugExists(String slug) {
+    return surfers.containsKey(slug);
+  }
   
 }

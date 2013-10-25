@@ -40,6 +40,7 @@ public class Application extends Controller {
   }
   
   public static Result deleteSurfer(String slug) {
+    SurferDB.deleteSurfer(slug);
     return ok(Index.render(""));
   }
   
@@ -52,6 +53,7 @@ public class Application extends Controller {
   }
   
   public static Result postSurfer() {
+    System.out.println("postSurfer");
     Map<String, Boolean> surferTypesMap = new HashMap<>();
     Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
@@ -62,7 +64,7 @@ public class Application extends Controller {
     else {
       SurferFormData data = formData.get();
       SurferDB.addSurfer(data);
-      System.out.format("%s, %s, %s%n", data.name, data.slug);
+      System.out.format("%s, %s", data.name, data.slug);
       return ok(ShowSurfer.render(formData));
     }
   }
