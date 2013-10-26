@@ -53,7 +53,6 @@ public class Application extends Controller {
   }
   
   public static Result postSurfer() {
-    System.out.println("postSurfer");
     Map<String, Boolean> surferTypesMap = new HashMap<>();
     Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
@@ -68,4 +67,5 @@ public class Application extends Controller {
       return ok(ShowSurfer.render(formData));
     }
   }
+  
 }

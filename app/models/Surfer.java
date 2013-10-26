@@ -14,6 +14,7 @@ public class Surfer {
   private String bio = "";
   private String slug = "";
   private String type = "";
+  private String status = "";
   
   /**
    * Default constructor method.
@@ -34,7 +35,7 @@ public class Surfer {
    * @param type Male, Female, Grom - for placement in the menu bar.
    */
   public Surfer(String name, String home, String awards, String carouselUrl, 
-                String bioUrl, String bio, String slug, String type) {
+                String bioUrl, String bio, String slug, String type, String status) {
     this.name = name;
     this.home = home;
     this.awards = awards;
@@ -43,6 +44,7 @@ public class Surfer {
     this.bio = bio;
     this.slug = slug;
     this.type = type;
+    this.status = status;
   }
 
   /**
@@ -156,6 +158,22 @@ public class Surfer {
   public void setType(String type) {
     this.type = type;
   }
+
+  /**
+   * @return the status
+   */
+  public String getStatus() {
+    return status;
+  }
+
+  /**
+   * @param status the status to set
+   */
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+
 
 
 }

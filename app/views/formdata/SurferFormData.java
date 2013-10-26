@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import play.data.validation.ValidationError;
 import models.Surfer;
+import models.SurferDB;
 
 /**
  * Surfer form data.
@@ -27,6 +28,8 @@ public class SurferFormData {
   public String slug = "";
   /** The surfers type. **/
   public String type = "";
+  /** Is this a new entry? **/
+  public String status = "";
   
   /**
    * Default constructor method.
@@ -48,6 +51,7 @@ public class SurferFormData {
     this.bio = surfer.getBio();
     this.slug = surfer.getSlug();
     this.type = surfer.getType();
+    this.status = surfer.getStatus();
   }
 
   /**
@@ -62,7 +66,7 @@ public class SurferFormData {
    * @param type The surfers type - Male, female, grom.
    */
   public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio,
-      String slug, String type) {
+      String slug, String type, String status) {
     this.name = name;
     this.home = home;
     this.awards = awards;
@@ -71,6 +75,7 @@ public class SurferFormData {
     this.bio = bio;
     this.slug = slug;
     this.type = type;
+    this.status = status;
   }
   
   /**
@@ -80,7 +85,7 @@ public class SurferFormData {
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
     
-    System.out.println("Validation: " + slug);
+    System.out.println("Validation: " + slug + ", " + status);
     
     if (name == null || name.length() == 0) {
       errors.add(new ValidationError("name", "Name is required."));
@@ -105,7 +110,16 @@ public class SurferFormData {
     if (slug == null || slug.length() == 0) {
       errors.add(new ValidationError("slug", "Slug is required."));
     }
-       
+           
+    if (!status.equals("existing") && SurferDB.slugExists(slug)) {
+      errors.add(new ValidationError("slug", "Slug is already in use. Choose another."));
+    }
+    else {
+      if (!slug.matches("[A-Za-z0-9]+")) {
+        errors.add(new ValidationError("slug", "Invalid entry. Alphanumeric characters only."));
+      }
+    }
+    
     if (!SurferTypes.isType(type)) {
       errors.add(new ValidationError("type", "Surfer type is invalid."));
     }

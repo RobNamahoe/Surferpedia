@@ -31,7 +31,7 @@ public class Global extends GlobalSettings {
           + "he was happy with how [he] did. Surfer Kelly Slater has said of Florence John John's going to know the "
           + "waves on North Shore like no one we've ever seen before. Singer Jack Johnson, who grew up in the same town as "
           + "Florence, said he is a little unprecedented";
-    SurferDB.addSurfer(new SurferFormData("John Florence", "Maui", "", carouselUrl, bioUrl, bio, "jjflorence", "Male"));
+    SurferDB.addSurfer(new SurferFormData("John Florence", "Maui", "", carouselUrl, bioUrl, bio, "jjflorence", "Male", "existing"));
     
     // Kelia Moniz
     carouselUrl = "http://cdn.rsvlts.com/wp-content/uploads/2013/02/Kelia-Moniz-020.jpg";
@@ -42,7 +42,7 @@ public class Global extends GlobalSettings {
           +"She proved her merit last year by being the only girl to make it to the semifinals in the noseriding event at "
           + "the Corona Hawaiian Open.";
 
-    SurferDB.addSurfer(new SurferFormData("Kelia Moniz", "Kauai", "", carouselUrl, bioUrl, bio, "kmoniz", "Female"));
+    SurferDB.addSurfer(new SurferFormData("Kelia Moniz", "Kauai", "", carouselUrl, bioUrl, bio, "kmoniz", "Female", "existing"));
     
     // Kaulana Apo
     carouselUrl = "http://www.surfermag.com/hot-100/img/grm10.jpg";
@@ -51,6 +51,6 @@ public class Global extends GlobalSettings {
           + "this year is a window on the future. Sitting down with him and his parents on shore leaves little doubt "
           + "that this kid has everything it takes to make it big.";
         
-    SurferDB.addSurfer(new SurferFormData("Kaulana Apo", "Oahu, Hawaii", "", carouselUrl, bioUrl, bio, "kapo", "Grom"));
+    SurferDB.addSurfer(new SurferFormData("Kaulana Apo", "Oahu, Hawaii", "", carouselUrl, bioUrl, bio, "kapo", "Grom", "existing"));
   }
 }
