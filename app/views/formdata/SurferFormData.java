@@ -8,7 +8,7 @@ import models.SurferDB;
 
 /**
  * Surfer form data.
- * @author rckndn
+ * @author Rob Namahoe
  */
 public class SurferFormData {
 
@@ -66,7 +66,7 @@ public class SurferFormData {
    * @param type The surfers type - Male, female, grom.
    */
   public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio,
-      String slug, String type, String status) {
+                        String slug, String type) {
     this.name = name;
     this.home = home;
     this.awards = awards;
@@ -75,7 +75,7 @@ public class SurferFormData {
     this.bio = bio;
     this.slug = slug;
     this.type = type;
-    this.status = status;
+    this.status = "existing";
   }
   
   /**

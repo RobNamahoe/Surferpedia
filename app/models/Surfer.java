@@ -2,7 +2,7 @@ package models;
 
 /**
  * The surfer class.
- * @author rckndn
+ * @author Rob Namahoe
  */
 public class Surfer {
 
@@ -33,6 +33,7 @@ public class Surfer {
    * @param bio A description of the surfer.
    * @param slug Letters and digits to be used to identify this surfer.
    * @param type Male, Female, Grom - for placement in the menu bar.
+   * @param status New or existing surfer.
    */
   public Surfer(String name, String home, String awards, String carouselUrl, 
                 String bioUrl, String bio, String slug, String type, String status) {
@@ -172,8 +173,5 @@ public class Surfer {
   public void setStatus(String status) {
     this.status = status;
   }
-
-
-
 
 }

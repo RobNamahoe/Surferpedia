@@ -49,7 +49,6 @@
     @slug(surferForm("slug"),
           surferForm("status"),
           label="Slug",
-          readOnly = if(message == "ManageSurfer") {"readonly"} else {""},
           help="Slug field cannot be edited for an existing surfer.")
 
     <!-- Type -->
@@ -58,11 +57,9 @@
             optionMap=surferTypesMap,
             isMultiple=false,
             help="The type of surfer for placement in the menubar.")
-            
-    @text(surferForm("status"),
-          label="Status",
-          placeholder="",
-          help="")
+    
+    <!-- Status -->
+    @hidden(surferForm("status"))
           
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

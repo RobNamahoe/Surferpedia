@@ -8,7 +8,7 @@ import views.formdata.SurferFormData;
 
 /**
  * A repository to store surfer information.
- * @author rckndn
+ * @author Rob Namahoe
  */
 public class SurferDB {
 
@@ -24,7 +24,6 @@ public class SurferDB {
                                formData.bioUrl, formData.bio, formData.slug, formData.type, formData.status);
     surfer.setStatus("existing");
     surfers.put(formData.slug, surfer);
-    System.out.println("SurferDB.addSurfer(): " + formData.slug + ": " + formData.name + " added");
     return surfer;
   }
   
