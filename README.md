@@ -1,4 +1,4 @@
-![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/dynamic_surferpedia.png)
+![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/dynamic_surferpedia.jpg)
 
 Overview
 --------
@@ -14,12 +14,12 @@ Usage
 The application includes 3 surfer profiles. Use the navbar to find interior pages with bio information on surfers.
 From the the bio page, you are presented with the option to either edit or delete the profile.
 
-![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/bio_example.png)
+![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/bio_example.jpg)
 
 New surfers can be added to the database by clicking 'New' in the navbar. Data validation is included to assist 
 in including appropriate information.
 
-![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/validation_example.png)
+![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/validation_example.jpg)
 
 Credits
 -------
