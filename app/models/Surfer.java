@@ -15,6 +15,7 @@ public class Surfer {
   private String slug = "";
   private String type = "";
   private String status = "";
+  private String footStyle = "";
   
   /**
    * Default constructor method.
@@ -34,9 +35,10 @@ public class Surfer {
    * @param slug Letters and digits to be used to identify this surfer.
    * @param type Male, Female, Grom - for placement in the menu bar.
    * @param status New or existing surfer.
+   * @param footStyle 
    */
   public Surfer(String name, String home, String awards, String carouselUrl, 
-                String bioUrl, String bio, String slug, String type, String status) {
+                String bioUrl, String bio, String slug, String type, String status, String footStyle) {
     this.name = name;
     this.home = home;
     this.awards = awards;
@@ -46,6 +48,7 @@ public class Surfer {
     this.slug = slug;
     this.type = type;
     this.status = status;
+    this.footStyle = footStyle;
   }
 
   /**
@@ -172,6 +175,20 @@ public class Surfer {
    */
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  /**
+   * @return the footStyle
+   */
+  public String getFootStyle() {
+    return footStyle;
+  }
+
+  /**
+   * @param footStyle the footStyle to set
+   */
+  public void setFootStyle(String footStyle) {
+    this.footStyle = footStyle;
   }
 
 }

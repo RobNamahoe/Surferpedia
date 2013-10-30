@@ -30,6 +30,8 @@ public class SurferFormData {
   public String type = "";
   /** Is this a new entry? **/
   public String status = "";
+  /** The surfers foot style. **/
+  public String footStyle = "";
   
   /**
    * Default constructor method.
@@ -52,6 +54,7 @@ public class SurferFormData {
     this.slug = surfer.getSlug();
     this.type = surfer.getType();
     this.status = surfer.getStatus();
+    this.footStyle = surfer.getFootStyle();
   }
 
   /**
@@ -64,9 +67,10 @@ public class SurferFormData {
    * @param bio The surfers bio.
    * @param slug The surfers slug.
    * @param type The surfers type - Male, female, grom.
+   * @param footStyle The suferfs footstyle.
    */
   public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio,
-                        String slug, String type) {
+                        String slug, String type, String footStyle) {
     this.name = name;
     this.home = home;
     this.awards = awards;
@@ -76,6 +80,7 @@ public class SurferFormData {
     this.slug = slug;
     this.type = type;
     this.status = "existing";
+    this.footStyle = footStyle;
   }
   
   /**

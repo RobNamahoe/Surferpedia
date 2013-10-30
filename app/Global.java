@@ -23,6 +23,7 @@ public class Global extends GlobalSettings {
     String slug = "";
     String type = "";
     String bio = "";
+    String footStyle = "";
     
     // John John Florence
     name = "John John Florence";
@@ -39,7 +40,8 @@ public class Global extends GlobalSettings {
         + "at the age of six months, wearing a life vest on his father John's board; he was riding on his own " 
         + "by the age of three. He is known now for his spectacular aerial abilities.";
     
-    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type));
+    footStyle = "Regular";
+    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type, footStyle));
     
     // Kelia Moniz
     name = "Kelia Moniz";
@@ -56,7 +58,8 @@ public class Global extends GlobalSettings {
           + "the boys. She proved her merit last year by being the only girl to make it to the semifinals in the " 
           + "noseriding event at the Corona Hawaiian Open.";
 
-    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type));
+    footStyle = "Goofy";
+    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type, footStyle));
     
     // Kaulana Apo
     name = "Kaulana Apo";
@@ -71,6 +74,7 @@ public class Global extends GlobalSettings {
           + "is focused on doing well in school, and is interested in art. While a lot of junior surfers have "
           + "one track minds, Kaulana is a unique and creative talent.";
         
-    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type));
+    footStyle = "Regular";
+    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type, footStyle));
   }
 }

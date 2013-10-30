@@ -6,6 +6,7 @@ import models.SurferDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.FootStyle;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
@@ -34,7 +35,7 @@ public class Application extends Controller {
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
     Map<String, Boolean> surferTypesMap = new HashMap<>();
     surferTypesMap = SurferTypes.getTypes();
-    return ok(ManageSurfer.render("NewSurfer", formData, surferTypesMap));
+    return ok(ManageSurfer.render("NewSurfer", formData, surferTypesMap, FootStyle.getTypes()));
   }
   
   /**
@@ -68,7 +69,7 @@ public class Application extends Controller {
     SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
     surferTypesMap = SurferTypes.getTypes(data.type);
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
-    return ok(ManageSurfer.render("ManageSurfer", formData, surferTypesMap));
+    return ok(ManageSurfer.render("ManageSurfer", formData, surferTypesMap, FootStyle.getTypes()));
   }
   
   /**
@@ -80,7 +81,7 @@ public class Application extends Controller {
     Form<SurferFormData> formData = Form.form(SurferFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       surferTypesMap = SurferTypes.getTypes();
-      return badRequest(ManageSurfer.render("ManageSurfer", formData, surferTypesMap));
+      return badRequest(ManageSurfer.render("ManageSurfer", formData, surferTypesMap, FootStyle.getTypes()));
     }
     else {
       SurferFormData data = formData.get();

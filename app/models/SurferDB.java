@@ -21,7 +21,8 @@ public class SurferDB {
    */
   public static Surfer addSurfer(SurferFormData formData) {
     Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl,
-                               formData.bioUrl, formData.bio, formData.slug, formData.type, formData.status);
+                               formData.bioUrl, formData.bio, formData.slug, formData.type, 
+                               formData.status, formData.footStyle);
     surfer.setStatus("existing");
     surfers.put(formData.slug, surfer);
     return surfer;
