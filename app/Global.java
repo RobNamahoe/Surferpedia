@@ -7,7 +7,7 @@ import views.formdata.SurferFormData;
  * Global settings for the Play Application.
  * @author Rob Namahoe
  */
-public class Global extends GlobalSettings {
+public class Global extends GlobalSettings { 
   
   /**
    * Initialize the database with 3 surfers.
