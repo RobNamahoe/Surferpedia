@@ -1,8 +1,11 @@
-@(surferForm: Form[views.formdata.SurferFormData]) 
+@(page:String, 
+  isLoggedIn: Boolean, 
+  userInfo: UserInfo,
+  surferForm: Form[views.formdata.SurferFormData]) 
 
 @import helper._
 
-@Main("ShowSurfer") { 
+@Main("ShowSurfer", isLoggedIn, userInfo) { 
 <div class="container">
 
   @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
@@ -22,9 +25,10 @@
         <p><strong>Foot Style: </strong>@surferForm("footStyle").value</p>
         <p><strong>Biography: </strong>@surferForm("bio").value</p>
         
-        <a href="@routes.Application.manageSurfer(surferForm("slug").value)" class="pull-left">Edit</a>
-        <a data-toggle="modal" href="#confirmDelete" class="pull-right">Delete</a>
-
+        @if(isLoggedIn) {
+          <a href="@routes.Application.manageSurfer(surferForm("slug").value)" class="pull-left">Edit</a>
+          <a data-toggle="modal" href="#confirmDelete" class="pull-right">Delete</a>
+        }
       </div>
     </div>
   }

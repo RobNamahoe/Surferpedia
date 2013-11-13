@@ -1,4 +1,6 @@
-@(message: String, 
+@(message:String, 
+  isLoggedIn: Boolean, 
+  userInfo: UserInfo,
   surferForm: Form[views.formdata.SurferFormData], 
   surferTypesMap: Map[String, Boolean], 
   footStyles: List[String]) 
@@ -6,7 +8,7 @@
 @import helper._
 @import bootstrap3._
 
-@Main(message) {
+@Main(message, isLoggedIn, userInfo) {
 <div class="container">
 
   @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {

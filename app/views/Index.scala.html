@@ -1,6 +1,6 @@
-@(message: String) 
+@(page:String, isLoggedIn: Boolean, userInfo: UserInfo)
 
-@Main("Home") {
+@Main("Home", isLoggedIn, userInfo) {
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">

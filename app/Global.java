@@ -1,4 +1,5 @@
 import models.SurferDB;
+import models.UserInfoDB;
 import play.Application;
 import play.GlobalSettings;
 import views.formdata.SurferFormData;
@@ -24,6 +25,8 @@ public class Global extends GlobalSettings {
     String type = "";
     String bio = "";
     String footStyle = "";
+    
+    UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
     
     // John John Florence
     name = "John John Florence";
