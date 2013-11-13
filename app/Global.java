@@ -2,6 +2,7 @@ import models.SurferDB;
 import models.UserInfoDB;
 import play.Application;
 import play.GlobalSettings;
+import play.Play;
 import views.formdata.SurferFormData;
 
 /**
@@ -26,8 +27,13 @@ public class Global extends GlobalSettings {
     String bio = "";
     String footStyle = "";
     
-    UserInfoDB.addUserInfo("John Smith", "smith@example.com", "password");
+    String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+    String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
     
+    System.out.println(adminEmail + "  " + adminPassword);
+    
+    UserInfoDB.addAdmin("Administrator", adminEmail, adminPassword);
+   
     // John John Florence
     name = "John John Florence";
     home = "Honolulu, Hawaii";
