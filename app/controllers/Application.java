@@ -1,8 +1,11 @@
 package controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import models.SurferDB;
+import models.Updates;
+import models.UpdatesDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -15,6 +18,7 @@ import views.html.Index;
 import views.html.Login;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
+import views.html.ShowUpdates;
 import play.mvc.Security;
 import views.formdata.LoginFormData;
 
@@ -63,6 +67,11 @@ public class Application extends Controller {
  */
   @Security.Authenticated(Secured.class)
   public static Result deleteSurfer(String slug) {
+ 
+    Date date = new Date();
+    String name = SurferDB.getSurfer(slug).getName();
+    UpdatesDB.addUpdate(new Updates(date.toString(), "Delete", name));
+
     SurferDB.deleteSurfer(slug);
     return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
   }
@@ -81,6 +90,16 @@ public class Application extends Controller {
                                    formData, surferTypesMap, FootStyle.getTypes()));
   }
   
+  
+  /**
+   * Displays the updates page.
+   * @return the update page.
+   */
+  public static Result showUpdates() {
+    return ok(ShowUpdates.render("Updates", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                                  UpdatesDB.getUpdates()));
+  }
+  
   /**
    * Handles the posting of form data by the user with validation.
    * @return ShowSurfer page with form data if successful, ManageSurfer page otherwise.
@@ -96,6 +115,11 @@ public class Application extends Controller {
     }
     else {
       SurferFormData data = formData.get();
+
+      Date date = new Date();
+      String action = SurferDB.slugExists(data.slug) ? "Edit" : "Create";
+      UpdatesDB.addUpdate(new Updates(date.toString(), action, data.name));
+      
       SurferDB.addSurfer(data);
       return ok(ShowSurfer.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData));
     }
