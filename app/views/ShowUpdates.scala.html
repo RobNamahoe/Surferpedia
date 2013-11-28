@@ -1,0 +1,21 @@
+@(page:String, isLoggedIn: Boolean, userInfo: UserInfo, updates: List[Updates])
+
+@Main("Home", isLoggedIn, userInfo) {
+   <div class="container">
+     <h1>Updates Log</h1>
+     <table class="table table-bordered">
+       <thead>
+         <tr><th>Date</th><th>Action</th><th>Surfer</th></tr>
+       </thead>
+       <tbody>
+       @for(update <- updates) {
+         <tr>
+         <td>@update.getDate()</td>
+         <td>@update.getAction()</td>
+         <td>@update.getName()</td>
+         </tr>
+       }
+       </tbody>
+     </table>
+   </div>
+}
