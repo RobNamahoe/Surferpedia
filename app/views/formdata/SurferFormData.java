@@ -16,6 +16,8 @@ public class SurferFormData {
   public String name = "";
   /** The surfers home. **/
   public String home = "";
+  /** The surfers country. **/
+  public String country = "";
   /** The surfers awards. **/
   public String awards = "";
   /** The url to the pic to be used in the carousel. **/
@@ -47,6 +49,7 @@ public class SurferFormData {
   public SurferFormData(Surfer surfer) {
     this.name = surfer.getName();
     this.home = surfer.getHome();
+    this.country = surfer.getCountry();
     this.awards = surfer.getAwards();
     this.carouselUrl = surfer.getCarouselUrl();
     this.bioUrl = surfer.getBioUrl();
@@ -69,10 +72,11 @@ public class SurferFormData {
    * @param type The surfers type - Male, female, grom.
    * @param footStyle The suferfs footstyle.
    */
-  public SurferFormData(String name, String home, String awards, String carouselUrl, String bioUrl, String bio,
+  public SurferFormData(String name, String home, String country, String awards, String carouselUrl, String bioUrl, String bio,
                         String slug, String type, String footStyle) {
     this.name = name;
     this.home = home;
+    this.country = country;
     this.awards = awards;
     this.carouselUrl = carouselUrl;
     this.bioUrl = bioUrl;
@@ -96,6 +100,10 @@ public class SurferFormData {
     
     if (home == null || home.length() == 0) {
       errors.add(new ValidationError("home", "Home is required."));
+    }
+    
+    if (country == null || country.length() == 0) {
+      errors.add(new ValidationError("country", "Country is required."));
     }
     
     if (carouselUrl == null || carouselUrl.length() == 0) {

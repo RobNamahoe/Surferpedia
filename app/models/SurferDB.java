@@ -20,7 +20,7 @@ public class SurferDB {
    * @return The new surfer.
    */
   public static Surfer addSurfer(SurferFormData formData) {
-    Surfer surfer = new Surfer(formData.name, formData.home, formData.awards, formData.carouselUrl,
+    Surfer surfer = new Surfer(formData.name, formData.home, formData.country, formData.awards, formData.carouselUrl,
                                formData.bioUrl, formData.bio, formData.slug, formData.type, 
                                formData.status, formData.footStyle);
     surfer.setStatus("existing");

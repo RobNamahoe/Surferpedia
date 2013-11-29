@@ -8,6 +8,7 @@ public class Surfer {
 
   private String name = "";
   private String home = "";
+  private String country = "";
   private String awards = "";
   private String carouselUrl = "";
   private String bioUrl = "";
@@ -28,6 +29,7 @@ public class Surfer {
    * Constructor method.
    * @param name The name of the surfer.
    * @param home Where this surfer hails from.
+   * @param country The country of origin of surfer.
    * @param awards Titles and other surfing awards.
    * @param carouselUrl URL to be presented on the home page carousel.
    * @param bioUrl URL to the picture to be presented in the bio page.
@@ -37,10 +39,11 @@ public class Surfer {
    * @param status New or existing surfer.
    * @param footStyle 
    */
-  public Surfer(String name, String home, String awards, String carouselUrl, 
+  public Surfer(String name, String home, String country, String awards, String carouselUrl, 
                 String bioUrl, String bio, String slug, String type, String status, String footStyle) {
     this.name = name;
     this.home = home;
+    this.country = country;
     this.awards = awards;
     this.carouselUrl = carouselUrl;
     this.bioUrl = bioUrl;
@@ -189,6 +192,20 @@ public class Surfer {
    */
   public void setFootStyle(String footStyle) {
     this.footStyle = footStyle;
+  }
+
+  /**
+   * @return the country
+   */
+  public String getCountry() {
+    return country;
+  }
+
+  /**
+   * @param country the country to set
+   */
+  public void setCountry(String country) {
+    this.country = country;
   }
 
 }

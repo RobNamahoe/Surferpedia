@@ -19,6 +19,7 @@ public class Global extends GlobalSettings {
     
     String name = "";
     String home = "";
+    String country = "";
     String awards = "";
     String carouselUrl = "";
     String bioUrl = "";
@@ -37,6 +38,7 @@ public class Global extends GlobalSettings {
     // John John Florence
     name = "John John Florence";
     home = "Honolulu, Hawaii";
+    country = "USA";
     awards = "2003 1st NSSA Nationals Open Mini Grom";
     carouselUrl = "http://snowbrains.com/wp-content/uploads/2013/05/981517-john-john-florence.jpg";
     bioUrl = "http://beckersurf.com/blog/wp-content/uploads/2013/08/JOHNJOHN-AI-AWARD-TEAHUPOO-2013.jpg";
@@ -50,11 +52,13 @@ public class Global extends GlobalSettings {
         + "by the age of three. He is known now for his spectacular aerial abilities.";
     
     footStyle = "Regular";
-    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type, footStyle));
+    SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
+        bio, slug, type, footStyle));
     
     // Kelia Moniz
     name = "Kelia Moniz";
     home = "Hawaii";
+    country = "USA";
     awards = "ASP Longboard World Title";
     carouselUrl = "http://4.bp.blogspot.com/_tPLV5CkprP4/TRFKxIZIlbI/AAAAAAAAAKo/ZZJVtwpj3b0/"
                   + "s1600/20101218_PipeLine-010.jpg";
@@ -68,11 +72,13 @@ public class Global extends GlobalSettings {
           + "noseriding event at the Corona Hawaiian Open.";
 
     footStyle = "Goofy";
-    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type, footStyle));
+    SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
+        bio, slug, type, footStyle));
     
     // Kaulana Apo
     name = "Kaulana Apo";
     home = "Oahu, Hawaii";
+    country = "USA";
     awards = "";
     carouselUrl = "http://www.surfermag.com/hot-100/img/grm10.jpg";
     bioUrl = "http://2.bp.blogspot.com/_IMTICxzEzp4/SJaw9VFQ1UI/AAAAAAAAAnY/RVzUwE8A-eI/s320/kaulana.jpg";
@@ -84,6 +90,7 @@ public class Global extends GlobalSettings {
           + "one track minds, Kaulana is a unique and creative talent.";
         
     footStyle = "Regular";
-    SurferDB.addSurfer(new SurferFormData(name, home, awards, carouselUrl, bioUrl, bio, slug, type, footStyle));
+    SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
+        bio, slug, type, footStyle));
   }
 }
