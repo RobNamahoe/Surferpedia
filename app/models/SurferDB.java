@@ -15,11 +15,17 @@ public class SurferDB {
    */
   public static void addSurfer(SurferFormData formData) {
     
-    Surfer surfer = new Surfer(formData.name, formData.home, formData.country, formData.awards, formData.carouselUrl,
-                               formData.bioUrl, formData.bio, formData.slug, formData.gender, 
-                               formData.status, formData.footStyle);
-
-    //test if country and gender exists
+    // Check if object exists, if not create a new one
+    Surfer surfer; 
+    if (!isSurfer(formData.slug)) {
+      surfer = new Surfer(formData.name, formData.home, formData.country, formData.awards, formData.carouselUrl,
+                          formData.bioUrl, formData.bio, formData.slug, formData.gender, 
+                          formData.status, formData.footStyle);
+    }
+    else {
+      surfer = SurferDB.getSurfer(formData.slug);  
+    }
+    
     Country country;
     if (!CountryDB.isCountry(formData.country)) {
       country = new Country(formData.country);
@@ -63,7 +69,7 @@ public class SurferDB {
    * @return A list of all surfers.
    */
   public static List<Surfer> getSurfers() {
-  return Surfer.find().findList();
+    return Surfer.find().findList();
   }
   
   /**
@@ -72,7 +78,6 @@ public class SurferDB {
    */
   public static void deleteSurfer(String slug) {
     Surfer.find().where().eq("slug", slug).findUnique().delete();
-    
   }
   
   /**
@@ -84,4 +89,15 @@ public class SurferDB {
     return Surfer.find().where().eq("slug", slug).findUnique() != null;
   }
   
+  /**
+   * Ebean Users guide 6.7
+   * 
+   * Gets a list of surfers of the specified gender.
+   * @param gender The gender of the surfers.
+   * @return A list of surfers.
+   */
+  public static List<Surfer> getSurfersByGender(String gender) {
+    return Surfer.find().where().eq("gender", GenderDB.getGender(gender)).findList();
+  }
+
 }

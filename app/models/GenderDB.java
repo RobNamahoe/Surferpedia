@@ -35,4 +35,5 @@ public class GenderDB {
     public static Gender getGender(String gender) {
       return Gender.find().where().eq("gender", gender).findUnique();
     }
+    
 }

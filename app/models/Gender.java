@@ -27,15 +27,6 @@ public class Gender extends Model {
   private String gender;
 
   /**
-   * The EBean ORM finder method for database queries.
-   * @return The finder method for gender.
-   */
-  public static Finder<Long, Gender> find() {
-    return new Finder<Long, Gender>(Long.class, Gender.class);
-  }
-  
-  
-  /**
    * Default constructor method.
    */
   public Gender() {
@@ -51,10 +42,18 @@ public class Gender extends Model {
   }
   
   /**
-   * Get a list of surfers.
-   * @return A list of contacts.
+   * The EBean ORM finder method for database queries.
+   * @return The finder method for gender.
    */
-  public List<Surfer> getContacts() {
+  public static Finder<Long, Gender> find() {
+    return new Finder<Long, Gender>(Long.class, Gender.class);
+  }
+  
+  /**
+   * Get a list of surfers.
+   * @return A list of surfers.
+   */
+  public List<Surfer> getSurfers() {
     return this.surfers;
   }
   
@@ -79,5 +78,4 @@ public class Gender extends Model {
   public void setGender(String gender) {
     this.gender = gender;
   }
-  
 }

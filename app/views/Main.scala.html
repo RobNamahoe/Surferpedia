@@ -39,10 +39,8 @@
           @for(types <- Array("Male", "Female", "Grom")) {
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@types<b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
-                @for(surfer <- SurferDB.getSurfers()) {
-                  @if(surfer.getType() == types) {
-                    <li><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></li>
-                  }
+                @for(surfer <- SurferDB.getSurfersByGender(types)) {
+                  <li><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></li>
                 }
               </ul>
             </li>

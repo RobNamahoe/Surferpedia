@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
 
@@ -25,13 +26,16 @@ public class Surfer extends Model {
   @ManyToOne
   private Gender gender;
   
+  //This marks a property that is mapped to a Clob/Blob/Longvarchar or Longvarbinary.
+  @Lob
+  private String bio = "";
+  
   private String type = ""; // Remove later - replaced with gender
   private String name = "";
   private String home = "";
   private String awards = "";
   private String carouselUrl = "";
   private String bioUrl = "";
-  private String bio = "";
   private String slug = "";
   private String status = "";
   private String footStyle = "";
