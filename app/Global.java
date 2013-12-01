@@ -52,8 +52,11 @@ public class Global extends GlobalSettings {
         + "by the age of three. He is known now for his spectacular aerial abilities.";
     
     footStyle = "Regular";
-    SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
+    
+    if (!SurferDB.isSurfer(slug)) {
+      SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
         bio, slug, type, footStyle));
+    }
     
     // Kelia Moniz
     name = "Kelia Moniz";
@@ -72,8 +75,11 @@ public class Global extends GlobalSettings {
           + "noseriding event at the Corona Hawaiian Open.";
 
     footStyle = "Goofy";
-    SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
+    
+    if (!SurferDB.isSurfer(slug)) {
+      SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
         bio, slug, type, footStyle));
+    }
     
     // Kaulana Apo
     name = "Kaulana Apo";
@@ -90,7 +96,11 @@ public class Global extends GlobalSettings {
           + "one track minds, Kaulana is a unique and creative talent.";
         
     footStyle = "Regular";
-    SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
+    
+    if (!SurferDB.isSurfer(slug)) {
+      SurferDB.addSurfer(new SurferFormData(name, home, country, awards, carouselUrl, bioUrl,
         bio, slug, type, footStyle));
+  
+    }
   }
 }

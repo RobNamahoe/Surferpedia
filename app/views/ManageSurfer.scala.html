@@ -2,7 +2,7 @@
   isLoggedIn: Boolean, 
   userInfo: UserInfo,
   surferForm: Form[views.formdata.SurferFormData], 
-  surferTypesMap: Map[String, Boolean], 
+  surferGenderMap: Map[String, Boolean], 
   footStyles: List[String]) 
 
 @import helper._
@@ -68,12 +68,12 @@
           label="Slug",
           help="Slug field cannot be edited for an existing surfer.")
 
-    <!-- Type -->
-    @bootstrap3.select(surferForm("type"),
-            label="Type",
-            optionMap=surferTypesMap,
+    <!-- Gender -->
+    @bootstrap3.select(surferForm("gender"),
+            label="Gender",
+            optionMap=surferGenderMap,
             isMultiple=false,
-            help="The type of surfer for placement in the menubar.")
+            help="The gender of surfer for placement in the menubar.")
     
     <!-- Status -->
     @hidden(surferForm("status"))

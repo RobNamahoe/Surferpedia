@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class SurferTypes {
 
-  private static String[] types = {"Male", "Female", "Groms"};
+  private static String[] types = {"Male", "Female", "Grom"};
   
   /**
    * Returns a newly initialized map of surfer types.
