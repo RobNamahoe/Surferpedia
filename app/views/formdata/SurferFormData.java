@@ -134,7 +134,6 @@ public class SurferFormData {
       }
     }
     
-    System.out.println("Validation: " + gender);
     if (!SurferTypes.isType(gender)) {
       errors.add(new ValidationError("type", "Surfer type is invalid."));
     }
