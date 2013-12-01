@@ -125,7 +125,7 @@ public class SurferFormData {
       errors.add(new ValidationError("slug", "Slug is required."));
     }
    
-    if (!SurferDB.isSurfer(slug)) {
+    if (!status.equals("existing") && SurferDB.isSurfer(slug))  {
       errors.add(new ValidationError("slug", "Slug is already in use. Choose another."));
     }
     else {

@@ -21,6 +21,7 @@ public class SurferDB {
       surfer = new Surfer(formData.name, formData.home, formData.country, formData.awards, formData.carouselUrl,
                           formData.bioUrl, formData.bio, formData.slug, formData.gender, 
                           formData.status, formData.footStyle);
+      surfer.setStatus("existing");
     }
     else {
       surfer = SurferDB.getSurfer(formData.slug);  
