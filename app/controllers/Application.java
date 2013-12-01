@@ -84,7 +84,7 @@ public class Application extends Controller {
   public static Result manageSurfer(String slug) {
     Map<String, Boolean> surferTypesMap = new HashMap<>();
     SurferFormData data = new SurferFormData(SurferDB.getSurfer(slug));
-    surferTypesMap = SurferTypes.getTypes(data.type);
+    surferTypesMap = SurferTypes.getTypes(data.gender);
     Form<SurferFormData> formData = Form.form(SurferFormData.class).fill(data);
     return ok(ManageSurfer.render("ManageSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
                                    formData, surferTypesMap, FootStyle.getTypes()));
@@ -117,7 +117,7 @@ public class Application extends Controller {
       SurferFormData data = formData.get();
 
       Date date = new Date();
-      String action = SurferDB.slugExists(data.slug) ? "Edit" : "Create";
+      String action = SurferDB.isSurfer(data.slug) ? "Edit" : "Create";
       UpdatesDB.addUpdate(new Updates(date.toString(), action, data.name));
       
       SurferDB.addSurfer(data);

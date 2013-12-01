@@ -1,22 +1,48 @@
 package models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import play.db.ebean.Model;
+
 /**
  * The surfer class.
  * @author Rob Namahoe
  */
-public class Surfer {
+@Entity
+public class Surfer extends Model {
 
+  private static final long serialVersionUID = 1L;
+  
+  @Id
+  private long id;
+  
+  // Many of me (surfers) maps to one of the following (country)
+  @ManyToOne
+  private Country country;
+  
+  // Many of me (surfers) maps to one of the following (gender)
+  @ManyToOne
+  private Gender gender;
+  
+  private String type = ""; // Remove later - replaced with gender
   private String name = "";
   private String home = "";
-  private String country = "";
   private String awards = "";
   private String carouselUrl = "";
   private String bioUrl = "";
   private String bio = "";
   private String slug = "";
-  private String type = "";
   private String status = "";
   private String footStyle = "";
+  
+  /**
+   * The EBean ORM finder method for database queries.
+   * @return The finder method for Surfers.
+   */
+  public static Finder<Long, Surfer> find() {
+    return new Finder<Long, Surfer>(Long.class, Surfer.class);
+  }
   
   /**
    * Default constructor method.
@@ -35,21 +61,21 @@ public class Surfer {
    * @param bioUrl URL to the picture to be presented in the bio page.
    * @param bio A description of the surfer.
    * @param slug Letters and digits to be used to identify this surfer.
-   * @param type Male, Female, Grom - for placement in the menu bar.
+   * @param gender Male, Female, Grom - for placement in the menu bar.
    * @param status New or existing surfer.
    * @param footStyle 
    */
   public Surfer(String name, String home, String country, String awards, String carouselUrl, 
-                String bioUrl, String bio, String slug, String type, String status, String footStyle) {
+                String bioUrl, String bio, String slug, String gender, String status, String footStyle) {
     this.name = name;
     this.home = home;
-    this.country = country;
+    this.country = new Country(country);
     this.awards = awards;
     this.carouselUrl = carouselUrl;
     this.bioUrl = bioUrl;
     this.bio = bio;
     this.slug = slug;
-    this.type = type;
+    this.gender = new Gender(gender);
     this.status = status;
     this.footStyle = footStyle;
   }
@@ -197,15 +223,29 @@ public class Surfer {
   /**
    * @return the country
    */
-  public String getCountry() {
+  public Country getCountry() {
     return country;
   }
 
   /**
    * @param country the country to set
    */
-  public void setCountry(String country) {
+  public void setCountry(Country country) {
     this.country = country;
+  }
+
+  /**
+   * @return the gender
+   */
+  public Gender getGender() {
+    return gender;
+  }
+
+  /**
+   * @param gender the gender to set
+   */
+  public void setGender(Gender gender) {
+    this.gender = gender;
   }
 
 }

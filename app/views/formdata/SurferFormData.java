@@ -28,8 +28,8 @@ public class SurferFormData {
   public String bio = "";
   /** The surfers slug. **/
   public String slug = "";
-  /** The surfers type. **/
-  public String type = "";
+  /** The surfers gender. **/
+  public String gender = "";
   /** Is this a new entry? **/
   public String status = "";
   /** The surfers foot style. **/
@@ -49,15 +49,18 @@ public class SurferFormData {
   public SurferFormData(Surfer surfer) {
     this.name = surfer.getName();
     this.home = surfer.getHome();
-    this.country = surfer.getCountry();
     this.awards = surfer.getAwards();
     this.carouselUrl = surfer.getCarouselUrl();
     this.bioUrl = surfer.getBioUrl();
     this.bio = surfer.getBio();
     this.slug = surfer.getSlug();
-    this.type = surfer.getType();
     this.status = surfer.getStatus();
     this.footStyle = surfer.getFootStyle();
+    
+    // The following fields access database tables to get the information they need.
+    this.country = surfer.getCountry().getCountry();
+    this.gender = surfer.getGender().getGender();
+    
   }
 
   /**
@@ -69,11 +72,11 @@ public class SurferFormData {
    * @param bioUrl The url to the bio image.
    * @param bio The surfers bio.
    * @param slug The surfers slug.
-   * @param type The surfers type - Male, female, grom.
+   * @param gender The surfers gender - Male, female, grom.
    * @param footStyle The suferfs footstyle.
    */
-  public SurferFormData(String name, String home, String country, String awards, String carouselUrl, String bioUrl, String bio,
-                        String slug, String type, String footStyle) {
+  public SurferFormData(String name, String home, String country, String awards, String carouselUrl, String bioUrl, 
+                        String bio, String slug, String gender, String footStyle) {
     this.name = name;
     this.home = home;
     this.country = country;
@@ -82,7 +85,7 @@ public class SurferFormData {
     this.bioUrl = bioUrl;
     this.bio = bio;
     this.slug = slug;
-    this.type = type;
+    this.gender = gender;
     this.status = "existing";
     this.footStyle = footStyle;
   }
@@ -121,8 +124,8 @@ public class SurferFormData {
     if (slug == null || slug.length() == 0) {
       errors.add(new ValidationError("slug", "Slug is required."));
     }
-           
-    if (!status.equals("existing") && SurferDB.slugExists(slug)) {
+   
+    if (!SurferDB.isSurfer(slug)) {
       errors.add(new ValidationError("slug", "Slug is already in use. Choose another."));
     }
     else {
@@ -131,7 +134,8 @@ public class SurferFormData {
       }
     }
     
-    if (!SurferTypes.isType(type)) {
+    System.out.println("Validation: " + gender);
+    if (!SurferTypes.isType(gender)) {
       errors.add(new ValidationError("type", "Surfer type is invalid."));
     }
     

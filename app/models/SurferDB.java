@@ -1,9 +1,6 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import views.formdata.SurferFormData;
 
 /**
@@ -11,21 +8,45 @@ import views.formdata.SurferFormData;
  * @author Rob Namahoe
  */
 public class SurferDB {
-
-  private static Map<String, Surfer> surfers = new HashMap<>();
   
   /**
    * A method to add a new surfer to the database.
    * @param formData Surfer Form.
-   * @return The new surfer.
    */
-  public static Surfer addSurfer(SurferFormData formData) {
+  public static void addSurfer(SurferFormData formData) {
+    
     Surfer surfer = new Surfer(formData.name, formData.home, formData.country, formData.awards, formData.carouselUrl,
-                               formData.bioUrl, formData.bio, formData.slug, formData.type, 
+                               formData.bioUrl, formData.bio, formData.slug, formData.gender, 
                                formData.status, formData.footStyle);
-    surfer.setStatus("existing");
-    surfers.put(formData.slug, surfer);
-    return surfer;
+
+    //test if country and gender exists
+    Country country;
+    if (!CountryDB.isCountry(formData.country)) {
+      country = new Country(formData.country);
+    }
+    else {
+      country = CountryDB.getCountry(formData.country);
+    }
+    
+    Gender gender = new Gender();
+    if (!GenderDB.isGender(formData.gender)) {
+      gender = new Gender(formData.gender);
+    }
+    else {
+      gender = GenderDB.getGender(formData.gender);
+    }
+    
+    // Establish the relationships
+    surfer.setCountry(country);
+    surfer.setGender(gender);
+    
+    country.addSurfer(surfer);
+    gender.addSurfer(surfer);
+    
+    country.save();
+    gender.save();
+    surfer.save();
+    
   }
   
   /**
@@ -34,7 +55,7 @@ public class SurferDB {
    * @return The surfer.
    */
   public static Surfer getSurfer(String slug) {
-    return surfers.get(slug);
+    return Surfer.find().where().eq("slug", slug).findUnique();
   }
   
   /**
@@ -42,7 +63,7 @@ public class SurferDB {
    * @return A list of all surfers.
    */
   public static List<Surfer> getSurfers() {
-    return new ArrayList<>(surfers.values());
+  return Surfer.find().findList();
   }
   
   /**
@@ -50,7 +71,8 @@ public class SurferDB {
    * @param slug The slug of the surfer to delete.
    */
   public static void deleteSurfer(String slug) {
-    surfers.remove(slug);
+    Surfer.find().where().eq("slug", slug).findUnique().delete();
+    
   }
   
   /**
@@ -58,8 +80,8 @@ public class SurferDB {
    * @param slug The unique identifier.
    * @return true of the slug is already associated to a surfer, false otherwise.
    */
-  public static Boolean slugExists(String slug) {
-    return surfers.containsKey(slug);
+  public static Boolean isSurfer(String slug) {
+    return Surfer.find().where().eq("slug", slug).findUnique() != null;
   }
   
 }
