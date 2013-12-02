@@ -21,6 +21,10 @@ in including appropriate information.
 
 ![screenshot](https://raw.github.com/robnamahoe/surferpedia/dynamic/doc/validation_example.jpg)
 
+ER Diagram
+-----
+![erd](https://raw.github.com/robnamahoe/surferpedia/master/doc/surferpedia-erd.png)
+
 Credits
 -------
 Aloha to ICS 341, Fall 2013 and [Jonathan Ortal](https://github.com/jortal) for support.
