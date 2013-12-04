@@ -32,9 +32,6 @@ public class Global extends GlobalSettings {
 
     String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
     String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
-
-    System.out.println(adminEmail + "  " + adminPassword);
-
     UserInfoDB.addAdmin("Administrator", adminEmail, adminPassword);
 
     // Males
