@@ -1,0 +1,71 @@
+@(page:String, 
+  isLoggedIn: Boolean, 
+  userInfo: UserInfo, 
+  bioUrl: String, 
+  surferMap: Map[String, String])
+
+@Main(page, isLoggedIn, userInfo) {
+
+<div class="jumbotron">
+  <h1>Name This Surfer!</h1>
+  <p></p>
+</div>
+
+<div class="container">
+  <div class="col-md-4">
+    <div class="well">
+      <div class="bio-image" style="background-image: url('@bioUrl');"></div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    @for((name, url) <- surferMap) {
+      <p><a data-toggle="modal" href="@url" class="btn btn-primary btn-lg btn-block">@name</a></p>
+    }
+  </div>
+</div>
+
+                  
+  <div class="modal fade" id="loser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Loser!</h4>
+        </div>
+        <div class="modal-body">
+          Try harder next time :(
+        </div>
+        <div class="modal-footer">
+          <a type="button" 
+             class="btn btn-primary"
+             href="">
+          Next
+         </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <div class="modal fade" id="winner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Winner!</h4>
+        </div>
+        <div class="modal-body">
+          Good Job! :)
+        </div>
+        <div class="modal-footer">
+          <a type="button" 
+             class="btn btn-primary"
+             href="">
+          Next
+         </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+}

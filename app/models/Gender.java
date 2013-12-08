@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * The gender class.

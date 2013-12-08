@@ -2,7 +2,10 @@ package controllers;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import models.Surfer;
 import models.SurferDB;
 import models.Updates;
 import models.UpdatesDB;
@@ -16,6 +19,7 @@ import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
 import views.html.Login;
+import views.html.NameTheSurfer;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
@@ -27,14 +31,72 @@ import views.formdata.LoginFormData;
  */
 public class Application extends Controller {
 
+  private static final int CAROUSEL_MAX = 3;
+  private static final int SURFER_GAME_MIN = 1;
+  private static final int SURFER_GAME_MAX = 7;
+  
   /**
    * Returns the surferpedia home page. 
    * @return The resulting surferpedia home page. 
    */
   public static Result index() {
-    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                           SurferDB.getSurfersRandom(CAROUSEL_MAX)));
   }
  
+  /**
+   * Return the Name-That-Surfer Game page.
+   * @return The resulting game page.
+   */
+  public static Result nameTheSurfer() {
+    
+    int answerIndex = randInt(SURFER_GAME_MIN, SURFER_GAME_MAX) - 1;
+    
+    String choiceName = "";
+    String choiceUrl = "";
+    
+    Map<String, String> surfersMap = new HashMap<>();    
+    List<Surfer> surfers = SurferDB.getSurfersRandom(SURFER_GAME_MAX);
+
+    // Url of the picture of the surfer to display.
+    String pictureUrl = surfers.get(answerIndex).getBioUrl();
+    
+    for (int i = 0; i < surfers.size(); i++) {
+      choiceName = surfers.get(i).getName();
+      choiceUrl = (i == answerIndex) ? "#winner" : "#loser";
+      surfersMap.put(choiceName, choiceUrl);
+    }
+    
+    return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                                    pictureUrl, surfersMap));
+    
+  }
+  
+  
+  /**
+   * Returns a psuedo-random number between min and max, inclusive.
+   * The difference between min and max can be at most
+   * <code>Integer.MAX_VALUE - 1</code>.
+   *
+   * @param min Minimim value
+   * @param max Maximim value.  Must be greater than min.
+   * @return Integer between min and max, inclusive.
+   * @see java.util.Random#nextInt(int)
+   */
+  public static int randInt(int min, int max) {
+
+      // Usually this can be a field rather than a method variable
+      Random rand = new Random();
+
+      // nextInt is normally exclusive of the top value,
+      // so add 1 to make it inclusive
+      int randomNum = rand.nextInt((max - min) + 1) + min;
+
+      return randomNum;
+  }
+  
+  
+  
   /**
    * Returns ManageSurfer view configured to add a new surfer.
    * @return The page to add a new surfer.
@@ -73,7 +135,8 @@ public class Application extends Controller {
     UpdatesDB.addUpdate(new Updates(date.toString(), "Delete", name));
 
     SurferDB.deleteSurfer(slug);
-    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                           SurferDB.getSurfersRandom(CAROUSEL_MAX)));
   }
   
   /**

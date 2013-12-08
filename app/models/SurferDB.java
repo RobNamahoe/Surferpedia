@@ -101,4 +101,12 @@ public class SurferDB {
     return Surfer.find().where().eq("gender", GenderDB.getGender(gender)).findList();
   }
 
+  /**
+   * Get a list of random surfers. Number returned is defined by the accepted parameter.
+   * @param countOfSurfers The number of surfers to return.
+   * @return A list of surfers.
+   */
+  public static List<Surfer> getSurfersRandom(int countOfSurfers) {
+    return Surfer.find().orderBy("RAND()").setMaxRows(countOfSurfers).findList();
+  }  
 }
