@@ -9,6 +9,8 @@ GET     /surfer/:slug               controllers.Application.getSurfer(slug)
 GET     /surfer/:slug/delete        controllers.Application.deleteSurfer(slug)
 GET     /surfer/:slug/edit          controllers.Application.manageSurfer(slug)
 POST    /post                       controllers.Application.postSurfer()
+
+GET     /search                     controllers.Application.search()
  
 GET     /updates                    controllers.Application.showUpdates()
  

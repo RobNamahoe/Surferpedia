@@ -12,6 +12,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
 import views.formdata.LoginFormData;
+import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
@@ -19,8 +20,7 @@ import views.html.Login;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
-import play.mvc.Security;
-import views.formdata.LoginFormData;
+import views.html.Search;
 
 /**
  * Implements the controllers for this application.
@@ -98,6 +98,17 @@ public class Application extends Controller {
   public static Result showUpdates() {
     return ok(ShowUpdates.render("Updates", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
                                   UpdatesDB.getUpdates()));
+  }
+  
+  public static Result search() {
+    SearchFormData data = new SearchFormData();
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).fill(data);
+    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    countryMap.put("USA", false);
+    countryMap.put("Australia", false);
+    return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+              formData, surferTypesMap, countryMap));
   }
   
   /**
