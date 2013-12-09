@@ -20,7 +20,7 @@ public class Gender extends Model {
   private long id;
   
   // One of me (gender) maps to many of the following (surfers)
-  @OneToMany(mappedBy="gender")
+  @OneToMany(mappedBy = "gender")
   private List<Surfer> surfers = new ArrayList<>();
   
   private String gender;

@@ -20,7 +20,6 @@ create table surfer (
   country_id                bigint,
   gender_id                 bigint,
   bio                       longtext,
-  type                      varchar(255),
   name                      varchar(255),
   home                      varchar(255),
   awards                    varchar(255),

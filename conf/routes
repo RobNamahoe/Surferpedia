@@ -11,8 +11,10 @@ GET     /surfer/:slug/edit          controllers.Application.manageSurfer(slug)
 POST    /post                       controllers.Application.postSurfer()
 
 GET     /updates                    controllers.Application.showUpdates()
-GET     /nameTheSurfer             controllers.Application.nameTheSurfer()
+GET     /nameTheSurfer              controllers.Application.nameTheSurfer()
+GET     /checkGameAnswer()          controllers.Application.checkGameAnswer()
 
+GET     /search                     controllers.Application.search()
 
 GET     /login                      controllers.Application.login()
 POST    /login                      controllers.Application.postLogin()

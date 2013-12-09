@@ -20,7 +20,7 @@ public class Country extends Model {
   private long id;
   
   // One of me (country) maps to many of the following (surfers)
-  @OneToMany(mappedBy="country")
+  @OneToMany(mappedBy = "country")
   private List<Surfer> surfers = new ArrayList<>();
   
   private String country;

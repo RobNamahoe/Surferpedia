@@ -2,10 +2,9 @@ package controllers;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import models.Surfer;
+import models.GameQuestion;
+import models.GameQuestionDB;
 import models.SurferDB;
 import models.Updates;
 import models.UpdatesDB;
@@ -14,6 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
+import views.formdata.GameQuestionFormData;
 import views.formdata.LoginFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
@@ -23,8 +23,6 @@ import views.html.NameTheSurfer;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
-import play.mvc.Security;
-import views.formdata.LoginFormData;
 
 /**
  * Implements the controllers for this application.
@@ -32,8 +30,6 @@ import views.formdata.LoginFormData;
 public class Application extends Controller {
 
   private static final int CAROUSEL_MAX = 3;
-  private static final int SURFER_GAME_MIN = 1;
-  private static final int SURFER_GAME_MAX = 7;
   
   /**
    * Returns the surferpedia home page. 
@@ -45,58 +41,60 @@ public class Application extends Controller {
   }
  
   /**
-   * Return the Name-That-Surfer Game page.
-   * @return The resulting game page.
+   * Return the search widget page.
+   * @return The search widget page.
    */
-  public static Result nameTheSurfer() {
-    
-    int answerIndex = randInt(SURFER_GAME_MIN, SURFER_GAME_MAX) - 1;
-    
-    String choiceName = "";
-    String choiceUrl = "";
-    
-    Map<String, String> surfersMap = new HashMap<>();    
-    List<Surfer> surfers = SurferDB.getSurfersRandom(SURFER_GAME_MAX);
-
-    // Url of the picture of the surfer to display.
-    String pictureUrl = surfers.get(answerIndex).getBioUrl();
-    
-    for (int i = 0; i < surfers.size(); i++) {
-      choiceName = surfers.get(i).getName();
-      choiceUrl = (i == answerIndex) ? "#winner" : "#loser";
-      surfersMap.put(choiceName, choiceUrl);
-    }
-    
-    return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                                    pictureUrl, surfersMap));
-    
+  public static Result search() {
+    return TODO;
   }
   
   
   /**
-   * Returns a psuedo-random number between min and max, inclusive.
-   * The difference between min and max can be at most
-   * <code>Integer.MAX_VALUE - 1</code>.
-   *
-   * @param min Minimim value
-   * @param max Maximim value.  Must be greater than min.
-   * @return Integer between min and max, inclusive.
-   * @see java.util.Random#nextInt(int)
+   * Return the Name-That-Surfer Game page.
+   * @return The resulting game page.
    */
-  public static int randInt(int min, int max) {
+  public static Result nameTheSurfer() {
+    GameQuestionDB.resetStats();
+    GameQuestionFormData data = new GameQuestionFormData();
+    Form<GameQuestionFormData> formData = Form.form(GameQuestionFormData.class).fill(data);
+    return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                                    formData, GameQuestionDB.getNextQuestion()));    
+  } 
+  
+  /**
+   * Checks the users answer to the game question. Updates wins and losses accordingly. 
+   * Also generates new question when appropriate.
+   * @return The resulting game page.
+   */
+  public static Result checkGameAnswer() {
+    
+    Form<GameQuestionFormData> formData = Form.form(GameQuestionFormData.class).bindFromRequest();
+    
+    if (formData.hasErrors()) {
+      return badRequest(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+          formData, GameQuestionDB.getCurrentQuestion()));
+    }
+    else {
 
-      // Usually this can be a field rather than a method variable
-      Random rand = new Random();
-
-      // nextInt is normally exclusive of the top value,
-      // so add 1 to make it inclusive
-      int randomNum = rand.nextInt((max - min) + 1) + min;
-
-      return randomNum;
+      GameQuestionFormData data = formData.get();
+      GameQuestion question = GameQuestionDB.getCurrentQuestion();
+      
+      if (data.selection.equals(question.getAnswer())) {
+        GameQuestionDB.addWin();
+      }
+      else {
+        GameQuestionDB.addLoss();
+      }
+      
+      // Issue new question.
+      data = new GameQuestionFormData();
+      formData = Form.form(GameQuestionFormData.class).fill(data);
+      
+      return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+          formData, GameQuestionDB.getNextQuestion()));   
+    }
   }
-  
-  
-  
+
   /**
    * Returns ManageSurfer view configured to add a new surfer.
    * @return The page to add a new surfer.
