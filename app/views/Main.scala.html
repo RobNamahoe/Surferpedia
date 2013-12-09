@@ -20,10 +20,11 @@
 </head>
 
 <body>
-  
+
   <div class="header"></div>
 
   <!-- Responsive navbar -->
+  
   <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -36,30 +37,29 @@
 
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          @for(types <- Array("Male", "Female", "Grom")) {
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@types<b class="caret"></b></a>
-              <ul class="dropdown-menu" role="menu">
-                @for(surfer <- SurferDB.getSurfersByGender(types)) {
-                  <li><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></li>
-                }
-              </ul>
-            </li>
-          }
+          <li class="@(" active".when(page=="NameTheSurfer"))">
+            <a href="@routes.Application.nameTheSurfer()">Game: Name The Surfer!</a>
+          </li>
+        </ul>
+          
+        @if(isLoggedIn) {
+          <ul class="nav navbar-nav">
+            <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
+            <li class="@(" active".when(page=="Updates"))"><a href="@routes.Application.showUpdates()">Updates</a></li>
           </ul>
-          @if(isLoggedIn) {
-            <ul class="nav navbar-nav">
-            <li class="@("active".when(page == "NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
-            <li class="@("active".when(page == "Updates"))"><a href="@routes.Application.showUpdates()">Updates</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="navbar-right"><a href="@routes.Application.logout()">Logout</a></li>
-            </ul>
-          } else {
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-right"><a href="@routes.Application.logout()">Logout</a></li>
+          </ul>
+        } else {
           <ul class="nav navbar-nav navbar-right">
             <li><a href="@routes.Application.login()">Login</a></li>
           </ul>
-          }
-
+        }
+        
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="@routes.Application.search()">Search</a></li>
+        </ul>
+      
       </div>
     </div>
   </div>

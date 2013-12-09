@@ -30,7 +30,6 @@ public class Surfer extends Model {
   @Lob
   private String bio = "";
   
-  private String type = ""; // Remove later - replaced with gender
   private String name = "";
   private String home = "";
   private String awards = "";
@@ -180,20 +179,6 @@ public class Surfer extends Model {
    */
   public void setSlug(String slug) {
     this.slug = slug;
-  }
-
-  /**
-   * @return the type
-   */
-  public String getType() {
-    return type;
-  }
-
-  /**
-   * @param type the type to set
-   */
-  public void setType(String type) {
-    this.type = type;
   }
 
   /**

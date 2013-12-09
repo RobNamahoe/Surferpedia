@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * The Country class.
@@ -21,7 +20,7 @@ public class Country extends Model {
   private long id;
   
   // One of me (country) maps to many of the following (surfers)
-  @OneToMany(mappedBy="country")
+  @OneToMany(mappedBy = "country")
   private List<Surfer> surfers = new ArrayList<>();
   
   private String country;
