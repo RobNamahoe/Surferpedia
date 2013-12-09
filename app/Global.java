@@ -10,7 +10,7 @@ import views.formdata.SurferFormData;
  * 
  * @author Rob Namahoe
  */
-public class Global extends GlobalSettings { 
+public class Global extends GlobalSettings {
 
   /**
    * Initialize the database with 3 surfers.
