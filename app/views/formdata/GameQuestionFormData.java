@@ -8,7 +8,7 @@ import play.data.validation.ValidationError;
  * Game Question form data.
  * @author Rob Namahoe
  */
-public class GameQuestionFormData {
+public class GameQuestionFormData { 
 
   /** The users choice. **/
   public String selection = "";

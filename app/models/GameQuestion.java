@@ -8,7 +8,7 @@ import java.util.Random;
  * The Game-Question Game class.
  * @author Rob Namahoe
  */
-public class GameQuestion {
+public class GameQuestion { 
   
   private static final int SURFER_GAME_MIN = 1;
   private static final int SURFER_GAME_MAX = 5;

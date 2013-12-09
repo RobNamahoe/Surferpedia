@@ -4,7 +4,7 @@ package models;
  * A repo to store game stats.
  * @author Rob Namahoe
  */
-public class GameQuestionDB {
+public class GameQuestionDB { 
 
   private static int wins;
   private static int losses;
