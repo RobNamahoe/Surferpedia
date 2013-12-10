@@ -1,8 +1,11 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import models.Surfer;
 import models.SurferDB;
 import models.Updates;
 import models.UpdatesDB;
@@ -21,6 +24,7 @@ import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
 import views.html.Search;
+import views.html.SearchResults;
 
 /**
  * Implements the controllers for this application.
@@ -100,6 +104,10 @@ public class Application extends Controller {
                                   UpdatesDB.getUpdates()));
   }
   
+  /**
+   * Displays the search page where a user can filter surfers by name, gender, or country.
+   * @return SearchResults page
+   */
   public static Result search() {
     SearchFormData data = new SearchFormData();
     Form<SearchFormData> formData = Form.form(SearchFormData.class).fill(data);
@@ -109,6 +117,19 @@ public class Application extends Controller {
     countryMap.put("Australia", false);
     return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
               formData, surferTypesMap, countryMap));
+  }
+  
+  public static Result results() {
+    List<Surfer> matchedSurfers = new ArrayList<>();
+    matchedSurfers.add(SurferDB.getSurfer("jjflorence"));
+    matchedSurfers.add(SurferDB.getSurfer("ezekiellau"));
+    matchedSurfers.add(SurferDB.getSurfer("joelparkinson"));
+    matchedSurfers.add(SurferDB.getSurfer("jeremyflores"));
+    matchedSurfers.add(SurferDB.getSurfer("cjhobgood"));
+    matchedSurfers.add(SurferDB.getSurfer("rabbitkekai"));
+    matchedSurfers.add(SurferDB.getSurfer("kellyslater"));
+    return ok(SearchResults.render("Search Results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+        matchedSurfers));
   }
   
   /**
