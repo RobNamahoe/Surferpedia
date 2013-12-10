@@ -1,8 +1,12 @@
 package test;
 
 import org.junit.Test;
+import play.Play;
 import play.test.TestBrowser;
 import play.libs.F.Callback;
+import test.pages.IndexPage;
+import test.pages.LoginPage;
+import test.pages.NewSurferPage;
 import static play.test.Helpers.HTMLUNIT;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.fakeApplication;
@@ -18,17 +22,32 @@ public class IntegrationTest {
   private static final int PORT = 3333;
 
   /**
-   * Check to see that the two pages can be displayed.
+   * Check to see that the user can add a new surfer.
    */
   @Test
-  public void test() {
+  public void testNewSurfer() {
     running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
-        browser.goTo("http://localhost:3333");
-        assertThat(browser.pageSource()).contains("home page");
-
-        browser.goTo("http://localhost:3333/page1");
-        assertThat(browser.pageSource()).contains("Page1");
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+        indexPage.goToLogin();
+        
+        LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
+        loginPage.isAt();
+        loginPage.setEmail(Play.application().configuration().getString("surferpedia.admin.email"));
+        loginPage.setPassword(Play.application().configuration().getString("surferpedia.admin.password"));
+        loginPage.submit();
+        assertThat(indexPage.isLoggedIn()).isTrue();
+        
+        indexPage.goToNewSurfer();
+        
+        NewSurferPage newSurferPage = new NewSurferPage(browser.getDriver(), PORT);
+        newSurferPage.isAt();
+        newSurferPage.addSurfer("A B", "Honolulu, Hawaii", "USA", "Regular", "#", "#", "fjdkslnvlksf", "ab", "Male");
+        
+        browser.goTo(indexPage + "/surfer/ab");
+        assertThat(browser.pageSource()).contains("fjdkslnvlksf");
       }
     });
   }

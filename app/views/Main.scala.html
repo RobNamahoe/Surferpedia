@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>Surferpedia</title>
+<title>Surferpedia: @page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
@@ -44,7 +44,7 @@
           
         @if(isLoggedIn) {
           <ul class="nav navbar-nav">
-            <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
+            <li class="@(" active".when(page=="NewSurfer"))"><a id="newsurfer" href="@routes.Application.newSurfer()">New</a></li>
             <li class="@(" active".when(page=="Updates"))"><a href="@routes.Application.showUpdates()">Updates</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -52,7 +52,7 @@
           </ul>
         } else {
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="@routes.Application.login()">Login</a></li>
+            <li><a id="login" href="@routes.Application.login()">Login</a></li>
           </ul>
         }
         
