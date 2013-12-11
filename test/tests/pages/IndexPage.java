@@ -40,7 +40,10 @@ public class IndexPage extends FluentPage {
    */
   public void goToLogin() {
     System.out.println("Start: IndexPage.goToLogin()");
-    find("#search").click();
+    System.out.println("1");
+    find("#logout").click();
+    System.out.println("2");
+    find("#login").click();
     System.out.println("End: IndexPage.goToLogin()");
   }
   

@@ -36,7 +36,7 @@ public class Application extends Controller {
    * @return The resulting surferpedia home page. 
    */
   public static Result index() {
-    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+    return ok(Index.render("Index", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
                            SurferDB.getSurfersRandom(CAROUSEL_MAX)));
   }
  
