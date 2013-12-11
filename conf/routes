@@ -12,7 +12,7 @@ POST    /post                       controllers.Application.postSurfer()
 
 GET     /updates                    controllers.Application.showUpdates()
 GET     /nameTheSurfer              controllers.Application.nameTheSurfer()
-GET     /checkGameAnswer()          controllers.Application.checkGameAnswer()
+GET     /checkGameAnswer            controllers.Application.checkGameAnswer(answer)
 
 GET     /search                     controllers.Application.search()
 
