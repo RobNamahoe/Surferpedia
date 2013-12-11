@@ -13,7 +13,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
-import views.formdata.GameQuestionFormData;
 import views.formdata.LoginFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
@@ -66,6 +65,7 @@ public class Application extends Controller {
    * @return The resulting game page.
    */
   public static Result checkGameAnswer(String answer) {
+    System.out.println(answer);
     GameQuestion question = GameQuestionDB.getCurrentQuestion();
     
     if (answer.equals(question.getAnswer())) {
