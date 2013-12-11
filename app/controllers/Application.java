@@ -65,7 +65,7 @@ public class Application extends Controller {
    * @return The resulting game page.
    */
   public static Result checkGameAnswer(String answer) {
-    System.out.println(answer);
+
     GameQuestion question = GameQuestionDB.getCurrentQuestion();
     
     if (answer.equals(question.getAnswer())) {
