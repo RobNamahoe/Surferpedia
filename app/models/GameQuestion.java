@@ -1,7 +1,8 @@
 package models;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -16,18 +17,23 @@ public class GameQuestion {
   private String pictureUrl = "";
   private String answer = "";
       
-  private List<Surfer> surfers = new ArrayList<Surfer>();
-  
+  //private List<Surfer> surfers = new ArrayList<Surfer>();
+  private Map<String, Boolean> surfersMap = new HashMap<>();
+
   /**
    * Default constructor method.
    */
   public GameQuestion() {
     
     int answerIndex = randInt(SURFER_GAME_MIN, SURFER_GAME_MAX) - 1;
-    surfers = getGameOptions();
+    List<Surfer> surfers = getGameOptions();
     
     pictureUrl = surfers.get(answerIndex).getBioUrl(); // Url of the picture of the surfer to display.
     answer = surfers.get(answerIndex).getName();       // Get the winning information.
+    
+    for (int i = 0; i < surfers.size(); i++) {
+      surfersMap.put(surfers.get(i).getName(), (i == answerIndex));
+    }
     
   }
 
@@ -35,12 +41,17 @@ public class GameQuestion {
    * Get a list of surfer names to be used as options.
    * @return A list of surfer names.
    */
-  public List<String> getOptions() {
-    List<String> options = new ArrayList<String>();
-    for (Surfer surfer : surfers) {
-      options.add(surfer.getName());
-    }
-    return options;
+  public Map<String, Boolean> getOptions() {
+    return this.surfersMap;
+  }
+  
+  /**
+   * Remove white space from a surfers name so it can be used as an id.
+   * @param name The surfers name.
+   * @return The surfers name with white space removed.
+   */
+  public String getAsId(String name) {
+    return name.replaceAll("\\s+", "");
   }
   
 /**

@@ -13,7 +13,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
-import views.formdata.GameQuestionFormData;
 import views.formdata.LoginFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
@@ -55,44 +54,29 @@ public class Application extends Controller {
    */
   public static Result nameTheSurfer() {
     GameQuestionDB.resetStats();
-    GameQuestionFormData data = new GameQuestionFormData();
-    Form<GameQuestionFormData> formData = Form.form(GameQuestionFormData.class).fill(data);
     return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
-                                    formData, GameQuestionDB.getNextQuestion()));    
+                                   GameQuestionDB.getNextQuestion()));    
   } 
   
   /**
    * Checks the users answer to the game question. Updates wins and losses accordingly. 
    * Also generates new question when appropriate.
+   * @param answer The users answer to the game question.
    * @return The resulting game page.
    */
-  public static Result checkGameAnswer() {
+  public static Result checkGameAnswer(String answer) {
+    System.out.println(answer);
+    GameQuestion question = GameQuestionDB.getCurrentQuestion();
     
-    Form<GameQuestionFormData> formData = Form.form(GameQuestionFormData.class).bindFromRequest();
-    
-    if (formData.hasErrors()) {
-      return badRequest(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
-          formData, GameQuestionDB.getCurrentQuestion()));
+    if (answer.equals(question.getAnswer())) {
+      GameQuestionDB.addWin();
     }
     else {
-
-      GameQuestionFormData data = formData.get();
-      GameQuestion question = GameQuestionDB.getCurrentQuestion();
-      
-      if (data.selection.equals(question.getAnswer())) {
-        GameQuestionDB.addWin();
-      }
-      else {
-        GameQuestionDB.addLoss();
-      }
-      
-      // Issue new question.
-      data = new GameQuestionFormData();
-      formData = Form.form(GameQuestionFormData.class).fill(data);
-      
-      return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
-          formData, GameQuestionDB.getNextQuestion()));   
+      GameQuestionDB.addLoss();
     }
+    
+    return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+        GameQuestionDB.getNextQuestion()));  
   }
 
   /**
