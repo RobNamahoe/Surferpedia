@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 /**
  * A repository to store country information.
  * @author Rob Namahoe
@@ -33,6 +35,14 @@ public class CountryDB {
  */
   public static Country getCountry(String country) {
     return Country.find().where().eq("country", country).findUnique();
+  }
+  
+  /**
+   * Gets a list of all countries associated with surfers in the system.
+   * @return List of countries.
+   */
+  public static List<Country> getCountries() {
+    return Country.find().order().asc("country").setDistinct(true).findList();
   }
   
 }

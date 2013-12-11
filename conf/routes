@@ -11,7 +11,7 @@ GET     /surfer/:slug/edit          controllers.Application.manageSurfer(slug)
 POST    /post                       controllers.Application.postSurfer()
 
 GET     /search                     controllers.Application.search()
-GET     /results                    controllers.Application.results()
+POST    /results                    controllers.Application.postSearch()
  
 GET     /updates                    controllers.Application.showUpdates()
  

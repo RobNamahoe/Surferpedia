@@ -13,10 +13,20 @@
             Try <a href="@routes.Application.search()">again</a>?
         } else {
             <table class="table table-bordered">
+                <tr>
+                    <th width="200px">Name</th>
+                    <th>Biography</th>
+                </tr>
                 @for(surfer <- results) {
                     <tr>
                         <td><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></td>
-                        <td>@surfer.getBio()</td>
+                        <td>
+                        @if(surfer.getBio().length() >= 40) {
+                        @surfer.getBio().substring(0, 39)...
+                        } else {
+                        @surfer.getBio()
+                        }
+                        </td>
                     </tr>
                 }
             </table>

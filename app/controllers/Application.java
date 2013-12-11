@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import models.Country;
+import models.CountryDB;
 import models.Surfer;
 import models.SurferDB;
 import models.Updates;
@@ -112,24 +114,23 @@ public class Application extends Controller {
     SearchFormData data = new SearchFormData();
     Form<SearchFormData> formData = Form.form(SearchFormData.class).fill(data);
     Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
+    List<Country> countries = CountryDB.getCountries();
     Map<String, Boolean> countryMap = new HashMap<>();
-    countryMap.put("USA", false);
-    countryMap.put("Australia", false);
+    for (Country country : countries) {
+      countryMap.put(country.getCountry(), false);
+    }
     return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
               formData, surferTypesMap, countryMap));
   }
   
-  public static Result results() {
-    List<Surfer> matchedSurfers = new ArrayList<>();
-    matchedSurfers.add(SurferDB.getSurfer("jjflorence"));
-    matchedSurfers.add(SurferDB.getSurfer("ezekiellau"));
-    matchedSurfers.add(SurferDB.getSurfer("joelparkinson"));
-    matchedSurfers.add(SurferDB.getSurfer("jeremyflores"));
-    matchedSurfers.add(SurferDB.getSurfer("cjhobgood"));
-    matchedSurfers.add(SurferDB.getSurfer("rabbitkekai"));
-    matchedSurfers.add(SurferDB.getSurfer("kellyslater"));
-    return ok(SearchResults.render("Search Results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
-        matchedSurfers));
+  public static Result postSearch() {
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
+    List<Surfer> matched = SurferDB.getSurfersByName(formData.get().name);
+    List<Surfer> matchedGender = SurferDB.getSurfersByGender(formData.get().gender);
+    List<Surfer> matchedCountry = SurferDB.getSurfersByCountry(formData.get().country);
+    matched.retainAll(matchedGender);
+    matched.retainAll(matchedCountry);
+    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), matched));
   }
   
   /**
