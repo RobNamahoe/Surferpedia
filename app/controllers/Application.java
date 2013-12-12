@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +10,7 @@ import models.Country;
 import models.CountryDB;
 import models.Surfer;
 import models.SurferDB;
+import models.SurferSearch;
 import models.Updates;
 import models.UpdatesDB;
 import play.data.Form;
@@ -19,7 +19,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
 import views.formdata.LoginFormData;
-import views.formdata.ResultFormData;
 import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
@@ -146,63 +145,6 @@ public class Application extends Controller {
   }
   
   /**
-   * Displays the search page where a user can filter surfers by name, gender, or country.
-   * @return Search page
-   */
-  public static Result search() {
-    SearchFormData data = new SearchFormData();
-    Form<SearchFormData> formData = Form.form(SearchFormData.class).fill(data);
-    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
-    List<Country> countries = CountryDB.getCountries();
-    Map<String, Boolean> countryMap = new HashMap<>();
-    for (Country country : countries) {
-      countryMap.put(country.getCountry(), false);
-    }
-    return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
-              formData, surferTypesMap, countryMap));
-  }
-  
-  /**
-   * Displays the search results page with results matching the user's query.
-   * @return Page 1 of the SearchResults page.
-   */
-  public static Result postSearch() {
-    Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
-    String name = formData.get().name;
-    String gender = formData.get().gender;
-    String country = formData.get().country;
-    
-    // surfers returned
-    int resultSize = SurferDB.numSurfersFromQuery(name, gender, country);
-    List<Surfer> matched = SurferDB.getSurfersInPages(name, gender, country, 0);
-    
-    // total pages
-    int pages = resultSize / 15;
-    if ((resultSize % 15) != 0) {
-      pages++;
-    }
-    
-    ResultFormData data = new ResultFormData(1, pages, resultSize, name, gender, country);
-    Form<ResultFormData> resultFormData = Form.form(ResultFormData.class).fill(data);
-    
-    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-        data, resultFormData, 1, matched));
-  }
-  
-  
-  public static Result searchPages() {
-    Form<ResultFormData> formData = Form.form(ResultFormData.class).bindFromRequest();
-    
-    String name = formData.get().name;
-    String gender = formData.get().gender;
-    String country = formData.get().country;
-    
-    List<Surfer> matched = SurferDB.getSurfersInPages(name, gender, country, formData.get().goToThis - 1);
-    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-        formData.get(), formData, formData.get().goToThis, matched));
-  }
-  
-  /**
    * Handles the posting of form data by the user with validation.
    * @return ShowSurfer page with form data if successful, ManageSurfer page otherwise.
    */
@@ -269,6 +211,45 @@ public class Application extends Controller {
   public static Result logout() {
     session().clear();
     return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Displays the search page where a user can filter surfers by name, gender, or country.
+   * @return Search page
+   */
+  public static Result search() {
+    SearchFormData data = new SearchFormData();
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).fill(data);
+    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
+    List<Country> countries = CountryDB.getCountries();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    for (Country country : countries) {
+      countryMap.put(country.getCountry(), false);
+    }
+    return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+              formData, surferTypesMap, countryMap));
+  }
+  
+  /**
+   * Query the database for a surfer matching the search criteria.
+   * @return Redirect to displaySearchPage with 0 parameter to display first page of results.
+   */
+  public static Result postSearch() {
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
+    SearchFormData data = formData.get();
+    SurferSearch.queryDatabase(data);
+    return redirect(routes.Application.displaySearchPage(0));
+  }
+  
+  /**
+   * Display the specified results page.
+   * @param pageNum The page to display.
+   * @return The result page.
+   */
+  public static Result displaySearchPage(int pageNum) {    
+    List<Surfer> matched = SurferSearch.getSurfersInPage(pageNum);
+    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+        SurferSearch.getSurferCount(), SurferSearch.getPageCount(), matched));
   }
   
 }

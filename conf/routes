@@ -13,8 +13,9 @@ POST    /post                       controllers.Application.postSurfer()
 
 GET     /search                     controllers.Application.search()
 POST    /search                     controllers.Application.postSearch()
-POST    /results                    controllers.Application.searchPages()
- 
+GET     /results                    controllers.Application.displaySearchPage(pageNum: Int)
+
+
 GET     /updates                    controllers.Application.showUpdates()
 GET     /nameTheSurfer              controllers.Application.nameTheSurfer()
 GET     /checkGameAnswer            controllers.Application.checkGameAnswer(answer)
