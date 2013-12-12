@@ -1,17 +1,17 @@
-@(page:String, isLoggedIn: Boolean, userInfo: UserInfo)
+@(page:String, isLoggedIn: Boolean, userInfo: UserInfo, surfers: List[Surfer])
 
 @Main("Home", isLoggedIn, userInfo) {
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    @for((surfer, index) <- SurferDB.getSurfers().zipWithIndex) {
+    @for((surfer, index) <- surfers.zipWithIndex) {
       <li data-target="#carousel-example-generic" data-slide-to="@index" @if(index == 0) {class="active"}></li>
     }
   </ol>
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
-    @for((surfer, index) <- SurferDB.getSurfers().zipWithIndex){
+    @for((surfer, index) <- surfers.zipWithIndex){
       <div @if(index == 0) {class="item active"} else {class="item"}>
         <div class="carousel-image" style="background-image: url('@surfer.getCarouselUrl');"></div>
         <div class="carousel-caption">

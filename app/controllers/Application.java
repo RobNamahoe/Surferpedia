@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import models.GameQuestion;
+import models.GameQuestionDB;
 import models.Country;
 import models.CountryDB;
 import models.Surfer;
@@ -23,6 +25,7 @@ import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
 import views.html.Login;
+import views.html.NameTheSurfer;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
@@ -34,14 +37,48 @@ import views.html.SearchResults;
  */
 public class Application extends Controller {
 
+  private static final int CAROUSEL_MAX = 3;
+  
   /**
    * Returns the surferpedia home page. 
    * @return The resulting surferpedia home page. 
    */
   public static Result index() {
-    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                           SurferDB.getSurfersRandom(CAROUSEL_MAX)));
+  } 
+  
+  /**
+   * Return the Name-That-Surfer Game page.
+   * @return The resulting game page.
+   */
+  public static Result nameTheSurfer() {
+    GameQuestionDB.resetStats();
+    return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                                   GameQuestionDB.getNextQuestion()));    
+  } 
+  
+  /**
+   * Checks the users answer to the game question. Updates wins and losses accordingly. 
+   * Also generates new question when appropriate.
+   * @param answer The users answer to the game question.
+   * @return The resulting game page.
+   */
+  public static Result checkGameAnswer(String answer) {
+
+    GameQuestion question = GameQuestionDB.getCurrentQuestion();
+    
+    if (answer.equals(question.getAnswer())) {
+      GameQuestionDB.addWin();
+    }
+    else {
+      GameQuestionDB.addLoss();
+    }
+    
+    return ok(NameTheSurfer.render("NameTheSurfer", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+        GameQuestionDB.getNextQuestion()));  
   }
- 
+
   /**
    * Returns ManageSurfer view configured to add a new surfer.
    * @return The page to add a new surfer.
@@ -80,7 +117,8 @@ public class Application extends Controller {
     UpdatesDB.addUpdate(new Updates(date.toString(), "Delete", name));
 
     SurferDB.deleteSurfer(slug);
-    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+                           SurferDB.getSurfersRandom(CAROUSEL_MAX)));
   }
   
   /**

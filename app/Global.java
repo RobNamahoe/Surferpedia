@@ -17,7 +17,7 @@ public class Global extends GlobalSettings {
    * 
    * @param app The Play application.
    */
-  public void onStart(Application app) {
+  public void onStart(Application app) { 
 
     String name = "";
     String home = "";

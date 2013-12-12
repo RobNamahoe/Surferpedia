@@ -1,0 +1,71 @@
+@(page: String, 
+  isLoggedIn: Boolean, 
+  userInfo: UserInfo, 
+  question: GameQuestion) 
+  
+@import helper._ 
+@import bootstrap3._ 
+
+@Main(page, isLoggedIn, userInfo) {
+
+  <div class="jumbotron">
+    <h1>Name This Surfer!</h1>
+    <p></p>
+  </div>
+  
+  <div class="container">
+    <div class="col-md-4">
+      <div class="well">
+        <div class="bio-image" style="background-image: url('@question.getPictureUrl');"></div>
+      </div>
+    </div>
+  
+    <div class="col-md-8">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Current Stats:</th>
+          <th>Wins <span class="badge">@GameQuestionDB.getWins()</span></th>
+          <th>Losses <span class="badge">@GameQuestionDB.getLosses()</span></th>
+        </tr>
+      </table>
+  
+      @for((name, url) <- question.getOptions()) {
+        <p>
+          <a data-toggle="modal" 
+             data-target="#@question.getAsId(name)" 
+             class="btn btn-primary btn-lg btn-block">@name 
+          </a>
+        </p>
+      }
+    </div>
+  </div>
+
+  @for((name, url) <- question.getOptions()) {
+    <div class="modal fade" id="@question.getAsId(name)" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            @if(name == question.getAnswer()) {
+              <h4 class="modal-title">Congratulations, @question.getAnswer() is the correct answer!</h4>
+            } else {
+              <h4 class="modal-title">Sorry, that is not the correct answer :(</h4>
+            }
+          </div>
+        <div class="modal-body">
+          @if(name == question.getAnswer()) { 
+            Click next to continue. 
+          } else { 
+            The correct answer is @question.getAnswer(). Click next to continue. 
+          }
+        </div>
+        <div class="modal-footer">
+          <a type="button" class="btn btn-primary" href="@routes.Application.checkGameAnswer(name)"> Next </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+}
+
