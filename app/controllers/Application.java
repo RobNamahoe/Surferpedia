@@ -17,6 +17,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
 import views.formdata.LoginFormData;
+import views.formdata.ResultFormData;
 import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
@@ -108,7 +109,7 @@ public class Application extends Controller {
   
   /**
    * Displays the search page where a user can filter surfers by name, gender, or country.
-   * @return SearchResults page
+   * @return Search page
    */
   public static Result search() {
     SearchFormData data = new SearchFormData();
@@ -123,14 +124,44 @@ public class Application extends Controller {
               formData, surferTypesMap, countryMap));
   }
   
+  /**
+   * Displays the search results page with results matching the user's query.
+   * @return Page 1 of the SearchResults page.
+   */
   public static Result postSearch() {
     Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
-    List<Surfer> matched = SurferDB.getSurfersByName(formData.get().name);
-    List<Surfer> matchedGender = SurferDB.getSurfersByGender(formData.get().gender);
-    List<Surfer> matchedCountry = SurferDB.getSurfersByCountry(formData.get().country);
-    matched.retainAll(matchedGender);
-    matched.retainAll(matchedCountry);
-    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), matched));
+    String name = formData.get().name;
+    String gender = formData.get().gender;
+    String country = formData.get().country;
+    
+    // surfers returned
+    int resultSize = SurferDB.numSurfersFromQuery(name, gender, country);
+    List<Surfer> matched = SurferDB.getSurfersInPages(name, gender, country, 0);
+    
+    // total pages
+    int pages = resultSize / 15;
+    if ((resultSize % 15) != 0) {
+      pages++;
+    }
+    
+    ResultFormData data = new ResultFormData(1, pages, resultSize, name, gender, country);
+    Form<ResultFormData> resultFormData = Form.form(ResultFormData.class).fill(data);
+    
+    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+        data, resultFormData, 1, matched));
+  }
+  
+  
+  public static Result searchPages() {
+    Form<ResultFormData> formData = Form.form(ResultFormData.class).bindFromRequest();
+    
+    String name = formData.get().name;
+    String gender = formData.get().gender;
+    String country = formData.get().country;
+    
+    List<Surfer> matched = SurferDB.getSurfersInPages(name, gender, country, formData.get().goToThis - 1);
+    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+        formData.get(), formData, formData.get().goToThis, matched));
   }
   
   /**

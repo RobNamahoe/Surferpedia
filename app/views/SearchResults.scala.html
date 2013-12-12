@@ -1,14 +1,18 @@
 @(page: String,
  isLoggedIn: Boolean,
  userInfo: UserInfo,
+ resultData: views.formdata.ResultFormData,
+ resultForm: Form[views.formdata.ResultFormData],
+ pageNum: Int,
  results: List[Surfer])
 
+@import helper._
 @import bootstrap3._
 
 @Main(page, isLoggedIn, userInfo) {
-  <div class="container">
+    <div class="container">
     @if(results != null) {
-        <h1>Results: @results.size() surfers found</h1>
+        <h1>Results: @resultData.numSurfers surfers found</h1>
         @if(results.isEmpty()) {
             Try <a href="@routes.Application.search()">again</a>?
         } else {
@@ -16,20 +20,44 @@
                 <tr>
                     <th width="200px">Name</th>
                     <th>Biography</th>
+                    <th>Gender</th>
+                    <th>Country</th>
                 </tr>
                 @for(surfer <- results) {
                     <tr>
                         <td><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></td>
                         <td>
                         @if(surfer.getBio().length() >= 40) {
-                        @surfer.getBio().substring(0, 39)...
+                            @surfer.getBio().substring(0, 40)...
                         } else {
-                        @surfer.getBio()
+                            @surfer.getBio()
                         }
                         </td>
+                        <td>@surfer.getGender().getGender()</td>
+                        <td>@surfer.getCountry().getCountry()</td>
                     </tr>
                 }
             </table>
+              @if(resultData.numSurfers > 15) {
+                @form(routes.Application.searchPages(), 'id -> "searchInfo") {
+                    @hidden(resultForm("goToPage"))
+                    @hidden(resultForm("pages"))
+                    @hidden(resultForm("numSurfers"))
+                    @hidden(resultForm("name"))
+                    @hidden(resultForm("gender"))
+                    @hidden(resultForm("country"))
+                }
+                
+                <div style="text-align:center">
+                <ul class="pagination">
+                    <li class="@("disabled".when(pageNum == 1))"><a id="@(pageNum -1)" href="#" onClick="fill(this.id); submitForm()">&laquo;</a></li>
+                    @for(i <- 1 until (resultData.pages + 1)) {
+                      <li class="@("active".when(i == pageNum))"><a id="@i" href="#" onClick="fill(this.id); submitForm()">@i</a></li>
+                    }
+                    <li class="@("disabled".when(pageNum == resultData.pages))"><a id="@(pageNum + 1)" href="#" onClick="fill(this.id); submitForm()">&raquo;</a></li>
+                </ul>
+                </div>
+             }
         }
     }
   </div>

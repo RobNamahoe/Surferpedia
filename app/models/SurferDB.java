@@ -1,6 +1,9 @@
 package models;
 
 import java.util.List;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.PagingList;
+import com.avaje.ebean.Query;
 import views.formdata.SurferFormData;
 
 /**
@@ -128,6 +131,76 @@ public class SurferDB {
       return Surfer.find().all();
     }
     return Surfer.find().where().icontains("name", name).findList();
+  }
+  
+  /**
+   * Get the number of surfers matching all name, gender, and country filters.
+   * @param name Partial/full of name of surfer(s) to retrieve.
+   * @param gender Gender category of surfer.
+   * @param country Country of origin.
+   * @return List size
+   */
+  public static int numSurfersFromQuery(String name, String gender, String country) {
+    Query<Surfer> query = Ebean.createQuery(Surfer.class);
+    if (!name.equals("")) {
+      query.where().icontains("name", name);
+    }
+    if (!gender.equals("")) {
+      query.where().eq("gender", GenderDB.getGender(gender));
+    }
+    if (!country.equals("")) {
+      query.where().eq("country", CountryDB.getCountry(country));
+    }
+    
+    
+    /**PagingList<Surfer> pages;
+    // in case all three parameters were empty strings
+    if (query.findList().isEmpty()) {
+      // grab all surfers
+      pages = Surfer.find().findPagingList(15);
+      return pages.getTotalPageCount();
+    } else {
+      pages = query.findPagingList(15);
+      return pages.getTotalPageCount();
+    }*/
+    // in case all three parameters were empty strings
+    if (query.findList().isEmpty()) {
+      // grab all surfers
+      return Surfer.find().all().size();
+    }
+    return query.findList().size();
+  }
+  
+  /**
+   * Get a page of surfer or list of surfers matching all name, gender, and country filters.
+   * @param name Partial/full of name of surfer(s) to retrieve.
+   * @param gender Gender category of surfer.
+   * @param country Country of origin.
+   * @param page Current page
+   * @return List of surfers.
+   */
+  public static List<Surfer> getSurfersInPages(String name, String gender, String country, int page) {
+    Query<Surfer> query = Ebean.createQuery(Surfer.class);
+    if (!name.equals("")) {
+      query.where().icontains("name", name);
+    }
+    if (!gender.equals("")) {
+      query.where().eq("gender", GenderDB.getGender(gender));
+    }
+    if (!country.equals("")) {
+      query.where().eq("country", CountryDB.getCountry(country));
+    }
+    
+    PagingList<Surfer> pages;
+    // in case all three parameters were empty strings
+    if (query.findList().isEmpty()) {
+      // grab all surfers
+      pages = Surfer.find().findPagingList(15);
+      return pages.getPage(page).getList();
+    } else {
+      pages = query.findPagingList(15);
+      return pages.getPage(page).getList();
+    }
   }
 
 }
