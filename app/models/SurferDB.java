@@ -152,17 +152,6 @@ public class SurferDB {
       query.where().eq("country", CountryDB.getCountry(country));
     }
     
-    
-    /**PagingList<Surfer> pages;
-    // in case all three parameters were empty strings
-    if (query.findList().isEmpty()) {
-      // grab all surfers
-      pages = Surfer.find().findPagingList(15);
-      return pages.getTotalPageCount();
-    } else {
-      pages = query.findPagingList(15);
-      return pages.getTotalPageCount();
-    }*/
     // in case all three parameters were empty strings
     if (query.findList().isEmpty()) {
       // grab all surfers
