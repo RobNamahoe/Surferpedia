@@ -18,8 +18,6 @@ GET     /updates                    controllers.Application.showUpdates()
 GET     /nameTheSurfer              controllers.Application.nameTheSurfer()
 GET     /checkGameAnswer            controllers.Application.checkGameAnswer(answer)
 
-GET     /search                     controllers.Application.search()
-
 GET     /login                      controllers.Application.login()
 POST    /login                      controllers.Application.postLogin()
 GET     /logout                     controllers.Application.logout()

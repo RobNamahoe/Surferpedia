@@ -45,16 +45,7 @@ public class Application extends Controller {
   public static Result index() {
     return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
                            SurferDB.getSurfersRandom(CAROUSEL_MAX)));
-  }
- 
-  /**
-   * Return the search widget page.
-   * @return The search widget page.
-   */
-  public static Result search() {
-    return TODO;
-  }
-  
+  } 
   
   /**
    * Return the Name-That-Surfer Game page.
