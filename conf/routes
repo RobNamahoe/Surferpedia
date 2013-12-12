@@ -10,6 +10,10 @@ GET     /surfer/:slug/delete        controllers.Application.deleteSurfer(slug)
 GET     /surfer/:slug/edit          controllers.Application.manageSurfer(slug)
 POST    /post                       controllers.Application.postSurfer()
 
+
+GET     /search                     controllers.Application.search()
+POST    /results                    controllers.Application.postSearch()
+ 
 GET     /updates                    controllers.Application.showUpdates()
 GET     /nameTheSurfer              controllers.Application.nameTheSurfer()
 GET     /checkGameAnswer            controllers.Application.checkGameAnswer(answer)

@@ -1,10 +1,15 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import models.GameQuestion;
 import models.GameQuestionDB;
+import models.Country;
+import models.CountryDB;
+import models.Surfer;
 import models.SurferDB;
 import models.Updates;
 import models.UpdatesDB;
@@ -14,6 +19,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
 import views.formdata.LoginFormData;
+import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
 import views.html.Index;
@@ -22,6 +28,8 @@ import views.html.NameTheSurfer;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
+import views.html.Search;
+import views.html.SearchResults;
 
 /**
  * Implements the controllers for this application.
@@ -143,6 +151,33 @@ public class Application extends Controller {
   public static Result showUpdates() {
     return ok(ShowUpdates.render("Updates", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
                                   UpdatesDB.getUpdates()));
+  }
+  
+  /**
+   * Displays the search page where a user can filter surfers by name, gender, or country.
+   * @return SearchResults page
+   */
+  public static Result search() {
+    SearchFormData data = new SearchFormData();
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).fill(data);
+    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
+    List<Country> countries = CountryDB.getCountries();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    for (Country country : countries) {
+      countryMap.put(country.getCountry(), false);
+    }
+    return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+              formData, surferTypesMap, countryMap));
+  }
+  
+  public static Result postSearch() {
+    Form<SearchFormData> formData = Form.form(SearchFormData.class).bindFromRequest();
+    List<Surfer> matched = SurferDB.getSurfersByName(formData.get().name);
+    List<Surfer> matchedGender = SurferDB.getSurfersByGender(formData.get().gender);
+    List<Surfer> matchedCountry = SurferDB.getSurfersByCountry(formData.get().country);
+    matched.retainAll(matchedGender);
+    matched.retainAll(matchedCountry);
+    return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), matched));
   }
   
   /**
