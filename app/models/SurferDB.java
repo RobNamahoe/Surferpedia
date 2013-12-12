@@ -98,7 +98,36 @@ public class SurferDB {
    * @return A list of surfers.
    */
   public static List<Surfer> getSurfersByGender(String gender) {
+    if (gender.equals("")) {
+      return Surfer.find().all();
+    }
     return Surfer.find().where().eq("gender", GenderDB.getGender(gender)).findList();
+  }
+  
+  /**
+   * Ebean Users guide 6.7
+   * 
+   * Gets a list of surfers of the specified country.
+   * @param gender The country of the surfers.
+   * @return A list of surfers.
+   */
+  public static List<Surfer> getSurfersByCountry(String country) {
+    if (country.equals("")) {
+      return Surfer.find().all();
+    }
+    return Surfer.find().where().eq("country", CountryDB.getCountry(country)).findList();
+  }
+  
+  /**
+   * Get a surfer or list of surfers matching a name query.
+   * @param name The partial/full name of the surfer(s) to retrieve.
+   * @return The surfer.
+   */
+  public static List<Surfer> getSurfersByName(String name) {
+    if (name.equals("")) {
+      return Surfer.find().all();
+    }
+    return Surfer.find().where().icontains("name", name).findList();
   }
 
   /**

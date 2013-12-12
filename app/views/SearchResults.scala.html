@@ -1,0 +1,36 @@
+@(page: String,
+ isLoggedIn: Boolean,
+ userInfo: UserInfo,
+ results: List[Surfer])
+
+@import bootstrap3._
+
+@Main(page, isLoggedIn, userInfo) {
+  <div class="container">
+    @if(results != null) {
+        <h1>Results: @results.size() surfers found</h1>
+        @if(results.isEmpty()) {
+            Try <a href="@routes.Application.search()">again</a>?
+        } else {
+            <table class="table table-bordered">
+                <tr>
+                    <th width="200px">Name</th>
+                    <th>Biography</th>
+                </tr>
+                @for(surfer <- results) {
+                    <tr>
+                        <td><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></td>
+                        <td>
+                        @if(surfer.getBio().length() >= 40) {
+                        @surfer.getBio().substring(0, 39)...
+                        } else {
+                        @surfer.getBio()
+                        }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    }
+  </div>
+}

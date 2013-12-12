@@ -1,0 +1,45 @@
+@(page: String,
+ isLoggedIn: Boolean,
+ userInfo: UserInfo,
+ searchForm: Form[views.formdata.SearchFormData],
+ surferGenderMap: Map[String, Boolean],
+ surferCountryMap: Map[String, Boolean])
+
+@import helper._
+@import bootstrap3._
+
+@Main(page, isLoggedIn, userInfo) {
+  <div class="container">
+  <div class="row">
+  @form(routes.Application.postSearch(), 'class -> "form-horizontal") {
+    
+    <div class="col-sm-4 col-sm-offset-4">
+        
+        @text(searchForm("name"),
+              label="Name",
+              placeholder="Surfer's Name",
+              help="")
+              
+        @bootstrap3.select(searchForm("gender"),
+                           label="Gender",
+                           optionMap=surferGenderMap,
+                           isMultiple=false,
+                           placeholder="All Genders",
+                           help="")
+                           
+        @bootstrap3.select(searchForm("country"),
+                           label="Country",
+                           optionMap=surferCountryMap,
+                           isMultiple=false,
+                           placeholder="All Countries",
+                           help="")
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-offset-5 col-sm-2">
+        <button type="submit" class="btn btn-primary btn-block">Search</button>
+    </div>
+  </div>
+  }
+ </div>
+}

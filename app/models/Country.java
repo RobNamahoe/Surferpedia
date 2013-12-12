@@ -50,9 +50,9 @@ public class Country extends Model {
   
   /**
    * Get a list of surfers.
-   * @return A list of contacts.
+   * @return A list of surfers.
    */
-  public List<Surfer> getContacts() {
+  public List<Surfer> getSurfers() {
     return this.surfers;
   }
   
