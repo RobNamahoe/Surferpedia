@@ -196,8 +196,8 @@ public class Application extends Controller {
     String name = formData.get().name;
     String gender = formData.get().gender;
     String country = formData.get().country;
-    
-    List<Surfer> matched = SurferDB.getSurfersInPages(name, gender, country, formData.get().goToThis - 1);
+    System.out.println(formData.get().goToThis);
+    List<Surfer> matched = SurferDB.getSurfersInPages(name, gender, country, formData.get().goToThis);
     return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
         formData.get(), formData, formData.get().goToThis, matched));
   }

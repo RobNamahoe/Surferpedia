@@ -39,6 +39,15 @@
                 }
             </table>
               @if(resultData.numSurfers > 15) {
+                <div style="text-align:center">
+                <ul class="pagination">
+                    <li class="@("disabled".when(pageNum == 1))"><a id="@(pageNum -1)" href="javascript:;" onClick="fill(this.id); submitForm()">&laquo;</a></li>
+                    @for(i <- 1 until (resultData.pages + 1)) {
+                      <li class="@("active".when(i == pageNum))"><a id="@i" href="javascript:;" onClick="fill(this.id); submitForm()">@i</a></li>
+                    }
+                    <li class="@("disabled".when(pageNum == resultData.pages))"><a id="@(pageNum + 1)" href="javascript:;" onClick="fill(this.id); submitForm()">&raquo;</a></li>
+                </ul>
+                </div>
                 @form(routes.Application.searchPages(), 'id -> "searchInfo") {
                     @hidden(resultForm("goToPage"))
                     @hidden(resultForm("pages"))
@@ -47,16 +56,6 @@
                     @hidden(resultForm("gender"))
                     @hidden(resultForm("country"))
                 }
-                
-                <div style="text-align:center">
-                <ul class="pagination">
-                    <li class="@("disabled".when(pageNum == 1))"><a id="@(pageNum -1)" href="#" onClick="fill(this.id); submitForm()">&laquo;</a></li>
-                    @for(i <- 1 until (resultData.pages + 1)) {
-                      <li class="@("active".when(i == pageNum))"><a id="@i" href="#" onClick="fill(this.id); submitForm()">@i</a></li>
-                    }
-                    <li class="@("disabled".when(pageNum == resultData.pages))"><a id="@(pageNum + 1)" href="#" onClick="fill(this.id); submitForm()">&raquo;</a></li>
-                </ul>
-                </div>
              }
         }
     }
