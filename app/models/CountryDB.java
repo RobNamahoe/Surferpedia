@@ -42,7 +42,7 @@ public class CountryDB {
    * @return List of countries.
    */
   public static List<Country> getCountries() {
-    return Country.find().order().asc("country").setDistinct(true).findList();
+    return Country.find().orderBy("country").setDistinct(true).findList();
   }
   
 }

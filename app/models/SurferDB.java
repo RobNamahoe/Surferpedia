@@ -108,7 +108,7 @@ public class SurferDB {
    * Ebean Users guide 6.7
    * 
    * Gets a list of surfers of the specified country.
-   * @param gender The country of the surfers.
+   * @param country The country of the surfers.
    * @return A list of surfers.
    */
   public static List<Surfer> getSurfersByCountry(String country) {
@@ -129,7 +129,7 @@ public class SurferDB {
     }
     return Surfer.find().where().icontains("name", name).findList();
   }
-
+  
   /**
    * Get a list of random surfers. Number returned is defined by the accepted parameter.
    * @param countOfSurfers The number of surfers to return.

@@ -1,14 +1,17 @@
 @(page: String,
  isLoggedIn: Boolean,
  userInfo: UserInfo,
+ surferCount: Int,
+ pageCount: Int,
  results: List[Surfer])
 
+@import helper._
 @import bootstrap3._
 
 @Main(page, isLoggedIn, userInfo) {
-  <div class="container">
+    <div class="container">
     @if(results != null) {
-        <h1>Results: @results.size() surfers found</h1>
+        <h1>Results: @surferCount surfers found</h1>
         @if(results.isEmpty()) {
             Try <a href="@routes.Application.search()">again</a>?
         } else {
@@ -16,20 +19,33 @@
                 <tr>
                     <th width="200px">Name</th>
                     <th>Biography</th>
+                    <th>Gender</th>
+                    <th>Country</th>
                 </tr>
                 @for(surfer <- results) {
                     <tr>
                         <td><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></td>
                         <td>
                         @if(surfer.getBio().length() >= 40) {
-                        @surfer.getBio().substring(0, 39)...
+                            @surfer.getBio().substring(0, 40)...
                         } else {
-                        @surfer.getBio()
+                            @surfer.getBio()
                         }
                         </td>
+                        <td>@surfer.getGender().getGender()</td>
+                        <td>@surfer.getCountry().getCountry()</td>
                     </tr>
                 }
             </table>
+            
+            <!-- Pagination -->
+            <div style="text-align:center">
+              <ul class="pagination">
+                @for(i <- 1 until (pageCount + 1)) {
+                  <li><a id="@i" href="@routes.Application.displaySearchPage(i-1)">@i</a></li>
+                }
+              </ul>
+            </div> 
         }
     }
   </div>
