@@ -39,12 +39,16 @@ public class IndexPage extends FluentPage {
    * Click on the login link.
    */
   public void goToLogin() {
-    System.out.println("Start: IndexPage.goToLogin()");
-    System.out.println("1");
-    find("#logout").click();
-    System.out.println("2");
+    find("#navbutton").click();
     find("#login").click();
-    System.out.println("End: IndexPage.goToLogin()");
+  }
+  
+  /**
+   * Click on the logout link.
+   */
+  public void logout() {
+    find("#navbutton").click();
+    find("#logout").click();
   }
   
   /**

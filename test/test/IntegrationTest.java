@@ -26,21 +26,32 @@ public class IntegrationTest {
   public void test() {
     running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
+
+        System.out.println("");
+        
         IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
         browser.goTo(indexPage);
         indexPage.isAt();
+        
+        System.out.println("goToLogin()");
         indexPage.goToLogin();
         
+        System.out.println("");
         LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
-        //System.out.println(loginPage.pageSource());
+        
+        System.out.println("loginPage.isAt()");
         loginPage.isAt();
-        //loginPage.login();
         
-        //assertThat(indexPage.isLoggedIn()).isTrue();
+        System.out.println("loginPage.login()");
+        loginPage.login();
         
-        //indexPage.logout();
-        //assertThat(indexPage.isLoggedIn()).isFalse();
-        
+        System.out.println("assertThat(isloggedin)");
+
+        assertThat(indexPage.isLoggedIn()).isTrue();
+
+        indexPage.logout();
+        assertThat(indexPage.isLoggedIn()).isFalse();
+
       }
     });
   }
