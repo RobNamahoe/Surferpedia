@@ -13,12 +13,14 @@ import models.SurferDB;
 import models.SurferSearch;
 import models.Updates;
 import models.UpdatesDB;
+import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.formdata.FootStyle;
 import views.formdata.LoginFormData;
+import views.formdata.RegistrationFormData;
 import views.formdata.SearchFormData;
 import views.formdata.SurferFormData;
 import views.formdata.SurferTypes;
@@ -156,6 +158,7 @@ public class Application extends Controller {
    * @param slug The unique identifier for the surfer to display.
    * @return ShowSurfer page for requested surfer with form data.
    */
+  @Security.Authenticated(Secured.class)
   public static Result manageSurfer(String slug) {
     SearchFormData searchFormData = new SearchFormData();
     Form<SearchFormData> searchForm = Form.form(SearchFormData.class).fill(searchFormData);
@@ -228,8 +231,9 @@ public class Application extends Controller {
     Map<String, Boolean> countryMap = CountryDB.getCountryMap();
     
     Form<LoginFormData> loginForm = Form.form(LoginFormData.class);
+    Form<RegistrationFormData> regForm = Form.form(RegistrationFormData.class);
     return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
-              surferTypesMap, countryMap, loginForm));
+              surferTypesMap, countryMap, loginForm, regForm));
   }
 
   /**
@@ -248,16 +252,47 @@ public class Application extends Controller {
 
     // Get the submitted form data from the request object, and run validation.
     Form<LoginFormData> loginForm = Form.form(LoginFormData.class).bindFromRequest();
+    Form<RegistrationFormData> regForm = Form.form(RegistrationFormData.class);
 
     if (loginForm.hasErrors()) {
       flash("error", "Login credentials not valid.");
       return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
-                        surferTypesMap, countryMap, loginForm));
+                        surferTypesMap, countryMap, loginForm, regForm));
     }
     else {
       // email/password OK, so now we set the session variable and only go to authenticated pages.
       session().clear();
       session("email", loginForm.get().email);
+      return redirect(routes.Application.index());
+    }
+  }
+  
+  /**
+   * Processes a registration form submission from a new user. 
+   * If errors are found, re-render the page, displaying the error data. 
+   * If errors not found, render the page with the good data. 
+   * @return The index page with no defined contacts. 
+   */
+  public static Result postReg() {
+    SearchFormData searchFormData = new SearchFormData();
+    Form<SearchFormData> searchForm = Form.form(SearchFormData.class).fill(searchFormData);
+    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = CountryDB.getCountryMap();
+    
+    // Get the submitted form data from the request object, and run validation.
+    Form<RegistrationFormData> regForm = Form.form(RegistrationFormData.class).bindFromRequest();
+    Form<LoginFormData> loginForm = Form.form(LoginFormData.class);
+
+    if (regForm.hasErrors()) {
+      flash("regerror", "* Please correct errors.");
+      return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+          searchForm, surferTypesMap, countryMap, loginForm, regForm));
+    }
+    else {
+      // registration info OK, so now we set the session variable and create the user in the database.
+      session().clear();
+      session("email", regForm.get().email);
+      UserInfoDB.addUserInfo(regForm.get().name, regForm.get().email, regForm.get().password);
       return redirect(routes.Application.index());
     }
   }
