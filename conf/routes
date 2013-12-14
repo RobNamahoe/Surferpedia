@@ -13,7 +13,7 @@ POST    /post                       controllers.Application.postSurfer()
 
 GET     /search                     controllers.Application.search()
 POST    /search                     controllers.Application.postSearch()
-GET     /results                    controllers.Application.displaySearchPage(pageNum: Int)
+GET     /results/:pageNum           controllers.Application.displaySearchPage(pageNum: Int)
 
 
 GET     /updates                    controllers.Application.showUpdates()

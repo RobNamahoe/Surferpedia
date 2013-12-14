@@ -1,6 +1,8 @@
 package models;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A repository to store country information.
@@ -45,4 +47,16 @@ public class CountryDB {
     return Country.find().orderBy("country").setDistinct(true).findList();
   }
   
+  /**
+   * Returns a list of country options for a drop down menu.
+   * @return Map of countries.
+   */
+  public static Map<String, Boolean> getCountryMap() {
+    List<Country> countries = getCountries();
+    Map<String, Boolean> countryMap = new HashMap<>();
+    for (Country country : countries) {
+      countryMap.put(country.getCountry(), false);
+    }
+    return countryMap;
+  }
 }

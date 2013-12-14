@@ -1,4 +1,12 @@
-@(page:String, isLoggedIn: Boolean, userInfo: UserInfo)(content: Html)
+@(page:String,
+  isLoggedIn: Boolean,
+  userInfo: UserInfo,
+  searchForm: Form[views.formdata.SearchFormData],
+  surferGenderMap: Map[String, Boolean],
+  surferCountryMap: Map[String, Boolean])(content: Html)
+
+@import helper._
+@import bootstrap3._
 
 <!DOCTYPE html>
 
@@ -49,26 +57,38 @@
           <li class="@(" active".when(page=="NameTheSurfer"))">
             <a href="@routes.Application.nameTheSurfer()">Game: Name The Surfer!</a>
           </li>
-        </ul>
-          
-        @if(isLoggedIn) {
-          <ul class="nav navbar-nav">
+          @if(isLoggedIn) {
             <li class="@(" active".when(page=="NewSurfer"))"><a href="@routes.Application.newSurfer()">New</a></li>
             <li class="@(" active".when(page=="Updates"))"><a href="@routes.Application.showUpdates()">Updates</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-right"><a href="@routes.Application.logout()">Logout</a></li>
-          </ul>
-        } else {
-          <ul class="nav navbar-nav navbar-right">
+            <li><a href="@routes.Application.logout()">Logout</a></li>
+          } else {
             <li><a href="@routes.Application.login()">Login</a></li>
+          }
           </ul>
-        }
-        
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="@routes.Application.search()">Search</a></li>
-        </ul>
-      
+          <ul class="nav navbar-nav navbar-right">
+            @form(routes.Application.postSearch(), 'class -> "form-inline") {
+                @text(searchForm("name"),
+                      nolabel=true,
+                      label="",
+                      placeholder="Surfer's Name",
+                      help="")
+                @bootstrap3.select(searchForm("gender"),
+                      nolabel=true,
+                      label="",
+                      optionMap=surferGenderMap,
+                      isMultiple=false,
+                      placeholder="All Genders",
+                      help="")
+                @bootstrap3.select(searchForm("country"),
+                      nolabel=true,
+                      label="",
+                      optionMap=surferCountryMap,
+                      isMultiple=false,
+                      placeholder="All Countries",
+                      help="")
+            <button type="submit" class="btn btn-sm btn-default">Search</button>
+            }
+          </ul>
       </div>
     </div>
   </div>

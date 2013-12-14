@@ -22,3 +22,8 @@
   padding-bottom: 0px;
   text-align: center;
 }
+
+.form-group {
+  margin-top: 7px;
+  margin-right: 10px;
+}

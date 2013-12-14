@@ -1,12 +1,15 @@
 @(page: String, 
   isLoggedIn: Boolean, 
-  userInfo: UserInfo, 
+  userInfo: UserInfo,
+  searchForm: Form[views.formdata.SearchFormData],
+  surferGenderMap: Map[String, Boolean],
+  surferCountryMap: Map[String, Boolean], 
   question: GameQuestion) 
   
 @import helper._ 
 @import bootstrap3._ 
 
-@Main(page, isLoggedIn, userInfo) {
+@Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
 
   <div class="jumbotron">
     <h1>Name This Surfer!</h1>
