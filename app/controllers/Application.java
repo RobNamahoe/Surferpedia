@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import models.GameQuestion;
 import models.GameQuestionDB;
-import models.Country;
 import models.CountryDB;
 import models.Surfer;
 import models.SurferDB;
@@ -28,7 +27,6 @@ import views.html.NameTheSurfer;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
-import views.html.Search;
 import views.html.SearchResults;
 
 /**
@@ -48,7 +46,7 @@ public class Application extends Controller {
     Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
     Map<String, Boolean> countryMap = CountryDB.getCountryMap();
     
-    return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
+    return ok(Index.render("Index", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
                            searchForm, surferTypesMap, countryMap, SurferDB.getSurfersRandom(CAROUSEL_MAX)));
   } 
   
@@ -176,6 +174,7 @@ public class Application extends Controller {
    * Displays the updates page.
    * @return the update page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result showUpdates() {
     SearchFormData searchFormData = new SearchFormData();
     Form<SearchFormData> searchForm = Form.form(SearchFormData.class).fill(searchFormData);
@@ -273,29 +272,14 @@ public class Application extends Controller {
   }
   
   /**
-   * Displays the search page where a user can filter surfers by name, gender, or country.
-   * @return Search page
-   */
-  public static Result search() {
-    SearchFormData searchFormData = new SearchFormData();
-    Form<SearchFormData> searchForm = Form.form(SearchFormData.class).fill(searchFormData);
-    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
-    Map<String, Boolean> countryMap = CountryDB.getCountryMap();
-    return ok(Search.render("Search", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
-        searchForm, surferTypesMap, countryMap));
-  }
-  
-  /**
    * Query the database for a surfer matching the search criteria.
-   * @return Redirect to displaySearchPage with 0 parameter to display first page of results.
+   * @return Redirect to displaySearchPage with 1 parameter to display first page of results.
    */
   public static Result postSearch() {
     Form<SearchFormData> searchForm = Form.form(SearchFormData.class).bindFromRequest();
     SearchFormData searchFormData = searchForm.get();
     SurferSearch.queryDatabase(searchFormData);
     return redirect(routes.Application.displaySearchPage(1));
-    /**return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-    searchForm, surferTypesMap, countryMap, matched));*/
   }
   
   /**
@@ -310,7 +294,8 @@ public class Application extends Controller {
     Map<String, Boolean> countryMap = CountryDB.getCountryMap();
     List<Surfer> matched = SurferSearch.getSurfersInPage(pageNum - 1);
     return ok(SearchResults.render("Search results", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-        SurferSearch.getSurferCount(), SurferSearch.getPageCount(), searchForm, surferTypesMap, countryMap, matched));
+        SurferSearch.getSurferCount(), SurferSearch.getPageCount(), pageNum, searchForm, surferTypesMap, 
+        countryMap, matched));
   }
   
 }

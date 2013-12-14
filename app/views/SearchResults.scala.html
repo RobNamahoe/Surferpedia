@@ -3,6 +3,7 @@
  userInfo: UserInfo,
  surferCount: Int,
  pageCount: Int,
+ currentPage: Int,
  searchForm: Form[views.formdata.SearchFormData],
  surferGenderMap: Map[String, Boolean],
  surferCountryMap: Map[String, Boolean],
@@ -16,7 +17,7 @@
     @if(results != null) {
         <h1>Results: @surferCount surfers found</h1>
         @if(results.isEmpty()) {
-            Try <a href="@routes.Application.search()">again</a>?
+            Sorry, no matches found.
         } else {
             <table class="table table-bordered">
                 <tr>
@@ -45,7 +46,11 @@
             <div style="text-align:center">
               <ul class="pagination">
                 @for(i <- 1 until (pageCount + 1)) {
-                  <li><a id="@i" href="@routes.Application.displaySearchPage(i)">@i</a></li>
+                  <li class=@if(i==currentPage){"active"}>
+                    <a id="@i" href="@routes.Application.displaySearchPage(i)">
+                      @i
+                    </a>
+                  </li>
                 }
               </ul>
             </div> 
