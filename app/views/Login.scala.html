@@ -3,12 +3,21 @@
 @import bootstrap3._
 
 @Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
-   <div class="container">
-     @loginform(routes.Application.postLogin(), loginForm("email"), loginForm("password"))
-     @regform(routes.Application.postReg(), regForm("name"), regForm("email"), regForm("password"))
-     
-     @if(!models.UserInfoDB.adminDefined()) {
-        <div class="alert alert-danger">Warning: Admin credentials undefined!</div>
-     }
-   </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-md-offset-1">
+        @loginform(routes.Application.postLogin(), loginForm("email"), loginForm("password"))
+      </div>
+      <div class="col-md-5">
+        @regform(routes.Application.postReg(), regForm("name"), regForm("email"), regForm("password"))
+      </div>
+    </div>
+  </div>
+  
+  @if(!models.UserInfoDB.adminDefined()) {
+    <div class="alert alert-danger admin-warning">
+      Warning: Admin credentials undefined!
+    </div>
+  }
 }

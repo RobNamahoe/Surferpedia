@@ -30,21 +30,12 @@ public class IntegrationTest {
         IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
         browser.goTo(indexPage);
         indexPage.isAt();
-        
-        System.out.println("goToLogin()");
+
         indexPage.goToLogin();
-        
-        System.out.println("");
         LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
-        
-        System.out.println("loginPage.isAt()");
         loginPage.isAt();
         
-        System.out.println("loginPage.login()");
         loginPage.login();
-        
-        System.out.println("assertThat(isloggedin)");
-
         assertThat(indexPage.isLoggedIn()).isTrue();
 
         indexPage.logout();
