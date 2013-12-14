@@ -30,8 +30,8 @@
         <p><strong>Biography: </strong>@surferForm("bio").value</p>
         
         @if(isLoggedIn) {
-          <a href="@routes.Application.manageSurfer(surferForm("slug").value)" class="pull-left">Edit</a>
-          <a data-toggle="modal" href="#confirmDelete" class="pull-right">Delete</a>&nbsp;
+          <a id="edit" href="@routes.Application.manageSurfer(surferForm("slug").value)" class="pull-left">Edit</a>
+          <a id="delete" data-toggle="modal" href="#confirmDelete" class="pull-right">Delete</a>&nbsp;
         }
       </div>
     </div>
@@ -49,8 +49,9 @@
           This action cannot be undone.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <a type="button" 
+          <button id="modalclose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <a id="modalconfirm"
+             type="button" 
              class="btn btn-primary"
              href="@routes.Application.deleteSurfer(surferForm("slug").value)">
           Delete

@@ -9,6 +9,7 @@ import com.avaje.ebean.Query;
 /**
  * 
  * @author Rob Namahoe
+ * @author Eva Shek
  */
 public class SurferSearch {
   
@@ -21,7 +22,16 @@ public class SurferSearch {
    */
   public static void queryDatabase(SearchFormData data) {
     
+    // If all three parameters are empty, then return all surfers.
+    // Do this first so we can differentiate between no matches vs no parameters.
+    if (data.name.equals("") && data.gender.equals("") && data.country.equals("")) {
+      pages = Surfer.find().findPagingList(PAGINATION_MAX);
+      SurferSearch.setPages(pages);
+      return;
+    }
+    
     Query<Surfer> query = Ebean.createQuery(Surfer.class);
+    
     if (!data.name.equals("")) {
       query.where().icontains("name", data.name);
     }
@@ -32,16 +42,9 @@ public class SurferSearch {
       query.where().eq("country", CountryDB.getCountry(data.country));
     }
     
-    // in case all three parameters were empty strings
-    if (query.findList().isEmpty()) {
-      // grab all surfers
-      pages = Surfer.find().findPagingList(PAGINATION_MAX);
-      SurferSearch.setPages(pages);
-    } 
-    else {
-      pages = query.findPagingList(PAGINATION_MAX);
-      SurferSearch.setPages(pages);
-    }
+    pages = query.findPagingList(PAGINATION_MAX);
+    SurferSearch.setPages(pages);
+ 
   }
 
   /**
@@ -75,6 +78,5 @@ public class SurferSearch {
   public static int getSurferCount() {
     return pages.getTotalRowCount();
   }
-  
-  
+ 
 }
