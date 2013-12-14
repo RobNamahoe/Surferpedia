@@ -1,6 +1,6 @@
-@(page:String, isLoggedIn: Boolean, userInfo: UserInfo, updates: List[Updates])
+@(page:String, isLoggedIn: Boolean, userInfo: UserInfo, searchForm: Form[views.formdata.SearchFormData], surferGenderMap: Map[String, Boolean], surferCountryMap: Map[String, Boolean], updates: List[Updates])
 
-@Main("Home", isLoggedIn, userInfo) {
+@Main("Home", isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
    <div class="container">
      <h1>Updates Log</h1>
      <table class="table table-bordered">

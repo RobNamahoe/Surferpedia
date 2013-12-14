@@ -8,7 +8,7 @@
 @import helper._
 @import bootstrap3._
 
-@Main(page, isLoggedIn, userInfo) {
+@Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
   <div class="container">
   <div class="row">
   @form(routes.Application.postSearch(), 'class -> "form-horizontal") {
@@ -16,11 +16,13 @@
     <div class="col-sm-4 col-sm-offset-4">
         
         @text(searchForm("name"),
+              nolabel=false,
               label="Name",
               placeholder="Surfer's Name",
               help="")
               
         @bootstrap3.select(searchForm("gender"),
+                           nolabel=true,
                            label="Gender",
                            optionMap=surferGenderMap,
                            isMultiple=false,
@@ -28,6 +30,7 @@
                            help="")
                            
         @bootstrap3.select(searchForm("country"),
+                           nolabel=true,
                            label="Country",
                            optionMap=surferCountryMap,
                            isMultiple=false,

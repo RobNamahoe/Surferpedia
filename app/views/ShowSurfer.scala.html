@@ -1,11 +1,14 @@
 @(page:String, 
   isLoggedIn: Boolean, 
   userInfo: UserInfo,
+  searchForm: Form[views.formdata.SearchFormData],
+  surferGenderMap: Map[String, Boolean],
+  surferCountryMap: Map[String, Boolean],
   surferForm: Form[views.formdata.SurferFormData]) 
 
 @import helper._
 
-@Main("ShowSurfer", isLoggedIn, userInfo) { 
+@Main("ShowSurfer", isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) { 
 <div class="container">
 
   @form(routes.Application.postSurfer(), 'class -> "form-horizontal") {
