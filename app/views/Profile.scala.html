@@ -15,7 +15,7 @@
 @Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
 <script type="text/javascript">
 function submitForm() {
-	alert(document.getElementById("saerch_form").submit);
+	document.getElementById('submit').click();
 }
 </script>
 
@@ -77,14 +77,14 @@ function submitForm() {
         <div class="row">
           <div class="col-md-12">
             <!-- View history -->
-            <div class="well" style="height:225px;">
-              <h3 id="viewed">Last viewed</h3> <a href="javascript:;" onclick="submitForm();">here</a>
+            <div class="well" style="height:225px; padding-left: 25px; padding-right: 5px;">
+              <h3 id="viewed">Last viewed</h3>
               @if(!userviews.isEmpty()) {
                 @for(view <- userviews) {
                     <a href="@routes.Application.getSurfer(view.getSlug())"><div class="lastviewed" style="background-image: url('@view.getBioUrl');"></div></a>
                 }
               } else {
-                Need help browsing? Click <a href="javascript:;" onclick="submitForm();S">here</a> to see all the surfers in our database!
+                Need help browsing? Click <a href="javascript:;" onclick="submitForm();">here</a> to see all the surfers in our database!
               }
             </div>
           </div>

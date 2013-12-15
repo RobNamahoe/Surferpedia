@@ -127,6 +127,10 @@ public class UserInfo extends Model {
    * @return list of surfers last viewed
    */
   public List<Surfer> getNewest() {
+    System.out.println("-----NEWEST-----");
+    for (Surfer s : views) {
+      System.out.println(s.getName());
+    }
     if (views.size() < 10) {
       return views;
     }
@@ -145,6 +149,14 @@ public class UserInfo extends Model {
    */
   public void setAdmin(boolean admin) {
     this.admin = admin;
+  }
+  
+  public void addView(Surfer surfer) {
+    views.add(0, surfer);
+  }
+  
+  public void removeView(Surfer surfer) {
+    views.remove(surfer);
   }
 
 }

@@ -71,15 +71,21 @@ public class UserInfoDB {
     
     // first delete the surfer from it's spot in the user's list because user is viewing it again
     if (user.getViews().contains(surfer)) {
-      user.getViews().remove(surfer);
+      user.removeView(surfer);
     }
-    
-    // add the surfer
-    user.getViews().add(surfer);
-    /**for (Surfer s : user.getViews()) {
-      System.out.println(s.getName());
-    }*/
     user.save();
+    // add the surfer
+    System.out.println("-----REMOVE-----");
+    for (Surfer s : user.getViews()) {
+      System.out.println(s.getName());
+    }
+    user.addView(surfer);
+    
+    System.out.println("-----ADD-----");
+    user.save();
+    for (Surfer s : user.getViews()) {
+      System.out.println(s.getName());
+    }
   }
 
   /**
