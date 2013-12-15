@@ -33,18 +33,41 @@ create table surfer (
 
 create table updates (
   id                        bigint auto_increment not null,
+  user_id                   bigint,
   date                      varchar(255),
   action                    varchar(255),
   name                      varchar(255),
   constraint pk_updates primary key (id))
 ;
 
+create table user_info (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  email                     varchar(255),
+  password                  varchar(255),
+  date_joined               varchar(255),
+  admin                     tinyint(1) default 0,
+  constraint pk_user_info primary key (id))
+;
+
+
+create table user_info_surfer (
+  user_info_id                   bigint not null,
+  surfer_id                      bigint not null,
+  constraint pk_user_info_surfer primary key (user_info_id, surfer_id))
+;
 alter table surfer add constraint fk_surfer_country_1 foreign key (country_id) references country (id) on delete restrict on update restrict;
 create index ix_surfer_country_1 on surfer (country_id);
 alter table surfer add constraint fk_surfer_gender_2 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
 create index ix_surfer_gender_2 on surfer (gender_id);
+alter table updates add constraint fk_updates_user_3 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_updates_user_3 on updates (user_id);
 
 
+
+alter table user_info_surfer add constraint fk_user_info_surfer_user_info_01 foreign key (user_info_id) references user_info (id) on delete restrict on update restrict;
+
+alter table user_info_surfer add constraint fk_user_info_surfer_surfer_02 foreign key (surfer_id) references surfer (id) on delete restrict on update restrict;
 
 # --- !Downs
 
@@ -56,7 +79,11 @@ drop table gender;
 
 drop table surfer;
 
+drop table user_info_surfer;
+
 drop table updates;
+
+drop table user_info;
 
 SET FOREIGN_KEY_CHECKS=1;
 

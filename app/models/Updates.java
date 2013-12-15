@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
 
 
@@ -17,6 +18,9 @@ public class Updates extends Model {
   @Id
   private long id;
   
+  @ManyToOne
+  private UserInfo user;
+  
   private String date;
   private String action;
   private String name;
@@ -30,11 +34,13 @@ public class Updates extends Model {
   
   /**
    * Constructor for updates.
+   * @param user The user info.
    * @param date The date.
    * @param action The action done.
    * @param name The surfers name.
    */
-  public Updates(String date, String action, String name) {
+  public Updates(UserInfo user, String date, String action, String name) {
+    this.user = user;
     this.date = date;
     this.action = action;
     this.name = name;
@@ -90,4 +96,17 @@ public class Updates extends Model {
     this.name = name;
   }
   
+  /**
+   * @return the user object
+   */
+  public UserInfo getUser() {
+    return user;
+  }
+  
+  /**
+   * @param user the UserInfo to set
+   */
+  public void setUser(UserInfo user) {
+    this.user = user;
+  }
 }

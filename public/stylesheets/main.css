@@ -31,3 +31,22 @@
 .admin-warning {
   text-align: center;
 }
+
+.activity {
+  height: 300px;
+  overflow:auto;
+}
+
+.lastviewed {
+  height: 150px;
+  width: 100px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin-left: 7px;
+  float: left;
+}
+
+h3 {
+ margin-top: 0;
+}
