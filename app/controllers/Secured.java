@@ -65,4 +65,13 @@ public class Secured extends Security.Authenticator {
   public static UserInfo getUserInfo(Context ctx) {
     return (isLoggedIn(ctx) ? UserInfoDB.getUser(getUser(ctx)) : null);
   }
+  
+  /**
+   * Force the session state to be cleared. This forces a logout of any currently logged in user. 
+   * Useful for testing to ensure all tests start with no logged in user. 
+   */ 
+  public static void clearSession() { 
+    play.mvc.Controller.ctx().session().clear(); 
+  }
+ 
 }

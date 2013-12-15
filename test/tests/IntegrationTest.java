@@ -1,6 +1,7 @@
 package tests;
 
 import org.junit.Test;
+import controllers.Secured;
 import play.test.TestBrowser;
 import play.libs.F.Callback;
 import tests.pages.IndexPage;
@@ -40,6 +41,9 @@ public class IntegrationTest {
 
         indexPage.logout();
         assertThat(indexPage.isLoggedIn()).isFalse();
+        
+        //Secured.clearSession();
+        
       }
     });
   }

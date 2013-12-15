@@ -37,7 +37,7 @@ public class IndexPage extends FluentPage {
    * Click on the login link.
    */
   public void goToLogin() {
-    find("#navbutton").click();
+    //find("#navbutton").click();
     find("#login").click();
   }
   
@@ -45,7 +45,7 @@ public class IndexPage extends FluentPage {
    * Click on the logout link.
    */
   public void logout() {
-    find("#navbutton").click();
+    //find("#navbutton").click();
     find("#logout").click();
   }
   
