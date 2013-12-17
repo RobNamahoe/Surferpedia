@@ -44,6 +44,14 @@ public class IndexPage extends FluentPage {
   }
   
   /**
+   * Click on the New link.
+   */
+  public void goToNew() {
+    find("#navbutton").click();
+    find("#new").click();
+  }
+  
+  /**
    * Click on the Updates link.
    */
   public void goToUpdates() {

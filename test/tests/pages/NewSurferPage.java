@@ -12,15 +12,15 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
  * Illustration of the Page Object Pattern in Fluentlenium.  
  * @author Philip Johnson
  */
-public class ManageSurferPage extends FluentPage {
+public class NewSurferPage extends FluentPage {
   private String url;
   
   /**
-   * Create the ManageSurfer page.
+   * Create the NewSurfer.
    * @param webDriver The driver.
    * @param port The port.
    */
-  public ManageSurferPage(WebDriver webDriver, int port) {
+  public NewSurferPage(WebDriver webDriver, int port) {
     super(webDriver);
     this.url = "http://localhost:" + port;
   }
@@ -32,7 +32,7 @@ public class ManageSurferPage extends FluentPage {
   
   @Override
   public void isAt() {
-    assertThat(title()).isEqualTo("Surferpedia: ManageSurfer");
+    assertThat(title()).isEqualTo("Surferpedia: NewSurfer");
   }
 
   /**
@@ -98,7 +98,15 @@ public class ManageSurferPage extends FluentPage {
   public void setBio(String bio) {
     fill("#bio").with(bio);
   }
-    
+  
+  /**
+   * Set the surfers slug.
+   * @param slug The surfers slug.
+   */
+  public void setSlug(String slug) {
+    fill("#slug").with(slug);
+  }
+  
   /**
    * Select the surfers gender.
    * @param gender The surfers gender.

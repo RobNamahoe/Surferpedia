@@ -7,6 +7,7 @@ import tests.pages.IndexPage;
 import tests.pages.LoginPage;
 import tests.pages.ManageSurferPage;
 import tests.pages.NameTheSurferPage;
+import tests.pages.NewSurferPage;
 import tests.pages.SearchResultsPage;
 import tests.pages.ShowSurferPage;
 import tests.pages.UpdatesPage;
@@ -204,5 +205,65 @@ public class IntegrationTest {
     });
   }
   
+  /**
+   * Ensure New function works.
+   */
+  @Test
+  public void testNew() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        // Login to application
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+
+        indexPage.goToLogin();
+        LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
+        loginPage.isAt();
+        
+        loginPage.login();
+        assertThat(indexPage.isLoggedIn()).isTrue();
+        
+        indexPage.goToNew();
+        
+        NewSurferPage newSurferPage = new NewSurferPage(browser.getDriver(), PORT);
+        newSurferPage.isAt();
+        
+        newSurferPage.setName("Jacqueline Silva");
+        newSurferPage.setHome("Florianopolis, Brazil");
+        newSurferPage.setCountry("Brazil");
+        newSurferPage.setAwards("1996 Brazilian Amateur Champion, 2001 World Champion in the World Qualifying Series");
+        newSurferPage.setFootStyle("Regular");
+        newSurferPage.setCarouselUrl("http://resources0.news.com.au/images/2011/04/19/1226041/"
+                                     + "413516-jacqueline-silva.jpg");
+        newSurferPage.setBioUrl("http://www.sportsresgate.com.br/imagens/news/original/"
+                                + "jacqueline-silva-03122010132401.jpg");
+        newSurferPage.setBio("Jacqueline Silva is considered to be a pioneer in women's Brazilian surfing and "
+                             + "has garnered the best results from someone from Brazil, male or female. She "
+                             + "began at a time when there were no female categories in Brazilian surfing " 
+                             + "championships. Among her notable accomplishments was winning the 1996 Brazilian " 
+                             + "Amateur Champion and World Champion in the World Qualifying Series in 2001. In "
+                             + "2004 she became the first Brazilian to ever win an event in the World Championship "
+                             + "Tour when she won the open at Australia’s Gold Coast.");
+        newSurferPage.setSlug("jacquelinesilva");
+        newSurferPage.selectGender("Female");
+        newSurferPage.submitChanges();
+        
+        ShowSurferPage showSurferPage = new ShowSurferPage(browser.getDriver(), PORT);
+        showSurferPage.isAt();
+        
+        assertThat(browser.pageSource()).contains("Jacqueline Silva");
+        
+        // Ensure changes were added to Updates page
+        indexPage.goToUpdates();
+        UpdatesPage updatesPage = new UpdatesPage(browser.getDriver(), PORT);
+        updatesPage.isAt();
+        assertThat(browser.pageSource()).contains("Create");
+        assertThat(browser.pageSource()).contains("Jacqueline Silva");
+
+      }
+    });
+  }
   
 }
