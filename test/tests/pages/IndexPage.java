@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 // Although Eclipse marks the following two methods as deprecated, 
 // the no-arg versions of the methods used here are not deprecated.  (as of May, 2013).
 import static org.fest.assertions.Assertions.assertThat;
+import static org.fluentlenium.core.filter.FilterConstructor.withId;
+import static org.fluentlenium.core.filter.FilterConstructor.withText;
 
 /**
  * Illustration of the Page Object Pattern in Fluentlenium.  
@@ -42,6 +44,22 @@ public class IndexPage extends FluentPage {
   }
   
   /**
+   * Click on the Updates link.
+   */
+  public void goToUpdates() {
+    find("#navbutton").click();
+    find("#updates").click();
+  }
+  
+  /**
+   * Click on the Name The Surfer Game link.
+   */
+  public void goToNameTheSurfer() {
+    find("#navbutton").click();
+    find("#game").click();
+  }
+  
+  /**
    * Click on the logout link.
    */
   public void logout() {
@@ -57,4 +75,20 @@ public class IndexPage extends FluentPage {
     return !find("#logout").isEmpty();
   }
 
+  /**
+   * Search the database for a surfer.
+   * @param name The name of the surfer to search.
+   * @param gender The gender of the surfer to search.
+   * @param country The country of the surfer to search.
+   */
+  public void searchSurfers(String name, String gender, String country) {
+    find("#navbutton").click();
+    fill("#name").with(name);
+    // Find the menu with id "gender", and click the menu item equal to the passed gender string.
+    find("select", withId().equalTo("gender")).find("option", withText().equalTo(gender)).click();
+    // Find the menu with id "country", and click the menu item equal to the passed country string.
+    find("select", withId().equalTo("country")).find("option", withText().equalTo(country)).click();
+    submit("#submitsearch");
+  }
+  
 }

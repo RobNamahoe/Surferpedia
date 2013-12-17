@@ -28,7 +28,7 @@
                 </tr>
                 @for(surfer <- results) {
                     <tr>
-                        <td><a href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></td>
+                        <td><a id="@surfer.getSlug()" href="@routes.Application.getSurfer(surfer.getSlug())"">@surfer.getName()</a></td>
                         <td>
                         @if(surfer.getBio().length() >= 40) {
                             @surfer.getBio().substring(0, 40)...
