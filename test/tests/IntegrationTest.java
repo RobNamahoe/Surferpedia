@@ -47,6 +47,7 @@ public class IntegrationTest {
         loginPage.login(adminEmail, adminPassword);
         assertThat(indexPage.isLoggedIn()).isTrue();
 
+         System.out.println("Logout");
         indexPage.logout();
         assertThat(indexPage.isLoggedIn()).isFalse();
       }
