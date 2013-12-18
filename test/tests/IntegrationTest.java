@@ -84,6 +84,34 @@ public class IntegrationTest {
   }
   
   /**
+   * Ensure that a user is automatically redirected to the login page if they try to
+   * access a secured page.
+   */
+  @Test
+  public void testAuthorization() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+        
+        LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
+        
+        // go to pages that only a logged in user is able to view
+        browser.goTo("http://localhost:" + PORT + "/new");
+        loginPage.isAt();
+        
+        browser.goTo("http://localhost:" + PORT + "/updates");
+        loginPage.isAt();
+        
+        browser.goTo("http://localhost:" + PORT + "/profile");
+        loginPage.isAt();
+      }
+    });
+  }
+  
+  /**
    * Ensure a user can access the Name The Surfer Game page.
    */
   @Test
