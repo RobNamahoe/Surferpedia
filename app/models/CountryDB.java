@@ -59,4 +59,13 @@ public class CountryDB {
     }
     return countryMap;
   }
+  
+  /**
+   * Delete a country from the database.
+   * @param country The country to delete.
+   */
+  public static void deleteCountry(Country country) {
+    country.delete();
+  }
+  
 }
