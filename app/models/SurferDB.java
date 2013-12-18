@@ -88,7 +88,12 @@ public class SurferDB {
    * @param slug The slug of the surfer to delete.
    */
   public static void deleteSurfer(String slug) {
+    Country country = SurferDB.getSurfer(slug).getCountry();
     Surfer.find().where().eq("slug", slug).findUnique().delete();
+    List<Surfer> surfers = Surfer.find().where().eq("country", country).findList();
+    if (surfers.size() == 0) {
+      CountryDB.deleteCountry(country);
+    }
   }
   
   /**
