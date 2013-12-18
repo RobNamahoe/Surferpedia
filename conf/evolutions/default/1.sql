@@ -4,22 +4,22 @@
 # --- !Ups
 
 create table country (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   country                   varchar(255),
   constraint pk_country primary key (id))
 ;
 
 create table gender (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   gender                    varchar(255),
   constraint pk_gender primary key (id))
 ;
 
 create table surfer (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   country_id                bigint,
   gender_id                 bigint,
-  bio                       clob,
+  bio                       longtext,
   name                      varchar(255),
   home                      varchar(255),
   awards                    varchar(255),
@@ -32,20 +32,12 @@ create table surfer (
 ;
 
 create table updates (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   date                      varchar(255),
   action                    varchar(255),
   name                      varchar(255),
   constraint pk_updates primary key (id))
 ;
-
-create sequence country_seq;
-
-create sequence gender_seq;
-
-create sequence surfer_seq;
-
-create sequence updates_seq;
 
 alter table surfer add constraint fk_surfer_country_1 foreign key (country_id) references country (id) on delete restrict on update restrict;
 create index ix_surfer_country_1 on surfer (country_id);
@@ -56,23 +48,15 @@ create index ix_surfer_gender_2 on surfer (gender_id);
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists country;
+drop table country;
 
-drop table if exists gender;
+drop table gender;
 
-drop table if exists surfer;
+drop table surfer;
 
-drop table if exists updates;
+drop table updates;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists country_seq;
-
-drop sequence if exists gender_seq;
-
-drop sequence if exists surfer_seq;
-
-drop sequence if exists updates_seq;
+SET FOREIGN_KEY_CHECKS=1;
 

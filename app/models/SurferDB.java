@@ -24,7 +24,17 @@ public class SurferDB {
       surfer.setStatus("existing");
     }
     else {
-      surfer = SurferDB.getSurfer(formData.slug);  
+      surfer = SurferDB.getSurfer(formData.slug);
+      surfer.setName(formData.name);
+      surfer.setHome(formData.home);
+      surfer.setCountry(new Country(formData.country));
+      surfer.setAwards(formData.awards);
+      surfer.setCarouselUrl(formData.carouselUrl);
+      surfer.setBioUrl(formData.bioUrl);
+      surfer.setBio(formData.bio);
+      surfer.setGender(new Gender(formData.gender));
+      surfer.setStatus(formData.status);
+      surfer.setFootStyle(formData.footStyle);
     }
     
     Country country;
@@ -53,7 +63,7 @@ public class SurferDB {
     country.save();
     gender.save();
     surfer.save();
-    
+
   }
   
   /**
