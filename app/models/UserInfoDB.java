@@ -1,7 +1,6 @@
 package models;
 
-import java.util.HashMap;
-import java.util.Map;
+import controllers.Secured;
 
 /**
  * Provides an in-memory repository for UserInfo.
@@ -10,20 +9,18 @@ import java.util.Map;
  */
 public class UserInfoDB {
   
-  private static boolean adminDefined = false;
-  private static Map<String, UserInfo> userinfos = new HashMap<String, UserInfo>();
-  
-  
   /**
    * Define the admin credentials.
    * @param name The name of the admin.
    * @param email The admin email.
    * @param password The admin password.
+   * @param dateJoined The date of joining.
    */
-  public static void addAdmin(String name, String email, String password) {
-    if (email != null && password != null) {
-      adminDefined = true;
-      addUserInfo(name, email, password);
+  public static void addAdmin(String name, String email, String password, String dateJoined) {
+    if ((email != null) && (password != null) && (!adminDefined())) {
+      UserInfo userInfo = new UserInfo(name, email, password, dateJoined);
+      userInfo.setAdmin(true);
+      userInfo.save();
     }
   }
   
@@ -32,7 +29,8 @@ public class UserInfoDB {
    * @return true if admin credentials are defined, false otherwise.
    */
   public static boolean adminDefined() {
-    return adminDefined;
+    UserInfo userInfo = UserInfo.find().where().eq("admin", true).findUnique();
+    return userInfo != null;
   }
 
   /**
@@ -40,9 +38,11 @@ public class UserInfoDB {
    * @param name Their name.
    * @param email Their email.
    * @param password Their password. 
+   * @param dateJoined The date of joining.
    */
-  public static void addUserInfo(String name, String email, String password) {
-    userinfos.put(email, new UserInfo(name, email, password));
+  public static void addUserInfo(String name, String email, String password, String dateJoined) {
+    UserInfo userInfo = new UserInfo(name, email, password, dateJoined);
+    userInfo.save();
   }
   
   /**
@@ -51,7 +51,7 @@ public class UserInfoDB {
    * @return True if known user.
    */
   public static boolean isUser(String email) {
-    return userinfos.containsKey(email);
+    return (UserInfo.find().where().eq("email", email).findUnique() != null);
   }
 
   /**
@@ -60,7 +60,25 @@ public class UserInfoDB {
    * @return The UserInfo.
    */
   public static UserInfo getUser(String email) {
-    return userinfos.get((email == null) ? "" : email);
+    return UserInfo.find().where().eq("email", email).findUnique();
+  }
+  
+  /**
+   * Adds the surfer to the user's view list.
+   * @param user The user viewing the page
+   * @param slug The slug of the surfer page being viewed
+   */
+  public static void viewSurfer(UserInfo user, String slug) {
+    Surfer surfer = SurferDB.getSurfer(slug);
+    
+    // first delete the surfer from it's spot in the user's list because user is viewing it again
+    if (user.getViews().contains(surfer)) {
+      PageViewDB.removeView(user, surfer);
+    }
+
+    // add the surfer again
+    PageViewDB.addView(new PageView(surfer, user));
+    user.save();
   }
 
   /**
@@ -78,4 +96,5 @@ public class UserInfoDB {
             &&
             getUser(email).getPassword().equals(password));
   }
+  
 }

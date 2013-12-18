@@ -141,6 +141,15 @@ public class SurferDB {
   }
   
   /**
+   * Get a surfer by name.
+   * @param name The full name of the surfer.
+   * @return The surfer.
+   */
+  public static Surfer getSurferByName(String name) {
+    return Surfer.find().where().eq("name", name).findUnique();
+  }
+  
+  /**
    * Get a list of random surfers. Number returned is defined by the accepted parameter.
    * @param countOfSurfers The number of surfers to return.
    * @return A list of surfers.

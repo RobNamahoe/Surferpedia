@@ -1,3 +1,4 @@
+import java.util.Date;
 import models.SurferDB;
 import models.UserInfoDB;
 import play.Application;
@@ -29,10 +30,12 @@ public class Global extends GlobalSettings {
     String type = "";
     String bio = "";
     String footStyle = "";
-
+    
     String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
     String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
-    UserInfoDB.addAdmin("Administrator", adminEmail, adminPassword);
+    Date date = new Date();
+    
+    UserInfoDB.addAdmin("Administrator", adminEmail, adminPassword, date.toString());
 
     // Males
     type = "Male";

@@ -7,11 +7,14 @@ import java.util.Map;
 import models.GameQuestion;
 import models.GameQuestionDB;
 import models.CountryDB;
+import models.PageView;
+import models.PageViewDB;
 import models.Surfer;
 import models.SurferDB;
 import models.SurferSearch;
 import models.Updates;
 import models.UpdatesDB;
+import models.UserInfo;
 import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -26,6 +29,7 @@ import views.formdata.SurferTypes;
 import views.html.Index;
 import views.html.Login;
 import views.html.NameTheSurfer;
+import views.html.Profile;
 import views.html.ShowSurfer;
 import views.html.ManageSurfer;
 import views.html.ShowUpdates;
@@ -126,6 +130,8 @@ public class Application extends Controller {
     
     SurferFormData surferFormData = new SurferFormData(SurferDB.getSurfer(slug));
     Form<SurferFormData> surferForm = Form.form(SurferFormData.class).fill(surferFormData);
+    
+    UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), slug);
     return ok(ShowSurfer.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
                                 surferTypesMap, countryMap, surferForm));
   }
@@ -144,7 +150,7 @@ public class Application extends Controller {
     
     Date date = new Date();
     String name = SurferDB.getSurfer(slug).getName();
-    UpdatesDB.addUpdate(new Updates(date.toString(), "Delete", name));
+    UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), "Delete", name, slug));
 
     SurferDB.deleteSurfer(slug);
     return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
@@ -211,12 +217,34 @@ public class Application extends Controller {
 
       Date date = new Date();
       String action = SurferDB.isSurfer(surferFormData.slug) ? "Edit" : "Create";
-      UpdatesDB.addUpdate(new Updates(date.toString(), action, surferFormData.name));
-      
+      UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name,
+                                      surferFormData.slug));
       SurferDB.addSurfer(surferFormData);
+      UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), surferFormData.slug);
+      
       return ok(ShowSurfer.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
                 surferTypesMapSearch, countryMap, surferForm));
     }
+  }
+  
+  /**
+   * Displays the logged in user's profile page where they can see the date they joined, the list of surfer pages
+   * they helped create and edit, and their view history.
+   * @return the Profile page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result showProfile() {
+    SearchFormData searchFormData = new SearchFormData();
+    Form<SearchFormData> searchForm = Form.form(SearchFormData.class).fill(searchFormData);
+    Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
+    Map<String, Boolean> countryMap = CountryDB.getCountryMap();
+    
+    UserInfo currentUser = Secured.getUserInfo(ctx());
+    
+    return ok(Profile.render("My Profile", Secured.isLoggedIn(ctx()), currentUser, searchForm, surferTypesMap,
+        countryMap, UpdatesDB.getNumOfUpdatesByUser(currentUser), 
+        UpdatesDB.getUpdatesByUserAndAction(currentUser, "Create"),
+        UpdatesDB.getUpdatesByUserAndAction(currentUser, "Edit"), currentUser.getNewest()));
   }
   
   /**
@@ -289,9 +317,10 @@ public class Application extends Controller {
     }
     else {
       // registration info OK, so now we set the session variable and create the user in the database.
+      Date date = new Date();
       session().clear();
       session("email", regForm.get().email);
-      UserInfoDB.addUserInfo(regForm.get().name, regForm.get().email, regForm.get().password);
+      UserInfoDB.addUserInfo(regForm.get().name, regForm.get().email, regForm.get().password, date.toString());
       return redirect(routes.Application.index());
     }
   }

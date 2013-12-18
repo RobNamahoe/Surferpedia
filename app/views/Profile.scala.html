@@ -1,0 +1,93 @@
+@(page: String,
+ isLoggedIn: Boolean,
+ userInfo: UserInfo,
+ searchForm: Form[views.formdata.SearchFormData],
+ surferGenderMap: Map[String, Boolean],
+ surferCountryMap: Map[String, Boolean],
+ contributions: Int,
+ created: List[Updates],
+ edited: List[Updates],
+ userviews: List[Surfer])
+
+@import helper._
+@import bootstrap3._
+
+@Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
+<script type="text/javascript">
+function submitForm() {
+  document.getElementById('submit').click();
+}
+</script>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="well" style="height:300px;">
+                <!-- Account info -->
+                <b>Name:</b> @userInfo.getName()<br />
+                <b>Email:</b> @userInfo.getEmail()<br />
+                <b>Joined:</b> @userInfo.getDateJoined()<br />
+                <b>Contributions:</b> @contributions
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="activity">
+                <!-- User activity -->
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Surfer pages you've created</div>
+                        @if(created.isEmpty()) {
+                        <div class="panel-body">
+                            No surfers created by you. Would you like to add a <a href="@routes.Application.newSurfer()">new surfer</a> to our database?
+                        </div>
+                        } else {
+                        <!-- Table -->
+                        <table class="table">
+                            @for(crsurfer <- created) {
+                                <tr>
+                                    <td><a href="@routes.Application.getSurfer(crsurfer.getSlug())">@crsurfer.getName()</a></td>
+                                    <td style="text-align:right;">@crsurfer.getDate()</td>
+                                </tr>
+                            }
+                        </table>
+                        }
+                </div>
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Surfer pages you've helped update</div>
+                        @if(edited.isEmpty()) {
+                        <div class="panel-body">
+                            No surfers edited by you. Please help us improve our database by sharing all interesting bits of information you know about surfers!
+                        </div>
+                        } else {
+                        <!-- Table -->
+                        <table class="table">
+                            @for(edsurfer <- edited) {
+                                <tr>
+                                    <td><a href="@routes.Application.getSurfer(edsurfer.getSlug())">@edsurfer.getName()</a></td>
+                                    <td style="text-align:right;">@edsurfer.getDate()</td>
+                                </tr>
+                            }
+                        </table>
+                        }
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- View history -->
+            <div class="well" style="height:225px; padding-left: 25px; padding-right: 5px;">
+              <h3 id="viewed">Last viewed</h3>
+              @if(!userviews.isEmpty()) {
+                @for(view <- userviews) {
+                    <a href="@routes.Application.getSurfer(view.getSlug())"><div class="lastviewed" style="background-image: url('@view.getBioUrl');"></div></a>
+                }
+              } else {
+                Need help browsing? Click <a href="javascript:;" onclick="submitForm();">here</a> to see all the surfers in our database!
+              }
+            </div>
+          </div>
+        </div>
+    </div>
+}
