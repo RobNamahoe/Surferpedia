@@ -37,12 +37,20 @@ public class LoginPage extends FluentPage {
   /**
    * Login to the surferpedia application.
    */
-  public void login() {
-    String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
-    String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
-    fill("#email").with(adminEmail);
-    fill("#password").with(adminPassword);
+  public void login(String email, String password) {
+    fill("#email").with(email);
+    fill("#password").with(password);
     submit("#loginsubmit");
+  }
+  
+  /**
+   * Register for an account.
+   */
+  public void register(String name, String email, String password) {
+    fill("#regName").with(name);
+    fill("#regEmail").with(email);
+    fill("#regPassword").with(password);
+    submit("#regsubmit");
   }
 
 }

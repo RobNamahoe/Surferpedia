@@ -72,6 +72,7 @@ public class IndexPage extends FluentPage {
    */
   public void logout() {
     find("#navbutton").click();
+    find("#useroptions").click();
     find("#logout").click();
   }
   
@@ -80,7 +81,8 @@ public class IndexPage extends FluentPage {
    * @return true if we are logged into the application.
    */
   public boolean isLoggedIn() {
-    return !find("#logout").isEmpty();
+    find("#navbutton").click();
+    return !find("#useroptions").isEmpty();
   }
 
   /**

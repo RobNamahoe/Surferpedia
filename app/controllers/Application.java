@@ -322,8 +322,8 @@ public class Application extends Controller {
       // registration info OK, so now we set the session variable and create the user in the database.
       Date date = new Date();
       session().clear();
-      session("email", regForm.get().email);
-      UserInfoDB.addUserInfo(regForm.get().name, regForm.get().email, regForm.get().password, date.toString());
+      session("email", regForm.get().regEmail);
+      UserInfoDB.addUserInfo(regForm.get().regName, regForm.get().regEmail, regForm.get().regPassword, date.toString());
       return redirect(routes.Application.index());
     }
   }

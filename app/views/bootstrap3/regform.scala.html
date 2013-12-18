@@ -25,7 +25,7 @@
               <input id="@passwordField.id" name="@passwordField.name" value="@passwordField.value.getOrElse("")" class="form-control" placeholder="Password" type="password">
               <span class="help-block">@{passwordField.error.map { error => error.message }}</span>
             </div>
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Create">
+            <input id="regsubmit" class="btn btn-lg btn-primary btn-block" type="submit" value="Create">
           </fieldset>
         }
       </div>

@@ -11,11 +11,11 @@ import models.UserInfoDB;
 public class RegistrationFormData {
   
   /** The name. */
-  public String name = "";
+  public String regName = "";
   /** The email. */
-  public String email = "";
+  public String regEmail = "";
   /** The password. */
-  public String password = "";
+  public String regPassword = "";
 
   /** Required for form instantiation. */
   public RegistrationFormData() {
@@ -28,18 +28,18 @@ public class RegistrationFormData {
    */
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
-    if (name == null || name == "") {
-      errors.add(new ValidationError("name", "Name is required."));
+    if (regName == null || regName == "") {
+      errors.add(new ValidationError("regName", "Name is required."));
     }
-    if (email == null || email == "") {
-      errors.add(new ValidationError("email", "Email is required."));
+    if (regEmail == null || regEmail == "") {
+      errors.add(new ValidationError("regEmail", "Email is required."));
     }
-    if (password == null || password == "") {
-      errors.add(new ValidationError("password", "Password is required."));      
+    if (regPassword == null || regPassword == "") {
+      errors.add(new ValidationError("regPassword", "Password is required."));      
     }
-    if (UserInfoDB.isUser(email)) {
+    if (UserInfoDB.isUser(regEmail)) {
       // email exists
-      errors.add(new ValidationError("email", "Email already exists."));
+      errors.add(new ValidationError("regEmail", "Email already exists."));
     }
     return (errors.size() > 0) ? errors : null;
   }
