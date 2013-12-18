@@ -15,7 +15,7 @@
 @Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
 <script type="text/javascript">
 function submitForm() {
-  document.getElementById('submit').click();
+  document.getElementById('submitsearch').click();
 }
 </script>
 
@@ -51,7 +51,7 @@ function submitForm() {
                                       } else {@crsurfer.getName()}
                                     </td>
                                     <td style="text-align:right;">@crsurfer.getDate()</td>
-                                    <td>@if(SurferDB.isSurfer(crsurfer.getSlug())) {Active} else {Deleted}</td>
+                                    <td style="text-align:center;">@if(SurferDB.isSurfer(crsurfer.getSlug())) {Active} else {Deleted}</td>
                                 </tr>
                             }
                         </table>
@@ -74,7 +74,7 @@ function submitForm() {
                                   } else {@edsurfer.getName()}
                                   </td>
                                     <td style="text-align:right;">@edsurfer.getDate()</td>
-                                    <td>@if(SurferDB.isSurfer(edsurfer.getSlug())) {Active} else {Deleted}</td>
+                                    <td style="text-align:center;">@if(SurferDB.isSurfer(edsurfer.getSlug())) {Active} else {Deleted}</td>
                                 </tr>
                             }
                         </table>
