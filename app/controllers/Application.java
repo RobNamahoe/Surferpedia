@@ -7,8 +7,6 @@ import java.util.Map;
 import models.GameQuestion;
 import models.GameQuestionDB;
 import models.CountryDB;
-import models.PageView;
-import models.PageViewDB;
 import models.Surfer;
 import models.SurferDB;
 import models.SurferSearch;
@@ -131,7 +129,9 @@ public class Application extends Controller {
     SurferFormData surferFormData = new SurferFormData(SurferDB.getSurfer(slug));
     Form<SurferFormData> surferForm = Form.form(SurferFormData.class).fill(surferFormData);
     
-    UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), slug);
+    if (Secured.isLoggedIn(ctx())) {
+      UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), slug);
+    }
     return ok(ShowSurfer.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
                                 surferTypesMap, countryMap, surferForm));
   }
@@ -220,7 +220,10 @@ public class Application extends Controller {
       UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name,
                                       surferFormData.slug));
       SurferDB.addSurfer(surferFormData);
-      UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), surferFormData.slug);
+      
+      if (Secured.isLoggedIn(ctx())) {
+        UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), surferFormData.slug);
+      }
       
       return ok(ShowSurfer.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
                 surferTypesMapSearch, countryMap, surferForm));
