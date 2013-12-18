@@ -1,5 +1,6 @@
 package tests;
 
+import models.SurferDB;
 import org.junit.Test;
 import play.test.TestBrowser;
 import play.libs.F.Callback;
@@ -69,12 +70,12 @@ public class IntegrationTest {
       }
     });
   }
-  
+   
   /**
-   * Ensure that the Search function works.
+   * Ensure that the Search by name function works.
    */
   @Test
-  public void testSearch() {
+  public void testSearchByName() {
     running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
         
@@ -86,14 +87,68 @@ public class IntegrationTest {
         indexPage.searchSurfers("John Florence", "", "");
         assertThat(browser.pageSource()).contains("John John Florence");
         
+      }
+    });
+  }
+  
+  
+  /**
+   * Ensure that the Search by gender function works.
+   */
+  @Test
+  public void testSearchByGender() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+        
         // Test search by gender
         indexPage.searchSurfers("", "Female", "");
         assertThat(browser.pageSource()).contains("Results: 10 surfers found");
         
+      }
+    });
+  }
+  
+  
+  /**
+   * Ensure that the Search by country function works.
+   */
+  @Test
+  public void testSearchByCountry() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+
         // Test search by country
         indexPage.searchSurfers("", "", "Australia");
         assertThat(browser.pageSource()).contains("Results: 4 surfers found");
         
+      }
+    });
+  }
+  
+  /**
+   * Ensure that the Search function works when all fields are empty.
+   */
+  @Test
+  public void testSearchBlank() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+
+        // Test search with all fields blank
+        indexPage.searchSurfers("", "", "");
+        assertThat(browser.pageSource()).contains("Results: " + SurferDB.getSurfers().size() + " surfers found");
+                
       }
     });
   }
