@@ -1,26 +1,24 @@
 package tests.pages;
 
-import org.fluentlenium.core.FluentPage;
-import org.openqa.selenium.WebDriver;
-// Although Eclipse marks the following two methods as deprecated, 
-// the no-arg versions of the methods used here are not deprecated.  (as of May, 2013).
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fluentlenium.core.filter.FilterConstructor.withId;
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
+import org.fluentlenium.core.FluentPage;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Illustration of the Page Object Pattern in Fluentlenium.  
  * @author Philip Johnson
  */
-public class IndexPage extends FluentPage {
+public class ProfilePage extends FluentPage {
   private String url;
   
   /**
-   * Create the IndexPage.
+   * Create the ProfilePage.
    * @param webDriver The driver.
    * @param port The port.
    */
-  public IndexPage(WebDriver webDriver, int port) {
+  public ProfilePage(WebDriver webDriver, int port) {
     super(webDriver);
     this.url = "http://localhost:" + port;
   }
@@ -32,15 +30,7 @@ public class IndexPage extends FluentPage {
   
   @Override
   public void isAt() {
-    assertThat(title()).isEqualTo("Surferpedia: Index");
-  }
-
-  /**
-   * Click on the login link.
-   */
-  public void goToLogin() {
-    find("#navbutton").click();
-    find("#login").click();
+    assertThat(title()).isEqualTo("Surferpedia: My Profile");
   }
   
   /**
@@ -65,15 +55,6 @@ public class IndexPage extends FluentPage {
   public void goToNameTheSurfer() {
     find("#navbutton").click();
     find("#game").click();
-  }
-  
-  /**
-   * Click on the Profile link.
-   */
-  public void goToProfile() {
-    find("#navbutton").click();
-    find("#useroptions").click();
-    find("#profile").click();
   }
   
   /**
@@ -109,5 +90,7 @@ public class IndexPage extends FluentPage {
     find("select", withId().equalTo("country")).find("option", withText().equalTo(country)).click();
     submit("#submitsearch");
   }
+  
+  
   
 }

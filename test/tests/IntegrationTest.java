@@ -9,6 +9,7 @@ import tests.pages.LoginPage;
 import tests.pages.ManageSurferPage;
 import tests.pages.NameTheSurferPage;
 import tests.pages.NewSurferPage;
+import tests.pages.ProfilePage;
 import tests.pages.SearchResultsPage;
 import tests.pages.ShowSurferPage;
 import tests.pages.UpdatesPage;
@@ -333,4 +334,102 @@ public class IntegrationTest {
     });
   }
   
+  /**
+   * Ensure that a user can see that they have recently viewed a particular surfer page.
+   */
+  @Test
+  public void testProfileViews() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+        
+        indexPage.goToLogin();
+        LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
+        loginPage.isAt();
+        
+        String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+        String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+        loginPage.login(adminEmail, adminPassword);
+        assertThat(indexPage.isLoggedIn()).isTrue();
+        
+        indexPage.goToProfile();
+        ProfilePage profilePage = new ProfilePage(browser.getDriver(), PORT);
+        profilePage.isAt();
+        // user has not made any surfer page views yet
+        assertThat(browser.pageSource()).contains("Need help browsing?");
+        
+        // search for surfer
+        profilePage.searchSurfers("Eddie Aikau", "", "");
+        SearchResultsPage searchResultsPage = new SearchResultsPage(browser.getDriver(), PORT);
+        searchResultsPage.isAt();
+        // Ensure expected result is displayed
+        assertThat(browser.pageSource()).contains("Eddie Aikau");
+        
+        searchResultsPage.goToSurferProfile("eddieaikau");
+        ShowSurferPage showSurferPage = new ShowSurferPage(browser.getDriver(), PORT);
+        showSurferPage.isAt();
+        
+        // user can see that they viewed surfer's page
+        showSurferPage.goToProfile();
+        profilePage.isAt();
+        assertThat(browser.pageSource()).contains("http://upload.wikimedia.org/wikipedia/en/a/ae/Eddie_Aikau.jpg");
+      }
+    });
+  }
+ 
+  /**
+   * Ensure that a user can see that they have recently edited a particular surfer page in their profile page.
+   */
+  @Test
+  public void testProfileEdits() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+        
+        indexPage.goToLogin();
+        LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
+        loginPage.isAt();
+        
+        String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+        String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+        loginPage.login(adminEmail, adminPassword);
+        assertThat(indexPage.isLoggedIn()).isTrue();
+        
+        indexPage.goToProfile();
+        ProfilePage profilePage = new ProfilePage(browser.getDriver(), PORT);
+        profilePage.isAt();
+        // user has not made any edits to surfers yet
+        assertThat(browser.pageSource()).contains("No surfers edited by you.");
+        
+        // search for surfer
+        profilePage.searchSurfers("Bianca Buitendag", "", "");
+        SearchResultsPage searchResultsPage = new SearchResultsPage(browser.getDriver(), PORT);
+        searchResultsPage.isAt();
+        // Ensure expected result is displayed
+        assertThat(browser.pageSource()).contains("Bianca Buitendag");
+        
+        searchResultsPage.goToSurferProfile("biancabuitendag");
+        ShowSurferPage showSurferPage = new ShowSurferPage(browser.getDriver(), PORT);
+        showSurferPage.isAt();
+        showSurferPage.editSurfer();
+        
+        ManageSurferPage manageSurferPage = new ManageSurferPage(browser.getDriver(), PORT);
+        manageSurferPage.isAt();
+        manageSurferPage.setHome("Kahului, Maui");
+        manageSurferPage.submitChanges();
+        showSurferPage.isAt(); // redirects to surfer page
+        
+        // user can see that they have updated a surfer page
+        showSurferPage.goToProfile();
+        profilePage.isAt();
+        assertThat(browser.pageSource()).contains("Bianca Buitendag");
+      }
+    });
+  }
 }

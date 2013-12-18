@@ -48,4 +48,10 @@ public class ShowSurferPage extends FluentPage {
     find("#edit").click();
   }
   
+  public void goToProfile() {
+    find("#navbutton").click();
+    find("#useroptions").click();
+    find("#profile").click();
+  }
+  
 }
