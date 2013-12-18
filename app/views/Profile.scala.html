@@ -69,10 +69,11 @@ function submitForm() {
                         <table class="table">
                             @for(edsurfer <- edited) {
                                 <tr>
+                                    <td style="width:50%">
                                   @if(SurferDB.isSurfer(edsurfer.getSlug())) {
-                                    <td style="width:50%"><a href="@routes.Application.getSurfer(edsurfer.getSlug())">@edsurfer.getName()</a>
+                                    <a href="@routes.Application.getSurfer(edsurfer.getSlug())">@edsurfer.getName()</a>
                                   } else {@edsurfer.getName()}
-                                  </td>
+                                    </td>
                                     <td style="text-align:right;">@edsurfer.getDate()</td>
                                     <td style="text-align:center;">@if(SurferDB.isSurfer(edsurfer.getSlug())) {Active} else {Deleted}</td>
                                 </tr>
