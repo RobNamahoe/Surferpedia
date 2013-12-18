@@ -1,6 +1,7 @@
 package tests;
 
 import org.junit.Test;
+import play.Play;
 import play.test.TestBrowser;
 import play.libs.F.Callback;
 import tests.pages.IndexPage;
@@ -41,11 +42,43 @@ public class IntegrationTest {
         LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
         loginPage.isAt();
         
-        loginPage.login();
+        String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+        String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+        loginPage.login(adminEmail, adminPassword);
         assertThat(indexPage.isLoggedIn()).isTrue();
 
         indexPage.logout();
         assertThat(indexPage.isLoggedIn()).isFalse();
+      }
+    });
+  }
+  
+  /**
+   * Ensure a user can register for an account.
+   */
+  @Test
+  public void testRegistration() {
+    running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+      public void invoke(TestBrowser browser) {
+        
+        IndexPage indexPage = new IndexPage(browser.getDriver(), PORT);
+        browser.goTo(indexPage);
+        indexPage.isAt();
+        
+        indexPage.goToLogin();
+        LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
+        loginPage.isAt();
+        
+        loginPage.register("Y Z", "y@z.com", "password");
+        assertThat(indexPage.isLoggedIn()).isTrue();
+        
+        indexPage.logout();
+        assertThat(indexPage.isLoggedIn()).isFalse();
+        
+        indexPage.goToLogin();
+        loginPage.isAt();
+        loginPage.login("y@z.com", "password");
+        assertThat(indexPage.isLoggedIn()).isTrue();
       }
     });
   }
@@ -115,7 +148,9 @@ public class IntegrationTest {
         LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
         loginPage.isAt();
         
-        loginPage.login();
+        String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+        String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+        loginPage.login(adminEmail, adminPassword);
         assertThat(indexPage.isLoggedIn()).isTrue();
 
         // Search for a surfer
@@ -167,7 +202,9 @@ public class IntegrationTest {
         LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
         loginPage.isAt();
         
-        loginPage.login();
+        String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+        String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+        loginPage.login(adminEmail, adminPassword);
         assertThat(indexPage.isLoggedIn()).isTrue();
 
         // Search for a surfer
@@ -222,7 +259,9 @@ public class IntegrationTest {
         LoginPage loginPage = new LoginPage(browser.getDriver(), PORT);
         loginPage.isAt();
         
-        loginPage.login();
+        String adminEmail = Play.application().configuration().getString("surferpedia.admin.email");
+        String adminPassword = Play.application().configuration().getString("surferpedia.admin.password");
+        loginPage.login(adminEmail, adminPassword);
         assertThat(indexPage.isLoggedIn()).isTrue();
         
         indexPage.goToNew();
