@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
@@ -26,8 +25,8 @@ public class UserInfo extends Model {
   @OneToMany(mappedBy = "user")
   private List<Updates> updates = new ArrayList<>();
   
-  // Many of me (user) map to many of the following (surfers)
-  @ManyToMany(cascade = CascadeType.ALL)
+  //One of me (user) map to many of the following (surfers)
+  @OneToMany(mappedBy = "user")
   private List<Surfer> views = new ArrayList<>();
   
   private String name;

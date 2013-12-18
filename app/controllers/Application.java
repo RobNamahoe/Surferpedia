@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -217,8 +216,8 @@ public class Application extends Controller {
       Date date = new Date();
       String action = SurferDB.isSurfer(surferFormData.slug) ? "Edit" : "Create";
       UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name));
-      UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), surferFormData.slug);
       SurferDB.addSurfer(surferFormData);
+      UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), surferFormData.slug);
       
       return ok(ShowSurfer.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
                 surferTypesMapSearch, countryMap, surferForm));
@@ -238,6 +237,10 @@ public class Application extends Controller {
     Map<String, Boolean> countryMap = CountryDB.getCountryMap();
     
     UserInfo currentUser = Secured.getUserInfo(ctx());
+    
+    for (Surfer s : currentUser.getNewest()) {
+      System.out.println(s.getName());
+    }
     
     return ok(Profile.render("My Profile", Secured.isLoggedIn(ctx()), currentUser, searchForm, surferTypesMap,
         countryMap, UpdatesDB.getNumOfUpdatesByUser(currentUser), 

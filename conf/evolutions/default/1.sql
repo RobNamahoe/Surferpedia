@@ -19,6 +19,7 @@ create table surfer (
   id                        bigint auto_increment not null,
   country_id                bigint,
   gender_id                 bigint,
+  user_id                   bigint,
   bio                       longtext,
   name                      varchar(255),
   home                      varchar(255),
@@ -50,24 +51,16 @@ create table user_info (
   constraint pk_user_info primary key (id))
 ;
 
-
-create table user_info_surfer (
-  user_info_id                   bigint not null,
-  surfer_id                      bigint not null,
-  constraint pk_user_info_surfer primary key (user_info_id, surfer_id))
-;
 alter table surfer add constraint fk_surfer_country_1 foreign key (country_id) references country (id) on delete restrict on update restrict;
 create index ix_surfer_country_1 on surfer (country_id);
 alter table surfer add constraint fk_surfer_gender_2 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
 create index ix_surfer_gender_2 on surfer (gender_id);
-alter table updates add constraint fk_updates_user_3 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
-create index ix_updates_user_3 on updates (user_id);
+alter table surfer add constraint fk_surfer_user_3 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_surfer_user_3 on surfer (user_id);
+alter table updates add constraint fk_updates_user_4 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_updates_user_4 on updates (user_id);
 
 
-
-alter table user_info_surfer add constraint fk_user_info_surfer_user_info_01 foreign key (user_info_id) references user_info (id) on delete restrict on update restrict;
-
-alter table user_info_surfer add constraint fk_user_info_surfer_surfer_02 foreign key (surfer_id) references surfer (id) on delete restrict on update restrict;
 
 # --- !Downs
 
@@ -78,8 +71,6 @@ drop table country;
 drop table gender;
 
 drop table surfer;
-
-drop table user_info_surfer;
 
 drop table updates;
 

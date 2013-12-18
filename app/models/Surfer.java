@@ -6,7 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
 
@@ -30,9 +29,9 @@ public class Surfer extends Model {
   @ManyToOne
   private Gender gender;
   
-  // Many of me (surfers) map to many of the following (users)
-  @ManyToMany(mappedBy = "views", cascade = CascadeType.ALL)
-  private List<UserInfo> users = new ArrayList<>();
+  // Many of me (surfers) map to one of the following (user)
+  @ManyToOne
+  private UserInfo user;
   
   //This marks a property that is mapped to a Clob/Blob/Longvarchar or Longvarbinary.
   @Lob
@@ -243,10 +242,6 @@ public class Surfer extends Model {
    */
   public void setGender(Gender gender) {
     this.gender = gender;
-  }
-  
-  public List<UserInfo> getUsers() {
-    return users;
   }
 
 }

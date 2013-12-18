@@ -46,7 +46,7 @@ function submitForm() {
                             @for(crsurfer <- created) {
                                 <tr>
                                     <td><a href="@routes.Application.getSurfer(SurferDB.getSurferByName(crsurfer.getName()).getSlug())">@crsurfer.getName()</a></td>
-                                    <td>@crsurfer.getDate()</td>
+                                    <td style="text-align:right;">@crsurfer.getDate()</td>
                                 </tr>
                             }
                         </table>
@@ -65,7 +65,7 @@ function submitForm() {
                             @for(edsurfer <- edited) {
                                 <tr>
                                     <td><a href="@routes.Application.getSurfer(SurferDB.getSurferByName(edsurfer.getName()).getSlug())">@edsurfer.getName()</a></td>
-                                    <td>@edsurfer.getDate()</td>
+                                    <td style="text-align:right;">@edsurfer.getDate()</td>
                                 </tr>
                             }
                         </table>
