@@ -30,10 +30,10 @@ public class Surfer extends Model {
   @ManyToOne
   private Gender gender;
   
-  // Many of me (surfers) map to one of the following (user)
-  @OneToMany(mappedBy = "surfer")
+  // One of me (surfers) maps to many of the following (user)
+  @OneToMany(mappedBy = "surfer", cascade = CascadeType.ALL)
   private List<PageView> views = new ArrayList<>();
-  
+    
   //This marks a property that is mapped to a Clob/Blob/Longvarchar or Longvarbinary.
   @Lob
   private String bio = "";

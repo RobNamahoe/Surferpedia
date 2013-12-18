@@ -45,8 +45,13 @@ function submitForm() {
                         <table class="table">
                             @for(crsurfer <- created) {
                                 <tr>
-                                    <td><a href="@routes.Application.getSurfer(crsurfer.getSlug())">@crsurfer.getName()</a></td>
+                                    <td style="width:50%">
+                                      @if(SurferDB.isSurfer(crsurfer.getSlug())) {
+                                        <a href="@routes.Application.getSurfer(crsurfer.getSlug())">@crsurfer.getName()</a>
+                                      } else {@crsurfer.getName()}
+                                    </td>
                                     <td style="text-align:right;">@crsurfer.getDate()</td>
+                                    <td>@if(SurferDB.isSurfer(crsurfer.getSlug())) {Active} else {Deleted}</td>
                                 </tr>
                             }
                         </table>
@@ -64,8 +69,12 @@ function submitForm() {
                         <table class="table">
                             @for(edsurfer <- edited) {
                                 <tr>
-                                    <td><a href="@routes.Application.getSurfer(edsurfer.getSlug())">@edsurfer.getName()</a></td>
+                                  @if(SurferDB.isSurfer(edsurfer.getSlug())) {
+                                    <td style="width:50%"><a href="@routes.Application.getSurfer(edsurfer.getSlug())">@edsurfer.getName()</a>
+                                  } else {@edsurfer.getName()}
+                                  </td>
                                     <td style="text-align:right;">@edsurfer.getDate()</td>
+                                    <td>@if(SurferDB.isSurfer(edsurfer.getSlug())) {Active} else {Deleted}</td>
                                 </tr>
                             }
                         </table>
