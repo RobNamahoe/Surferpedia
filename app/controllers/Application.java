@@ -7,6 +7,8 @@ import java.util.Map;
 import models.GameQuestion;
 import models.GameQuestionDB;
 import models.CountryDB;
+import models.PageView;
+import models.PageViewDB;
 import models.Surfer;
 import models.SurferDB;
 import models.SurferSearch;
@@ -237,10 +239,6 @@ public class Application extends Controller {
     Map<String, Boolean> countryMap = CountryDB.getCountryMap();
     
     UserInfo currentUser = Secured.getUserInfo(ctx());
-    
-    for (Surfer s : currentUser.getNewest()) {
-      System.out.println(s.getName());
-    }
     
     return ok(Profile.render("My Profile", Secured.isLoggedIn(ctx()), currentUser, searchForm, surferTypesMap,
         countryMap, UpdatesDB.getNumOfUpdatesByUser(currentUser), 

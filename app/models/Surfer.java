@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import play.db.ebean.Model;
 
 /**
@@ -30,8 +31,8 @@ public class Surfer extends Model {
   private Gender gender;
   
   // Many of me (surfers) map to one of the following (user)
-  @ManyToOne
-  private UserInfo user;
+  @OneToMany(mappedBy = "surfer")
+  private List<PageView> views = new ArrayList<>();
   
   //This marks a property that is mapped to a Clob/Blob/Longvarchar or Longvarbinary.
   @Lob
@@ -242,6 +243,17 @@ public class Surfer extends Model {
    */
   public void setGender(Gender gender) {
     this.gender = gender;
+  }
+  
+  /**
+   * @return list of users that viewed page
+   */
+  public List<UserInfo> getViews() {
+    List<UserInfo> users = new ArrayList<>();
+    for (PageView pageView : views) {
+      users.add(pageView.getUser());
+    }
+    return users;
   }
 
 }

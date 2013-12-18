@@ -15,11 +15,17 @@ create table gender (
   constraint pk_gender primary key (id))
 ;
 
+create table page_view (
+  id                        bigint auto_increment not null,
+  surfer_id                 bigint,
+  user_id                   bigint,
+  constraint pk_page_view primary key (id))
+;
+
 create table surfer (
   id                        bigint auto_increment not null,
   country_id                bigint,
   gender_id                 bigint,
-  user_id                   bigint,
   bio                       longtext,
   name                      varchar(255),
   home                      varchar(255),
@@ -51,14 +57,16 @@ create table user_info (
   constraint pk_user_info primary key (id))
 ;
 
-alter table surfer add constraint fk_surfer_country_1 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_surfer_country_1 on surfer (country_id);
-alter table surfer add constraint fk_surfer_gender_2 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
-create index ix_surfer_gender_2 on surfer (gender_id);
-alter table surfer add constraint fk_surfer_user_3 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
-create index ix_surfer_user_3 on surfer (user_id);
-alter table updates add constraint fk_updates_user_4 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
-create index ix_updates_user_4 on updates (user_id);
+alter table page_view add constraint fk_page_view_surfer_1 foreign key (surfer_id) references surfer (id) on delete restrict on update restrict;
+create index ix_page_view_surfer_1 on page_view (surfer_id);
+alter table page_view add constraint fk_page_view_user_2 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_page_view_user_2 on page_view (user_id);
+alter table surfer add constraint fk_surfer_country_3 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_surfer_country_3 on surfer (country_id);
+alter table surfer add constraint fk_surfer_gender_4 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
+create index ix_surfer_gender_4 on surfer (gender_id);
+alter table updates add constraint fk_updates_user_5 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_updates_user_5 on updates (user_id);
 
 
 
@@ -69,6 +77,8 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table country;
 
 drop table gender;
+
+drop table page_view;
 
 drop table surfer;
 

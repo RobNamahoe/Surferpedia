@@ -1,5 +1,7 @@
 package models;
 
+import controllers.Secured;
+
 /**
  * Provides an in-memory repository for UserInfo.
  * Storing credentials in the clear is kind of bogus.
@@ -71,21 +73,12 @@ public class UserInfoDB {
     
     // first delete the surfer from it's spot in the user's list because user is viewing it again
     if (user.getViews().contains(surfer)) {
-      user.removeView(surfer);
+      PageViewDB.removeView(user, surfer);
     }
 
-    // add the surfer
-    System.out.println("-----REMOVE-----");
-    for (Surfer s : user.getViews()) {
-      System.out.println(s.getName());
-    }
-    user.addView(surfer);
-    
-    System.out.println("-----ADD-----");
+    // add the surfer again
+    PageViewDB.addView(new PageView(surfer, user));
     user.save();
-    for (Surfer s : user.getViews()) {
-      System.out.println(s.getName());
-    }
   }
 
   /**

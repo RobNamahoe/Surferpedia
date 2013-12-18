@@ -27,7 +27,7 @@ public class UserInfo extends Model {
   
   //One of me (user) map to many of the following (surfers)
   @OneToMany(mappedBy = "user")
-  private List<Surfer> views = new ArrayList<>();
+  private List<PageView> views = new ArrayList<>();
   
   private String name;
   private String email;
@@ -118,7 +118,12 @@ public class UserInfo extends Model {
    * @return list of surfers user last viewed
    */
   public List<Surfer> getViews() {
-    return views;
+    List<Surfer> surfers = new ArrayList<>();
+    for (PageView pageView : views) {
+      surfers.add(0, pageView.getSurfer());
+      //surfers.add(pageView.getSurfer());
+    }
+    return surfers;
   }
   
   /**
@@ -126,14 +131,11 @@ public class UserInfo extends Model {
    * @return list of surfers last viewed
    */
   public List<Surfer> getNewest() {
-    System.out.println("-----NEWEST-----");
-    for (Surfer s : views) {
-      System.out.println(s.getName());
-    }
     if (views.size() < 10) {
-      return views;
+      return getViews();
     }
-    return views.subList(0, 10);
+    List<Surfer> surfers = getViews();
+    return surfers.subList(0, 10);
   }
 
   /**
@@ -148,14 +150,6 @@ public class UserInfo extends Model {
    */
   public void setAdmin(boolean admin) {
     this.admin = admin;
-  }
-  
-  public void addView(Surfer surfer) {
-    views.add(0, surfer);
-  }
-  
-  public void removeView(Surfer surfer) {
-    views.remove(surfer);
   }
 
 }
