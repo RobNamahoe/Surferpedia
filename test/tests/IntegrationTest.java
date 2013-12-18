@@ -148,12 +148,13 @@ public class IntegrationTest {
 
         // Test search by name
         indexPage.searchSurfers("John Florence", "", "");
+        SearchResultsPage searchResultsPage = new SearchResultsPage(browser.getDriver(), PORT);
+        searchResultsPage.isAt();
         assertThat(browser.pageSource()).contains("John John Florence");
-        
+        assertThat(browser.pageSource()).contains("Results: 1 surfers found");
       }
     });
   }
-  
   
   /**
    * Ensure that the Search by gender function works.
@@ -168,9 +169,18 @@ public class IntegrationTest {
         indexPage.isAt();
         
         // Test search by gender
-        indexPage.searchSurfers("", "Female", "");
+        indexPage.searchSurfers("", "Male", "");
+        SearchResultsPage searchResultsPage = new SearchResultsPage(browser.getDriver(), PORT);
+        searchResultsPage.isAt();
         assertThat(browser.pageSource()).contains("Results: 10 surfers found");
         
+        indexPage.searchSurfers("", "Female", "");
+        searchResultsPage.isAt();
+        assertThat(browser.pageSource()).contains("Results: 10 surfers found");
+        
+        indexPage.searchSurfers("", "Grom", "");
+        searchResultsPage.isAt();
+        assertThat(browser.pageSource()).contains("Results: 10 surfers found");
       }
     });
   }
@@ -190,6 +200,8 @@ public class IntegrationTest {
         
         // Test search by country
         indexPage.searchSurfers("", "", "Australia");
+        SearchResultsPage searchResultsPage = new SearchResultsPage(browser.getDriver(), PORT);
+        searchResultsPage.isAt();
         assertThat(browser.pageSource()).contains("Results: 4 surfers found");
         
       }
@@ -200,7 +212,7 @@ public class IntegrationTest {
    * Ensure that the Search function works when all fields are empty.
    */
   @Test
-  public void testSearchBlank() {
+  public void testSearchNoParameters() {
     running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
         
@@ -210,7 +222,7 @@ public class IntegrationTest {
 
         // Test search by name
         indexPage.searchSurfers("", "", "");
-        assertThat(browser.pageSource()).contains("Results: " + SurferDB.getSurfers().size() + " surfers found");
+        assertThat(browser.pageSource()).contains("Results: 30 surfers found");
         
       }
     });
@@ -314,6 +326,7 @@ public class IntegrationTest {
         manageSurferPage.submitChanges();
         
         // Check that changes are displayed on Show Surfer page
+        showSurferPage.isAt();
         assertThat(browser.pageSource()).contains("Kahului, Maui");
         
         // Ensure changes were added to Updates page
@@ -331,7 +344,7 @@ public class IntegrationTest {
    * Ensure New function works.
    */
   @Test
-  public void testNew() {
+  public void testNewSurfer() {
     running(testServer(PORT, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
         
