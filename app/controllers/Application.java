@@ -148,7 +148,7 @@ public class Application extends Controller {
     
     Date date = new Date();
     String name = SurferDB.getSurfer(slug).getName();
-    UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), "Delete", name));
+    UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), "Delete", name, slug));
 
     SurferDB.deleteSurfer(slug);
     return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
@@ -215,7 +215,8 @@ public class Application extends Controller {
 
       Date date = new Date();
       String action = SurferDB.isSurfer(surferFormData.slug) ? "Edit" : "Create";
-      UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name));
+      UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name, 
+                          surferFormData.slug));
       SurferDB.addSurfer(surferFormData);
       UserInfoDB.viewSurfer(Secured.getUserInfo(ctx()), surferFormData.slug);
       

@@ -74,6 +74,8 @@ public class UserInfoDB {
       user.removeView(surfer);
     }
 
+    user.save();
+    
     // add the surfer
     System.out.println("-----REMOVE-----");
     for (Surfer s : user.getViews()) {

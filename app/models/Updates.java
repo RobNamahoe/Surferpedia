@@ -24,6 +24,7 @@ public class Updates extends Model {
   private String date;
   private String action;
   private String name;
+  private String slug;
   
   /**
    * Default constructor.
@@ -38,12 +39,14 @@ public class Updates extends Model {
    * @param date The date.
    * @param action The action done.
    * @param name The surfers name.
+   * @param slug The surfers slug.
    */
-  public Updates(UserInfo user, String date, String action, String name) {
+  public Updates(UserInfo user, String date, String action, String name, String slug) {
     this.user = user;
     this.date = date;
     this.action = action;
     this.name = name;
+    this.slug = slug;
   }
   
   /**
@@ -108,5 +111,19 @@ public class Updates extends Model {
    */
   public void setUser(UserInfo user) {
     this.user = user;
+  }
+
+  /**
+   * @return the slug
+   */
+  public String getSlug() {
+    return slug;
+  }
+
+  /**
+   * @param slug the slug to set
+   */
+  public void setSlug(String slug) {
+    this.slug = slug;
   }
 }
