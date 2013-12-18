@@ -44,6 +44,7 @@ create table updates (
   date                      varchar(255),
   action                    varchar(255),
   name                      varchar(255),
+  slug                      varchar(255),
   constraint pk_updates primary key (id))
 ;
 

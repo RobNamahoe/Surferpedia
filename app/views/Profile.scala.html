@@ -15,7 +15,7 @@
 @Main(page, isLoggedIn, userInfo, searchForm, surferGenderMap, surferCountryMap) {
 <script type="text/javascript">
 function submitForm() {
-	document.getElementById('submit').click();
+  document.getElementById('submit').click();
 }
 </script>
 
@@ -45,7 +45,7 @@ function submitForm() {
                         <table class="table">
                             @for(crsurfer <- created) {
                                 <tr>
-                                    <td><a href="@routes.Application.getSurfer(SurferDB.getSurferByName(crsurfer.getName()).getSlug())">@crsurfer.getName()</a></td>
+                                    <td><a href="@routes.Application.getSurfer(crsurfer.getSlug())">@crsurfer.getName()</a></td>
                                     <td style="text-align:right;">@crsurfer.getDate()</td>
                                 </tr>
                             }
@@ -64,7 +64,7 @@ function submitForm() {
                         <table class="table">
                             @for(edsurfer <- edited) {
                                 <tr>
-                                    <td><a href="@routes.Application.getSurfer(SurferDB.getSurferByName(edsurfer.getName()).getSlug())">@edsurfer.getName()</a></td>
+                                    <td><a href="@routes.Application.getSurfer(edsurfer.getSlug())">@edsurfer.getName()</a></td>
                                     <td style="text-align:right;">@edsurfer.getDate()</td>
                                 </tr>
                             }
