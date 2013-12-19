@@ -10,7 +10,7 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
 
 /**
  * Illustration of the Page Object Pattern in Fluentlenium.  
- * @author Philip Johnson
+ * @author Rob Namahoe
  */
 public class NewSurferPage extends FluentPage {
   private String url;

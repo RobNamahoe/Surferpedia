@@ -1,6 +1,5 @@
 package tests;
 
-import models.SurferDB;
 import org.junit.Test;
 import play.Play;
 import play.test.TestBrowser;

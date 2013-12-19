@@ -8,7 +8,8 @@ import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Illustration of the Page Object Pattern in Fluentlenium.  
- * @author Philip Johnson
+ * @author Rob Namahoe
+ * @author Eva Shek
  */
 public class ShowSurferPage extends FluentPage {
   private String url;
@@ -48,6 +49,9 @@ public class ShowSurferPage extends FluentPage {
     find("#edit").click();
   }
   
+  /**
+   * Navigate to the Profile page.
+   */
   public void goToProfile() {
     find("#navbutton").click();
     find("#useroptions").click();

@@ -5,7 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
 
-
 /**
  * A model for updates.
  * @author Rob Namahoe

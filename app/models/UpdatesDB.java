@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * A repository that stores update information.
  * @author Rob Namahoe
- *
  */
 public class UpdatesDB {
   

@@ -7,7 +7,7 @@ import com.avaje.ebean.PagingList;
 import com.avaje.ebean.Query;
 
 /**
- * 
+ * Provides the search function as well as stores the results for pagination.
  * @author Rob Namahoe
  * @author Eva Shek
  */
@@ -22,7 +22,7 @@ public class SurferSearch {
    */
   public static void queryDatabase(SearchFormData data) {
     
-    // If all three parameters are empty, then return all surfers.
+    // If all three parameters are empty, return all surfers.
     // Do this first so we can differentiate between no matches vs no parameters.
     if (data.name.equals("") && data.gender.equals("") && data.country.equals("")) {
       pages = Surfer.find().findPagingList(PAGINATION_MAX);

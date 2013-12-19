@@ -13,6 +13,7 @@ import play.db.ebean.Model;
 /**
  * The surfer class.
  * @author Rob Namahoe
+ * @author Eva Shek
  */
 @Entity
 public class Surfer extends Model {
@@ -243,17 +244,6 @@ public class Surfer extends Model {
    */
   public void setGender(Gender gender) {
     this.gender = gender;
-  }
-  
-  /**
-   * @return list of users that viewed page
-   */
-  public List<UserInfo> getViews() {
-    List<UserInfo> users = new ArrayList<>();
-    for (PageView pageView : views) {
-      users.add(pageView.getUser());
-    }
-    return users;
   }
 
 }

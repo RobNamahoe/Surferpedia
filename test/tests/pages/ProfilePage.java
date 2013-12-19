@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * Illustration of the Page Object Pattern in Fluentlenium.  
- * @author Philip Johnson
+ * @author Eva Shek
  */
 public class ProfilePage extends FluentPage {
   private String url;

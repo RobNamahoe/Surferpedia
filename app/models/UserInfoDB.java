@@ -1,11 +1,8 @@
 package models;
 
-import controllers.Secured;
-
 /**
- * Provides an in-memory repository for UserInfo.
- * Storing credentials in the clear is kind of bogus.
- * @author Philip Johnson
+ * Provides a repository for UserInfo.
+ * @author Eva Shek
  */
 public class UserInfoDB {
   

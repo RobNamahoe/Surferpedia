@@ -8,7 +8,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Illustration of the Page Object Pattern in Fluentlenium.  
- * @author Philip Johnson
+ * @author Rob Namahoe
  */
 public class SearchResultsPage extends FluentPage {
   private String url;

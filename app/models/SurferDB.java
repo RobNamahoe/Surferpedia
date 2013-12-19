@@ -106,8 +106,6 @@ public class SurferDB {
   }
   
   /**
-   * Ebean Users guide 6.7
-   * 
    * Gets a list of surfers of the specified gender.
    * @param gender The gender of the surfers.
    * @return A list of surfers.
@@ -120,8 +118,6 @@ public class SurferDB {
   }
   
   /**
-   * Ebean Users guide 6.7
-   * 
    * Gets a list of surfers of the specified country.
    * @param country The country of the surfers.
    * @return A list of surfers.
