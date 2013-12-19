@@ -10,7 +10,7 @@ import play.db.ebean.Model;
  * @author Rob Namahoe
  */
 @Entity
-public class Updates extends Model {
+public class SurferUpdate extends Model {
   
   private static final long serialVersionUID = 1L;
   
@@ -28,7 +28,7 @@ public class Updates extends Model {
   /**
    * Default constructor.
    */
-  public Updates() {
+  public SurferUpdate() {
     // Default constructor method.
   }
   
@@ -40,7 +40,7 @@ public class Updates extends Model {
    * @param name The surfers name.
    * @param slug The surfers slug.
    */
-  public Updates(UserInfo user, String date, String action, String name, String slug) {
+  public SurferUpdate(UserInfo user, String date, String action, String name, String slug) {
     this.user = user;
     this.date = date;
     this.action = action;
@@ -52,8 +52,8 @@ public class Updates extends Model {
    * The EBean ORM finder method for database queries.
    * @return The finder method for updates.
    */
-  public static Finder<Long, Updates> find() {
-    return new Finder<Long, Updates>(Long.class, Updates.class);
+  public static Finder<Long, SurferUpdate> find() {
+    return new Finder<Long, SurferUpdate>(Long.class, SurferUpdate.class);
   }
   
   /**

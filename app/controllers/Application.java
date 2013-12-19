@@ -10,8 +10,8 @@ import models.CountryDB;
 import models.Surfer;
 import models.SurferDB;
 import models.SurferSearch;
-import models.Updates;
-import models.UpdatesDB;
+import models.SurferUpdate;
+import models.SurferUpdateDB;
 import models.UserInfo;
 import models.UserInfoDB;
 import play.data.Form;
@@ -150,7 +150,7 @@ public class Application extends Controller {
     
     Date date = new Date();
     String name = SurferDB.getSurfer(slug).getName();
-    UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), "Delete", name, slug));
+    SurferUpdateDB.addUpdate(new SurferUpdate(Secured.getUserInfo(ctx()), date.toString(), "Delete", name, slug));
 
     SurferDB.deleteSurfer(slug);
     return ok(Index.render("", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), 
@@ -190,7 +190,7 @@ public class Application extends Controller {
     Map<String, Boolean> surferTypesMap = SurferTypes.getTypes();
     Map<String, Boolean> countryMap = CountryDB.getCountryMap();
     return ok(ShowUpdates.render("Updates", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), searchForm,
-                                 surferTypesMap, countryMap, UpdatesDB.getUpdates()));
+                                 surferTypesMap, countryMap, SurferUpdateDB.getUpdates()));
   }
   
   /**
@@ -217,7 +217,7 @@ public class Application extends Controller {
 
       Date date = new Date();
       String action = SurferDB.isSurfer(surferFormData.slug) ? "Edit" : "Create";
-      UpdatesDB.addUpdate(new Updates(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name,
+      SurferUpdateDB.addUpdate(new SurferUpdate(Secured.getUserInfo(ctx()), date.toString(), action, surferFormData.name,
                                       surferFormData.slug));
       SurferDB.addSurfer(surferFormData);
       
@@ -245,9 +245,9 @@ public class Application extends Controller {
     UserInfo currentUser = Secured.getUserInfo(ctx());
     
     return ok(Profile.render("My Profile", Secured.isLoggedIn(ctx()), currentUser, searchForm, surferTypesMap,
-        countryMap, UpdatesDB.getNumOfUpdatesByUser(currentUser), 
-        UpdatesDB.getUpdatesByUserAndAction(currentUser, "Create"),
-        UpdatesDB.getUpdatesByUserAndAction(currentUser, "Edit"), currentUser.getNewest()));
+        countryMap, SurferUpdateDB.getNumOfUpdatesByUser(currentUser), 
+        SurferUpdateDB.getUpdatesByUserAndAction(currentUser, "Create"),
+        SurferUpdateDB.getUpdatesByUserAndAction(currentUser, "Edit"), currentUser.getNewest()));
   }
   
   /**

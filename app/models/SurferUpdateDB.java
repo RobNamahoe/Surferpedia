@@ -6,13 +6,13 @@ import java.util.List;
  * A repository that stores update information.
  * @author Rob Namahoe
  */
-public class UpdatesDB {
+public class SurferUpdateDB {
   
   /**
    * Add an update log.
    * @param surferUpdate Update information.
    */
-  public static void addUpdate(Updates surferUpdate) {
+  public static void addUpdate(SurferUpdate surferUpdate) {
     surferUpdate.save();
   }
   
@@ -20,8 +20,8 @@ public class UpdatesDB {
    * Retrieves a List of updates.
    * @return list of updates.
    */
-  public static List<Updates> getUpdates() {
-    return Updates.find().all();
+  public static List<SurferUpdate> getUpdates() {
+    return SurferUpdate.find().all();
   }
   
   /**
@@ -29,8 +29,8 @@ public class UpdatesDB {
    * @param user The user
    * @return list of updates.
    */
-  public static List<Updates> getUpdatesByUser(UserInfo user) {
-    return Updates.find().where().eq("user", user).findList();
+  public static List<SurferUpdate> getUpdatesByUser(UserInfo user) {
+    return SurferUpdate.find().where().eq("user", user).findList();
   }
   
   /**
@@ -48,7 +48,7 @@ public class UpdatesDB {
    * @param action Action made (CUD)
    * @return list of updates
    */
-  public static List<Updates> getUpdatesByUserAndAction(UserInfo user, String action) {
-    return Updates.find().where().eq("user", user).eq("action", action).findList();
+  public static List<SurferUpdate> getUpdatesByUserAndAction(UserInfo user, String action) {
+    return SurferUpdate.find().where().eq("user", user).eq("action", action).findList();
   }
 }

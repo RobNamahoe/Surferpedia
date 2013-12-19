@@ -22,7 +22,7 @@ public class UserInfo extends Model {
   
   //One of me (user) maps to many of the following (updates)
   @OneToMany(mappedBy = "user")
-  private List<Updates> updates = new ArrayList<>();
+  private List<SurferUpdate> updates = new ArrayList<>();
   
   //One of me (user) map to many of the following (surfers)
   @OneToMany(mappedBy = "user")
@@ -115,7 +115,7 @@ public class UserInfo extends Model {
   /**
    * @return updates made by user
    */
-  public List<Updates> getUpdates() {
+  public List<SurferUpdate> getUpdates() {
     return updates;
   }
   

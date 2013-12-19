@@ -38,14 +38,14 @@ create table surfer (
   constraint pk_surfer primary key (id))
 ;
 
-create table updates (
+create table surfer_update (
   id                        bigint auto_increment not null,
   user_id                   bigint,
   date                      varchar(255),
   action                    varchar(255),
   name                      varchar(255),
   slug                      varchar(255),
-  constraint pk_updates primary key (id))
+  constraint pk_surfer_update primary key (id))
 ;
 
 create table user_info (
@@ -66,8 +66,8 @@ alter table surfer add constraint fk_surfer_country_3 foreign key (country_id) r
 create index ix_surfer_country_3 on surfer (country_id);
 alter table surfer add constraint fk_surfer_gender_4 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
 create index ix_surfer_gender_4 on surfer (gender_id);
-alter table updates add constraint fk_updates_user_5 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
-create index ix_updates_user_5 on updates (user_id);
+alter table surfer_update add constraint fk_surfer_update_user_5 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_surfer_update_user_5 on surfer_update (user_id);
 
 
 
@@ -83,7 +83,7 @@ drop table page_view;
 
 drop table surfer;
 
-drop table updates;
+drop table surfer_update;
 
 drop table user_info;
 
