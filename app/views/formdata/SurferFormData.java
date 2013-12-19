@@ -67,6 +67,7 @@ public class SurferFormData {
    * Constructor method - used to initialize database.
    * @param name The name of the surfer.
    * @param home The home of the surfer.
+   * @param country The country of the surfer.
    * @param awards Awards or titles the surfer has won.
    * @param carouselUrl The url to the carousel image.
    * @param bioUrl The url to the bio image.
