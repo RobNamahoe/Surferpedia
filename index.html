@@ -31,20 +31,87 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><img src="https://raw.github.com/robnamahoe/surfpedia/master/doc/surfpedia.png" alt="screenshot"></p>
+        <p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/index.png" alt="screenshot"></p>
 
-<p>Overview
-A Play application that provides an encyclopedia of surfers.</p>
+<h2>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
 
-<p>Installation
-Download the zip file, unzip, cd into the directory, invoke the Play console, and execute the run command to see the
-application at http://localhost:9000.</p>
+<p>A dynamic Play application that provides an encyclopedia of surfers.</p>
 
-<p>Usage
-Use the navbar to find interior pages with bio information on surfers.</p>
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<p>Credits
-Thanks to ICS 341, Fall 2013 for support.</p>
+<p>NOTE: Must have MySQL configured and installed before proceeding.</p>
+
+<p><strong>Configuration</strong></p>
+
+<ul>
+<li>Create environment variables for <code>SURFERPEDIA_ADMIN_EMAIL</code> and <code>SURFERPEDIA_ADMIN_PASSWORD</code> (ex. SURFERPEDIA_ADMIN_EMAIL=<a href="mailto:admin@example.com">admin@example.com</a>, SURFERPEDIA_ADMIN_PASSWORD=password). These will be the admin credentials to use to login.</li>
+<li>Create a database using MySQL, and create environment variables for <code>DATABASE_URL_DB</code> (database name), <code>DATABASE_USERNAME_DB</code> (username to access database), <code>DATABASE_PASSWORD_DB</code> (password to access database)</li>
+</ul><p><strong>Setup</strong></p>
+
+<ul>
+<li>Download the .zip file from GitHub</li>
+<li>Unzip and cd into the directory</li>
+<li>Invoke the Play console</li>
+<li>Execute the run command to see the application at http://localhost:9000.</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p><strong>Description</strong></p>
+
+<p>The application includes 30 surfer profiles as well as an administrative user account.  Users can log in or create an account on the login page. NOTE: Users registered in the database have extended privileges than that of anonymous users.</p>
+
+<p><strong>Searching</strong></p>
+
+<p>Use the search widget located on the right side of the navigation bar to find bio information on surfers.  Search results can be curated by three criteria (surfer name, gender, and country).</p>
+
+<p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/allsurfers.png" alt="screenshot"></p>
+
+<p><strong>Registered Users</strong></p>
+
+<p>From the the surfer bio page, you are presented with the option to either edit or delete the surfer from the database.</p>
+
+<p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/surferbio.png" alt="screenshot"></p>
+
+<p>New surfers can be added to the database by clicking 'New' in the navigation bar. Data validation is included to assist in including appropriate information.</p>
+
+<p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/editerror.png" alt="screenshot"></p>
+
+<p>Updates to the database can be viewed by clicking 'Updates' in the navigation bar.</p>
+
+<h2>
+<a name="special-features" class="anchor" href="#special-features"><span class="octicon octicon-link"></span></a>Special Features</h2>
+
+<p>Users can play a game called "Name This Surfer!" where they are presented with a picture of a surfer and given five names to choose from.  This encourages users to browse through our database in search of the "mystery surfer" and discover new surfers along the way.</p>
+
+<p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/game.png" alt="screenshot"></p>
+
+<p>An additional feature is the user profile page, where users can view all the activity related to their account.  They can keep track of surfer pages they've created and updated, as well as see the last 10 surfer pages they visited.</p>
+
+<p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/profile.png" alt="screenshot"></p>
+
+<h2>
+<a name="er-diagram" class="anchor" href="#er-diagram"><span class="octicon octicon-link"></span></a>ER Diagram</h2>
+
+<p><img src="https://raw.github.com/robnamahoe/surferpedia/master/doc/surferpedia-erd.png" alt="erd">
+This ER diagram shows how the entities interact in order for the application to do several things:</p>
+
+<ul>
+<li>Search for surfers based on three filters: Name, Gender, Country</li>
+<li>Display a list of updates made to the database</li>
+<li>Display a list of updates made by each user</li>
+<li>Display a user's view history</li>
+</ul><p>The assumptions shown on the model include:</p>
+
+<ul>
+<li>A user can make no updates and view none of the surfer pages (but that's no fun, is it?)</li>
+<li>A Country and Gender does not exist in the database unless there is at least one surfer belonging to the country or gender.</li>
+<li>User and Surfer hold a many-to-many relationship that is represented by a PageView.</li>
+</ul><h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p><a href="https://github.com/evashek">Eva Shek</a> and <a href="https://github.com/RobNamahoe">Rob Namahoe</a> would like to thank ICS 341, Fall 2013, for support.</p>
       </section>
     </div>
 
