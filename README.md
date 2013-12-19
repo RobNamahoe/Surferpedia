@@ -69,4 +69,4 @@ The assumptions shown on the model include:
 
 Credits
 -------
-Aloha to ICS 341, Fall 2013, [Jonathan Ortal](https://github.com/jortal), and [Eva Shek](https://github.com/evashek) for support.
+[Eva Shek](https://github.com/evashek) and [Rob Namahoe](https://github.com/RobNamahoe) would like to thank ICS 341, Fall 2013, for support.
